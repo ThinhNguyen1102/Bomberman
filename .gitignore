@@ -35,3 +35,12 @@
 .idea/libraries/Maven__org_openjfx_javafx_graphics_win_16.xml
 .idea/libraries/Maven__org_openjfx_javafx_media_16.xml
 .idea/libraries/Maven__org_openjfx_javafx_media_win_16.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/uiDesigner.xml
+logs/FXGL-11-Nov-2021-16.14.21.log
+logs/FXGL-11-Nov-2021-16.18.25.log
+logs/FXGL-11-Nov-2021-16.20.29.log
+logs/FXGL-11-Nov-2021-16.21.06.log
+target/classes/com/testniqatsu/bomberman/BombermanApplication.class
+system/Readme.txt
+system/fxgl.bundle
