@@ -48,3 +48,6 @@ system/fxgl.bundle
 target/classes/com/testniqatsu/bomberman/BombermanFactory.class
 target/classes/assets/textures/classic.png
 target/classes/assets/tmx/bomberman.tmx
+target/classes/module-info.class
+target/classes/assets/levels/classic.png
+target/classes/assets/levels/bomberman.tmx

@@ -15,8 +15,24 @@ public class BombermanApplication extends GameApplication {
      */
     @Override
     protected void initSettings(GameSettings settings) {
+        settings.setWidth(400); // 16px * 25 columns
+        settings.setHeight(240); // 16px * 15 rows
         settings.setTitle("Bomberman");
-        settings.setVersion("0.2.0");
+        settings.setVersion("0.3.0");
+        settings.setPreserveResizeRatio(true);
+        settings.setManualResizeEnabled(true);
+    }
+
+    /**
+     * Load level for the game
+     *
+     * @author Khoi Nguyen Truong
+     * @since 0.3.0
+     */
+    @Override
+    protected void initGame() {
+        FXGL.getGameWorld().addEntityFactory(new BombermanFactory());
+        FXGL.setLevelFromMap("bomberman.tmx");
     }
 
     /**
