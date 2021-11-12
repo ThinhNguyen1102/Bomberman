@@ -44,3 +44,7 @@ logs/FXGL-11-Nov-2021-16.21.06.log
 target/classes/com/testniqatsu/bomberman/BombermanApplication.class
 system/Readme.txt
 system/fxgl.bundle
+*.log
+target/classes/com/testniqatsu/bomberman/BombermanFactory.class
+target/classes/assets/textures/classic.png
+target/classes/assets/tmx/bomberman.tmx

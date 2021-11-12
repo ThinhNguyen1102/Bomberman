@@ -2,11 +2,12 @@ package com.testniqatsu.bomberman;
 
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.dsl.FXGL;
 
 public class BombermanApplication extends GameApplication {
 
     /**
-     * Set up some properties for games like windows size and title.
+     * Set up some properties for game like windows size and title.
      *
      * @param settings object to store initial settings for the game
      * @author Khoi Nguyen Truong
