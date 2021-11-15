@@ -4,7 +4,7 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.FXGL;
 
-public class BombermanApplication extends GameApplication {
+public class BombermanApp extends GameApplication {
 
     /**
      * Set up some properties for game like windows size and title.

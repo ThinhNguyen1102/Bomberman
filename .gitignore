@@ -51,3 +51,4 @@ target/classes/assets/tmx/bomberman.tmx
 target/classes/module-info.class
 target/classes/assets/levels/classic.png
 target/classes/assets/levels/bomberman.tmx
+target/classes/com/testniqatsu/bomberman/BombermanApp.class

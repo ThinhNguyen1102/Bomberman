@@ -11,6 +11,7 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 
 public class BombermanFactory implements EntityFactory {
 
+
     @Spawns("SolidWall")
     public Entity newSolidWall(SpawnData data) {
         return new EntityBuilder(data)
