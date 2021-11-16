@@ -93,9 +93,9 @@ public class PlayerAnimationComponent extends Component {
             }
 
             if (speedY > 0) {
-                direction = 2; // up
-            } else if (speedY < 0) {
                 direction = 0; // down
+            } else if (speedY < 0) {
+                direction = 2; // up
             }
 
             speedX = (int) (speedX * 0.9);
@@ -134,10 +134,10 @@ public class PlayerAnimationComponent extends Component {
     }
 
     public void moveUp() {
-        speedY = 250;
+        speedY = -250;
     }
 
     public void moveDown() {
-        speedY = -250;
+        speedY = 250;
     }
 }

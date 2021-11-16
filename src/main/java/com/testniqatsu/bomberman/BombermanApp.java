@@ -6,6 +6,7 @@ import com.almasb.fxgl.dsl.EntityBuilder;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.testniqatsu.bomberman.animations.PlayerAnimationComponent;
+import javafx.scene.input.KeyCode;
 
 public class BombermanApp extends GameApplication {
 
@@ -42,6 +43,14 @@ public class BombermanApp extends GameApplication {
         player = new EntityBuilder()
                 .with(new PlayerAnimationComponent())
                 .buildAndAttach();
+    }
+
+    @Override
+    protected void initInput() {
+        FXGL.onKey(KeyCode.W, () -> player.getComponent(PlayerAnimationComponent.class).moveUp());
+        FXGL.onKey(KeyCode.A, () -> player.getComponent(PlayerAnimationComponent.class).moveLeft());
+        FXGL.onKey(KeyCode.S, () -> player.getComponent(PlayerAnimationComponent.class).moveDown());
+        FXGL.onKey(KeyCode.D, () -> player.getComponent(PlayerAnimationComponent.class).moveRight());
     }
 
     /**
