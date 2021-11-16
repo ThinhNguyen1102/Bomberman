@@ -36,33 +36,33 @@ public class PlayerAnimationComponent extends Component {
      * @since 0.5.0
      */
     public PlayerAnimationComponent() {
-        final int framesPerRows = 4;
+        final int framesPerRow = 4;
         final int charWidth = 176;
         final int charHeight = 248;
 
-        animIdleDown = new AnimationChannel(FXGL.image("touhou.png"),
-                framesPerRows, charWidth, charHeight, Duration.seconds(1), 0, 0);
+        animIdleDown = new AnimationChannel(FXGL.image("touhou_char.png"),
+                framesPerRow, charWidth, charHeight, Duration.seconds(1), 0, 0);
 
-        animIdleLeft = new AnimationChannel(FXGL.image("touhou.png"),
-                framesPerRows, charWidth, charHeight, Duration.seconds(1), 4, 4);
+        animIdleLeft = new AnimationChannel(FXGL.image("touhou_char.png"),
+                framesPerRow, charWidth, charHeight, Duration.seconds(1), 4, 4);
 
-        animIdleRight = new AnimationChannel(FXGL.image("touhou.png"),
-                framesPerRows, charWidth, charHeight, Duration.seconds(1), 8, 8);
+        animIdleRight = new AnimationChannel(FXGL.image("touhou_char.png"),
+                framesPerRow, charWidth, charHeight, Duration.seconds(1), 8, 8);
 
-        animIdleUp = new AnimationChannel(FXGL.image("touhou.png"),
-                framesPerRows, charWidth, charHeight, Duration.seconds(1), 12, 12);
+        animIdleUp = new AnimationChannel(FXGL.image("touhou_char.png"),
+                framesPerRow, charWidth, charHeight, Duration.seconds(1), 12, 12);
 
-        animWalkDown = new AnimationChannel(FXGL.image("touhou.png"),
-                framesPerRows, charWidth, charHeight, Duration.seconds(1), 0, 3);
+        animWalkDown = new AnimationChannel(FXGL.image("touhou_char.png"),
+                framesPerRow, charWidth, charHeight, Duration.seconds(1), 0, 3);
 
-        animWalkLeft = new AnimationChannel(FXGL.image("touhou.png"),
-                framesPerRows, charWidth, charHeight, Duration.seconds(1), 4, 7);
+        animWalkLeft = new AnimationChannel(FXGL.image("touhou_char.png"),
+                framesPerRow, charWidth, charHeight, Duration.seconds(1), 4, 7);
 
-        animWalkRight = new AnimationChannel(FXGL.image("touhou.png"),
-                framesPerRows, charWidth, charHeight, Duration.seconds(1), 8, 11);
+        animWalkRight = new AnimationChannel(FXGL.image("touhou_char.png"),
+                framesPerRow, charWidth, charHeight, Duration.seconds(1), 8, 11);
 
-        animWalkUp = new AnimationChannel(FXGL.image("touhou.png"),
-                framesPerRows, charWidth, charHeight, Duration.seconds(1), 12, 15);
+        animWalkUp = new AnimationChannel(FXGL.image("touhou_char.png"),
+                framesPerRow, charWidth, charHeight, Duration.seconds(1), 12, 15);
 
         texture = new AnimatedTexture(animIdleDown);
     }
@@ -75,7 +75,7 @@ public class PlayerAnimationComponent extends Component {
      */
     @Override
     public void onAdded() {
-        entity.getTransformComponent().setScaleOrigin(new Point2D(88, 124));
+        entity.getTransformComponent().setScaleOrigin(new Point2D(44, 62));
         entity.getViewComponent().addChild(texture);
     }
 
