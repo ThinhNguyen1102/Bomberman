@@ -9,11 +9,24 @@ import javafx.util.Duration;
 
 public class PlayerAnimationComponent extends Component {
 
-    private int speed;
+    private final AnimatedTexture texture;
+    private final AnimationChannel animIdleDown, animIdleRight, animIdleLeft, animIdleUp;
+    private final AnimationChannel animWalkDown, animWalkRight, animWalkLeft, animWalkUp;
 
-    private AnimatedTexture texture;
-    private AnimationChannel animIdleDown, animIdleRight, animIdleLeft, animIdleUp;
-    private AnimationChannel animWalkDown, animWalkRight, animWalkLeft, animWalkUp;
+    private int speedX;
+    private int speedY;
+
+    // use number to represent character state
+    // 0: idle
+    // 1: walk
+    private int state = 0;
+
+    // also use number to represent direction
+    // 0: down
+    // 1: right
+    // 2: up
+    // 3: left
+    private int direction = 0;
 
     /**
      * Define animation for character movement. Each state can be represented by a "video" .aka
@@ -51,8 +64,6 @@ public class PlayerAnimationComponent extends Component {
         animWalkUp = new AnimationChannel(FXGL.image("touhou.png"),
                 framesPerRows, charWidth, charHeight, Duration.seconds(1), 12, 15);
 
-        // still don't know what the heck is this thing called animated texture, but the tutorial has
-        // it here, so I will do the same.
         texture = new AnimatedTexture(animIdleDown);
     }
 
@@ -64,17 +75,69 @@ public class PlayerAnimationComponent extends Component {
      */
     @Override
     public void onAdded() {
-        // still don't understand set scale origin but this maybe a way to resize the character
-        // sprite, I don't know, better keep it here.
         entity.getTransformComponent().setScaleOrigin(new Point2D(88, 124));
-        // seems like the entity is whatever entity that can add this component
-        // maybe in factory, entity is being generated after texture, hence we can not
-        // add child in the constructor
         entity.getViewComponent().addChild(texture);
     }
 
     @Override
     public void onUpdate(double tpf) {
+        // what is this tpf? I think this is sort of like delta in other game engines, perhaps.
+        entity.translate(speedX * tpf, speedY * tpf);
 
+        if (speedX != 0 || speedY != 0) {
+            state = 1;
+            if (speedX > 0) {
+                direction = 1; // right
+            } else if (speedX < 0) {
+                direction = 3; // left
+            }
+
+            if (speedY > 0) {
+                direction = 2; // up
+            } else if (speedY < 0) {
+                direction = 0; // down
+            }
+
+            speedX = (int) (speedX * 0.9);
+            speedY = (int) (speedY * 0.9);
+
+            if (speedX < 1 && speedY < 1) {
+                speedX = 0;
+                speedY = 0;
+                state = 0; // return to idle
+            }
+        }
+
+        if (state == 0) {
+            switch (direction) {
+                case 0: texture.loopAnimationChannel(animIdleDown);
+                case 1: texture.loopAnimationChannel(animIdleRight);
+                case 2: texture.loopAnimationChannel(animIdleUp);
+                case 3: texture.loopAnimationChannel(animIdleLeft);
+            }
+        } else {
+            switch (direction) {
+                case 0: texture.loopAnimationChannel(animWalkDown);
+                case 1: texture.loopAnimationChannel(animWalkRight);
+                case 2: texture.loopAnimationChannel(animWalkUp);
+                case 3: texture.loopAnimationChannel(animWalkLeft);
+            }
+        }
+    }
+
+    public void moveRight () {
+        speedX = 250;
+    }
+
+    public void moveLeft() {
+        speedX = -250;
+    }
+
+    public void moveUp() {
+        speedY = 250;
+    }
+
+    public void moveDown() {
+        speedY = -250;
     }
 }
