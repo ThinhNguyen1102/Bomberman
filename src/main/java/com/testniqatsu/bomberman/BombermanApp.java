@@ -45,6 +45,12 @@ public class BombermanApp extends GameApplication {
                 .buildAndAttach();
     }
 
+    /**
+     * Bind input to the game
+     *
+     * @author Khoi Nguyen Truong
+     * @since 0.6.2
+     */
     @Override
     protected void initInput() {
         FXGL.onKey(KeyCode.W, () -> player.getComponent(PlayerAnimationComponent.class).moveUp());

@@ -52,6 +52,7 @@ public class PlayerAnimationComponent extends Component {
         animIdleUp = new AnimationChannel(FXGL.image("touhou_char.png"),
                 framesPerRow, charWidth, charHeight, Duration.seconds(1), 12, 12);
 
+
         animWalkDown = new AnimationChannel(FXGL.image("touhou_char.png"),
                 framesPerRow, charWidth, charHeight, Duration.seconds(1), 0, 3);
 
@@ -75,7 +76,7 @@ public class PlayerAnimationComponent extends Component {
      */
     @Override
     public void onAdded() {
-        entity.getTransformComponent().setScaleOrigin(new Point2D(44, 62));
+        entity.getTransformComponent().setScaleOrigin(new Point2D(88, 124));
         entity.getViewComponent().addChild(texture);
     }
 
@@ -110,17 +111,17 @@ public class PlayerAnimationComponent extends Component {
 
         if (state == 0) {
             switch (direction) {
-                case 0: texture.loopAnimationChannel(animIdleDown);
-                case 1: texture.loopAnimationChannel(animIdleRight);
-                case 2: texture.loopAnimationChannel(animIdleUp);
-                case 3: texture.loopAnimationChannel(animIdleLeft);
+                case 0 -> texture.loopAnimationChannel(animIdleDown);
+                case 1 -> texture.loopAnimationChannel(animIdleRight);
+                case 2 -> texture.loopAnimationChannel(animIdleUp);
+                case 3 -> texture.loopAnimationChannel(animIdleLeft);
             }
         } else {
             switch (direction) {
-                case 0: texture.loopAnimationChannel(animWalkDown);
-                case 1: texture.loopAnimationChannel(animWalkRight);
-                case 2: texture.loopAnimationChannel(animWalkUp);
-                case 3: texture.loopAnimationChannel(animWalkLeft);
+                case 0 -> texture.loopAnimationChannel(animWalkDown);
+                case 1 -> texture.loopAnimationChannel(animWalkRight);
+                case 2 -> texture.loopAnimationChannel(animWalkUp);
+                case 3 -> texture.loopAnimationChannel(animWalkLeft);
             }
         }
     }
