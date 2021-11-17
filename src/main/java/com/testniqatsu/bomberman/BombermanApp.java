@@ -24,7 +24,7 @@ public class BombermanApp extends GameApplication {
         settings.setWidth(800);
         settings.setHeight(600);
         settings.setTitle("Bomberman");
-        settings.setVersion("0.3.0");
+        settings.setVersion("0.6.5");
         settings.setPreserveResizeRatio(true);
         settings.setManualResizeEnabled(true);
     }

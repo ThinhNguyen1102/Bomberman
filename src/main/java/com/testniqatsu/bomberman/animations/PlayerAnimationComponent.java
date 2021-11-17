@@ -10,113 +10,119 @@ import javafx.util.Duration;
 
 public class PlayerAnimationComponent extends Component {
 
-    private final AnimatedTexture texture;
-    private final AnimationChannel animIdleDown, animIdleRight, animIdleLeft, animIdleUp;
-    private final AnimationChannel animWalkDown, animWalkRight, animWalkLeft, animWalkUp;
+    // original sprite sheet data
+    private final int rows = 4;
+    private final int columns = 4;
+    private final int width = 704;
+    private final int height = 992;
+    
+    // character data
+    private final int scale = 4;
+    
+    private final int characterWidth = width / columns / scale;
+    private final int characterHeight = height / rows / scale;
 
     private int speedX;
     private int speedY;
 
-    // use number to represent character state
+    // speed is inverse proportional with scale
+    private final int maxSpeed = 800 / scale;
+
+    // current entity state
     // 0: idle
     // 1: walk
-    private int state = 0;
+    private int state; // default 0
 
-    // also use number to represent direction
     // 0: down
     // 1: right
     // 2: up
     // 3: left
-    private int direction = 0;
+    private int direction; // default 0
 
+    
+    // animation data
+    private final AnimatedTexture texture;
+    private final AnimationChannel animIdleDown, animIdleRight, animIdleLeft, animIdleUp;
+    private final AnimationChannel animWalkDown, animWalkRight, animWalkLeft, animWalkUp;
+    
+    
     /**
-     * Define animation for character movement. Each state can be represented by a "video" .aka
-     * animation channel.
+     * Define animations for each movement of the character
      *
      * @author Khoi Nguyen Truong
      * @since 0.5.0
      */
     public PlayerAnimationComponent() {
-        final var framesPerRow = 4;
+        final var sprites = FXGL.image(
+                "touhou_char.png",
+                characterWidth * columns,
+                characterHeight * columns);
 
-        // scale down 8 times the original
-        final var charWidth = 176 / 8;
-        final var charHeight = 248 / 8;
+        // in this case, frames per row is equal to number of columns
 
-        // sprite sheet is now 88 x 124
-        var sprites = FXGL.image("touhou_char.png", 88, 124);
-        
         // idle animation
-        animIdleDown = new AnimationChannel(sprites,
-                framesPerRow, charWidth, charHeight,
+        animIdleDown = new AnimationChannel(sprites, columns,
+                characterWidth, characterHeight,
                 Duration.seconds(0.5), 0, 0);
-
-        animIdleLeft = new AnimationChannel(sprites,
-                framesPerRow, charWidth, charHeight,
+        animIdleLeft = new AnimationChannel(sprites, columns,
+                characterWidth, characterHeight,
                 Duration.seconds(0.5), 4, 4);
-
-        animIdleRight = new AnimationChannel(sprites,
-                framesPerRow, charWidth, charHeight,
+        animIdleRight = new AnimationChannel(sprites, columns,
+                characterWidth, characterHeight,
                 Duration.seconds(0.5), 8, 8);
-
-        animIdleUp = new AnimationChannel(sprites,
-                framesPerRow, charWidth, charHeight,
+        animIdleUp = new AnimationChannel(sprites, columns,
+                characterWidth, characterHeight,
                 Duration.seconds(0.5), 12, 12);
 
         // walking animation
-        animWalkDown = new AnimationChannel(sprites,
-                framesPerRow, charWidth, charHeight,
+        animWalkDown = new AnimationChannel(sprites, columns,
+                characterWidth, characterHeight,
                 Duration.seconds(1), 1, 3);
-
-        animWalkLeft = new AnimationChannel(sprites,
-                framesPerRow, charWidth, charHeight,
+        animWalkLeft = new AnimationChannel(sprites, columns,
+                characterWidth, characterHeight,
                 Duration.seconds(1), 5, 7);
-
-        animWalkRight = new AnimationChannel(sprites,
-                framesPerRow, charWidth, charHeight,
+        animWalkRight = new AnimationChannel(sprites, columns,
+                characterWidth, characterHeight,
                 Duration.seconds(1), 9, 11);
-
-        animWalkUp = new AnimationChannel(sprites,
-                framesPerRow, charWidth, charHeight,
+        animWalkUp = new AnimationChannel(sprites, columns,
+                characterWidth, characterHeight,
                 Duration.seconds(1), 13, 15);
 
         texture = new AnimatedTexture(animIdleDown);
     }
 
     /**
-     * Called by the entity when adding this component.
+     * Called by entity when adding.
      *
      * @author Khoi Nguyen Truong
      * @since 0.5.0
      */
     @Override
     public void onAdded() {
-        // because sprite is now 22 x 31, the origin will be 11, 15.5
-        entity.getTransformComponent().setScaleOrigin(new Point2D(88, 124));
+        final var centerX = characterWidth / 2;
+        final var centerY = characterHeight / 2;
+        entity.getTransformComponent().setScaleOrigin(new Point2D(centerX, centerY));
         entity.getViewComponent().addChild(texture);
     }
 
+    /**
+     * Update animation state.
+     *
+     * @param tpf time it takes to loop the game
+     *
+     * @author Khoi Nguyen Truong
+     * @since 0.5.0
+     */
     @Override
     public void onUpdate(double tpf) {
-        // what is this tpf? I think this is sort of like delta in other game engines, perhaps.
+        // move entity
         entity.translate(speedX * tpf, speedY * tpf);
+
 
         if (speedX != 0 || speedY != 0) {
             state = 1;
 
-            // changing direction
-            if (speedX > 0) {
-                direction = 1; // right
-            } else if (speedX < 0) {
-                direction = 3; // left
-            }
-
-            if (speedY > 0) {
-                direction = 0; // down
-            } else if (speedY < 0) {
-                direction = 2; // up
-            }
-
+            // slow down entity
             speedX = (int) (speedX * 0.9);
             speedY = (int) (speedY * 0.9);
 
@@ -127,38 +133,37 @@ public class PlayerAnimationComponent extends Component {
             }
         }
 
-        if (state == 0) {
-            switch (direction) {
-                case 0 -> texture.loopNoOverride(animIdleDown);
-                case 1 -> texture.loopNoOverride(animIdleRight);
-                case 2 -> texture.loopNoOverride(animIdleUp);
-                case 3 -> texture.loopNoOverride(animIdleLeft);
-            }
+        switch ((state * 2 - 1) * (direction + 1)) {
+            case -1 -> texture.loopNoOverride(animIdleDown);
+            case -2 -> texture.loopNoOverride(animIdleRight);
+            case -3 -> texture.loopNoOverride(animIdleUp);
+            case -4 -> texture.loopNoOverride(animIdleLeft);
+
+            case 1 -> texture.loopNoOverride(animWalkDown);
+            case 2 -> texture.loopNoOverride(animWalkRight);
+            case 3 -> texture.loopNoOverride(animWalkUp);
+            case 4 -> texture.loopNoOverride(animWalkLeft);
         }
-
-        if (state == 1) {
-            switch (direction) {
-                case 0 -> texture.loopNoOverride(animWalkDown);
-                case 1 -> texture.loopNoOverride(animWalkRight);
-                case 2 -> texture.loopNoOverride(animWalkUp);
-                case 3 -> texture.loopNoOverride(animWalkLeft);
-            }
-        }
-    }
-
-    public void moveRight () {
-        speedX = 250;
-    }
-
-    public void moveLeft() {
-        speedX = -250;
-    }
-
-    public void moveUp() {
-        speedY = -250;
     }
 
     public void moveDown() {
-        speedY = 250;
+        speedY = maxSpeed;
+        direction = 0;
     }
+
+    public void moveRight () {
+        speedX = maxSpeed;
+        direction = 1;
+    }
+
+    public void moveUp() {
+        speedY = -maxSpeed;
+        direction = 2;
+    }
+
+    public void moveLeft() {
+        speedX = -maxSpeed;
+        direction = 3;
+    }
+
 }
