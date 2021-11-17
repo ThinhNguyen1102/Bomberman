@@ -1,5 +1,6 @@
 package com.testniqatsu.bomberman.animations;
 
+import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
@@ -40,19 +41,20 @@ public class PlayerAnimationComponent extends Component {
         final int charWidth = 176;
         final int charHeight = 248;
 
+        // idle animation
         animIdleDown = new AnimationChannel(FXGL.image("touhou_char.png"),
-                framesPerRow, charWidth, charHeight, Duration.seconds(1), 0, 0);
+                framesPerRow, charWidth, charHeight, Duration.seconds(0.5), 0, 0);
 
         animIdleLeft = new AnimationChannel(FXGL.image("touhou_char.png"),
-                framesPerRow, charWidth, charHeight, Duration.seconds(1), 4, 4);
+                framesPerRow, charWidth, charHeight, Duration.seconds(0.5), 4, 4);
 
         animIdleRight = new AnimationChannel(FXGL.image("touhou_char.png"),
-                framesPerRow, charWidth, charHeight, Duration.seconds(1), 8, 8);
+                framesPerRow, charWidth, charHeight, Duration.seconds(0.5), 8, 8);
 
         animIdleUp = new AnimationChannel(FXGL.image("touhou_char.png"),
-                framesPerRow, charWidth, charHeight, Duration.seconds(1), 12, 12);
+                framesPerRow, charWidth, charHeight, Duration.seconds(0.5), 12, 12);
 
-
+        // walking animation
         animWalkDown = new AnimationChannel(FXGL.image("touhou_char.png"),
                 framesPerRow, charWidth, charHeight, Duration.seconds(1), 0, 3);
 
@@ -87,6 +89,8 @@ public class PlayerAnimationComponent extends Component {
 
         if (speedX != 0 || speedY != 0) {
             state = 1;
+
+            // changing direction
             if (speedX > 0) {
                 direction = 1; // right
             } else if (speedX < 0) {
@@ -102,7 +106,7 @@ public class PlayerAnimationComponent extends Component {
             speedX = (int) (speedX * 0.9);
             speedY = (int) (speedY * 0.9);
 
-            if (speedX < 1 && speedY < 1) {
+            if (FXGLMath.abs(speedX) < 1 && FXGLMath.abs(speedY) < 1) {
                 speedX = 0;
                 speedY = 0;
                 state = 0; // return to idle
@@ -116,7 +120,9 @@ public class PlayerAnimationComponent extends Component {
                 case 2 -> texture.loopAnimationChannel(animIdleUp);
                 case 3 -> texture.loopAnimationChannel(animIdleLeft);
             }
-        } else {
+        }
+
+        if (state == 1) {
             switch (direction) {
                 case 0 -> texture.loopAnimationChannel(animWalkDown);
                 case 1 -> texture.loopAnimationChannel(animWalkRight);
