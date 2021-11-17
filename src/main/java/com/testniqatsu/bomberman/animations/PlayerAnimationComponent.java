@@ -37,35 +37,48 @@ public class PlayerAnimationComponent extends Component {
      * @since 0.5.0
      */
     public PlayerAnimationComponent() {
-        final int framesPerRow = 4;
-        final int charWidth = 176;
-        final int charHeight = 248;
+        final var framesPerRow = 4;
 
+        // scale down 8 times the original
+        final var charWidth = 176 / 8;
+        final var charHeight = 248 / 8;
+
+        // sprite sheet is now 88 x 124
+        var sprites = FXGL.image("touhou_char.png", 88, 124);
+        
         // idle animation
-        animIdleDown = new AnimationChannel(FXGL.image("touhou_char.png"),
-                framesPerRow, charWidth, charHeight, Duration.seconds(0.5), 0, 0);
+        animIdleDown = new AnimationChannel(sprites,
+                framesPerRow, charWidth, charHeight,
+                Duration.seconds(0.5), 0, 0);
 
-        animIdleLeft = new AnimationChannel(FXGL.image("touhou_char.png"),
-                framesPerRow, charWidth, charHeight, Duration.seconds(0.5), 4, 4);
+        animIdleLeft = new AnimationChannel(sprites,
+                framesPerRow, charWidth, charHeight,
+                Duration.seconds(0.5), 4, 4);
 
-        animIdleRight = new AnimationChannel(FXGL.image("touhou_char.png"),
-                framesPerRow, charWidth, charHeight, Duration.seconds(0.5), 8, 8);
+        animIdleRight = new AnimationChannel(sprites,
+                framesPerRow, charWidth, charHeight,
+                Duration.seconds(0.5), 8, 8);
 
-        animIdleUp = new AnimationChannel(FXGL.image("touhou_char.png"),
-                framesPerRow, charWidth, charHeight, Duration.seconds(0.5), 12, 12);
+        animIdleUp = new AnimationChannel(sprites,
+                framesPerRow, charWidth, charHeight,
+                Duration.seconds(0.5), 12, 12);
 
         // walking animation
-        animWalkDown = new AnimationChannel(FXGL.image("touhou_char.png"),
-                framesPerRow, charWidth, charHeight, Duration.seconds(1), 0, 3);
+        animWalkDown = new AnimationChannel(sprites,
+                framesPerRow, charWidth, charHeight,
+                Duration.seconds(1), 1, 3);
 
-        animWalkLeft = new AnimationChannel(FXGL.image("touhou_char.png"),
-                framesPerRow, charWidth, charHeight, Duration.seconds(1), 4, 7);
+        animWalkLeft = new AnimationChannel(sprites,
+                framesPerRow, charWidth, charHeight,
+                Duration.seconds(1), 5, 7);
 
-        animWalkRight = new AnimationChannel(FXGL.image("touhou_char.png"),
-                framesPerRow, charWidth, charHeight, Duration.seconds(1), 8, 11);
+        animWalkRight = new AnimationChannel(sprites,
+                framesPerRow, charWidth, charHeight,
+                Duration.seconds(1), 9, 11);
 
-        animWalkUp = new AnimationChannel(FXGL.image("touhou_char.png"),
-                framesPerRow, charWidth, charHeight, Duration.seconds(1), 12, 15);
+        animWalkUp = new AnimationChannel(sprites,
+                framesPerRow, charWidth, charHeight,
+                Duration.seconds(1), 13, 15);
 
         texture = new AnimatedTexture(animIdleDown);
     }
@@ -78,6 +91,7 @@ public class PlayerAnimationComponent extends Component {
      */
     @Override
     public void onAdded() {
+        // because sprite is now 22 x 31, the origin will be 11, 15.5
         entity.getTransformComponent().setScaleOrigin(new Point2D(88, 124));
         entity.getViewComponent().addChild(texture);
     }
@@ -115,19 +129,19 @@ public class PlayerAnimationComponent extends Component {
 
         if (state == 0) {
             switch (direction) {
-                case 0 -> texture.loopAnimationChannel(animIdleDown);
-                case 1 -> texture.loopAnimationChannel(animIdleRight);
-                case 2 -> texture.loopAnimationChannel(animIdleUp);
-                case 3 -> texture.loopAnimationChannel(animIdleLeft);
+                case 0 -> texture.loopNoOverride(animIdleDown);
+                case 1 -> texture.loopNoOverride(animIdleRight);
+                case 2 -> texture.loopNoOverride(animIdleUp);
+                case 3 -> texture.loopNoOverride(animIdleLeft);
             }
         }
 
         if (state == 1) {
             switch (direction) {
-                case 0 -> texture.loopAnimationChannel(animWalkDown);
-                case 1 -> texture.loopAnimationChannel(animWalkRight);
-                case 2 -> texture.loopAnimationChannel(animWalkUp);
-                case 3 -> texture.loopAnimationChannel(animWalkLeft);
+                case 0 -> texture.loopNoOverride(animWalkDown);
+                case 1 -> texture.loopNoOverride(animWalkRight);
+                case 2 -> texture.loopNoOverride(animWalkUp);
+                case 3 -> texture.loopNoOverride(animWalkLeft);
             }
         }
     }
