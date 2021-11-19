@@ -55,3 +55,8 @@ target/classes/com/testniqatsu/bomberman/BombermanApp.class
 target/classes/assets/textures/touhou_char.png
 target/classes/com/testniqatsu/bomberman/animations/PlayerAnimationComponent.class
 target/classes/com/testniqatsu/bomberman/BombermanType.class
+target/classes/assets/levels/demomap01/decorate.png
+target/classes/assets/levels/demomap01/demo.tmx
+target/classes/assets/levels/demomap01/wall.png
+target/classes/assets/levels/demomap02/forest-palette01-day.png
+target/classes/assets/levels/demomap02/map2.tmx

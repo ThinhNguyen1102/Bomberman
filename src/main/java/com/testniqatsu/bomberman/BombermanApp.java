@@ -38,11 +38,11 @@ public class BombermanApp extends GameApplication {
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new BombermanFactory());
-        // FXGL.setLevelFromMap("bomberman.tmx");
+        FXGL.setLevelFromMap("demomap01/demo.tmx");
 
-        player = new EntityBuilder()
-                .with(new PlayerAnimationComponent())
-                .buildAndAttach();
+//        player = new EntityBuilder()
+//                .with(new PlayerAnimationComponent())
+//                .buildAndAttach();
     }
 
     /**
@@ -53,10 +53,10 @@ public class BombermanApp extends GameApplication {
      */
     @Override
     protected void initInput() {
-        FXGL.onKey(KeyCode.W, () -> player.getComponent(PlayerAnimationComponent.class).moveUp());
-        FXGL.onKey(KeyCode.A, () -> player.getComponent(PlayerAnimationComponent.class).moveLeft());
-        FXGL.onKey(KeyCode.S, () -> player.getComponent(PlayerAnimationComponent.class).moveDown());
-        FXGL.onKey(KeyCode.D, () -> player.getComponent(PlayerAnimationComponent.class).moveRight());
+//        FXGL.onKey(KeyCode.W, () -> player.getComponent(PlayerAnimationComponent.class).moveUp());
+//        FXGL.onKey(KeyCode.A, () -> player.getComponent(PlayerAnimationComponent.class).moveLeft());
+//        FXGL.onKey(KeyCode.S, () -> player.getComponent(PlayerAnimationComponent.class).moveDown());
+//        FXGL.onKey(KeyCode.D, () -> player.getComponent(PlayerAnimationComponent.class).moveRight());
     }
 
     /**
