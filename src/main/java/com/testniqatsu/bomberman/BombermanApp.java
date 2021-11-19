@@ -6,7 +6,6 @@ import com.almasb.fxgl.dsl.EntityBuilder;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.testniqatsu.bomberman.animations.PlayerAnimationComponent;
-import javafx.scene.input.KeyCode;
 
 public class BombermanApp extends GameApplication {
 
@@ -38,11 +37,11 @@ public class BombermanApp extends GameApplication {
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new BombermanFactory());
-        FXGL.setLevelFromMap("demomap01/demo.tmx");
+//        FXGL.setLevelFromMap("demomap02/map2.tmx");
 
-//        player = new EntityBuilder()
-//                .with(new PlayerAnimationComponent())
-//                .buildAndAttach();
+        player = new EntityBuilder()
+                .with(new PlayerAnimationComponent())
+                .buildAndAttach();
     }
 
     /**
