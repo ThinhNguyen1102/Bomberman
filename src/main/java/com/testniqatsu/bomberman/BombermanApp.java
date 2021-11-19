@@ -6,6 +6,7 @@ import com.almasb.fxgl.dsl.EntityBuilder;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.testniqatsu.bomberman.animations.PlayerAnimationComponent;
+import javafx.scene.input.KeyCode;
 
 public class BombermanApp extends GameApplication {
 
@@ -23,7 +24,7 @@ public class BombermanApp extends GameApplication {
         settings.setWidth(800);
         settings.setHeight(600);
         settings.setTitle("Bomberman");
-        settings.setVersion("0.6.5");
+        settings.setVersion("0.7.2");
         settings.setPreserveResizeRatio(true);
         settings.setManualResizeEnabled(true);
     }
@@ -52,10 +53,10 @@ public class BombermanApp extends GameApplication {
      */
     @Override
     protected void initInput() {
-//        FXGL.onKey(KeyCode.W, () -> player.getComponent(PlayerAnimationComponent.class).moveUp());
-//        FXGL.onKey(KeyCode.A, () -> player.getComponent(PlayerAnimationComponent.class).moveLeft());
-//        FXGL.onKey(KeyCode.S, () -> player.getComponent(PlayerAnimationComponent.class).moveDown());
-//        FXGL.onKey(KeyCode.D, () -> player.getComponent(PlayerAnimationComponent.class).moveRight());
+        FXGL.onKey(KeyCode.W, () -> player.getComponent(PlayerAnimationComponent.class).moveUp());
+        FXGL.onKey(KeyCode.A, () -> player.getComponent(PlayerAnimationComponent.class).moveLeft());
+        FXGL.onKey(KeyCode.S, () -> player.getComponent(PlayerAnimationComponent.class).moveDown());
+        FXGL.onKey(KeyCode.D, () -> player.getComponent(PlayerAnimationComponent.class).moveRight());
     }
 
     /**
