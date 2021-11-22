@@ -12,15 +12,15 @@ import javafx.util.Duration;
 public class PlayerAnimationComponent extends Component {
 
     final String spriteSheetName = "wizard.png";
-    final int spriteSheetWidth = 96;
-    final int spriteSheetHeight = 128;
+    final int spriteSheetWidth = 96 / 2; // scale down 2 times
+    final int spriteSheetHeight = 128 / 2; // scale down 2 times
     final int numberOfColumn = 3;
     final int numberOfRow = 4;
     final int spriteWidth = spriteSheetWidth / numberOfColumn;
     final int spriteHeight = spriteSheetHeight / numberOfRow;
 
 
-    final Image spriteSheetImage = FXGL.image(spriteSheetName);
+    final Image spriteSheetImage = FXGL.image(spriteSheetName, spriteSheetWidth, spriteSheetHeight);
 
     final AnimationChannel idleDown = loadAnimation(1, 1);
     final AnimationChannel idleLeft = loadAnimation(4, 4);

@@ -38,7 +38,7 @@ public class BombermanApp extends GameApplication {
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new BombermanFactory());
-//        FXGL.setLevelFromMap("demomap02/map2.tmx");
+        FXGL.setLevelFromMap("demomap02/map2.tmx");
 
         player = new EntityBuilder()
                 .with(new PlayerAnimationComponent())
