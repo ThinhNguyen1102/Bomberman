@@ -21,8 +21,8 @@ public class BombermanApp extends GameApplication {
      */
     @Override
     protected void initSettings(GameSettings settings) {
-        settings.setWidth(800);
-        settings.setHeight(600);
+        settings.setWidth(16 * 27); // width 27 tiles
+        settings.setHeight(16 * 17); // height 17 tiles
         settings.setTitle("Bomberman");
         settings.setVersion("0.7.2");
         settings.setPreserveResizeRatio(true);
@@ -41,6 +41,7 @@ public class BombermanApp extends GameApplication {
         FXGL.setLevelFromMap("demomap02/map2.tmx");
 
         player = new EntityBuilder()
+                .at(16, 16) // position (1, 1)
                 .with(new PlayerAnimationComponent())
                 .buildAndAttach();
     }
