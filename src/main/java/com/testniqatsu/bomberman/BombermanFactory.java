@@ -11,12 +11,16 @@ public class BombermanFactory implements EntityFactory {
     @Spawns("aroundWall")
     public Entity newAroundWall(SpawnData data) {
         return FXGL.entityBuilder(data)
+                .type(BombermanType.WALL)
+                .collidable()
                 .build();
     }
 
     @Spawns("wall")
     public Entity newWall(SpawnData data) {
         return FXGL.entityBuilder(data)
+                .type(BombermanType.WALL)
+                .collidable()
                 .build();
     }
 

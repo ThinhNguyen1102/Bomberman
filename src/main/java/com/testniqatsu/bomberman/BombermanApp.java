@@ -41,8 +41,10 @@ public class BombermanApp extends GameApplication {
         FXGL.setLevelFromMap("demomap02/map2.tmx");
 
         player = new EntityBuilder()
+                .type(BombermanType.PLAYER)
                 .at(16, 16) // position (1, 1)
                 .with(new PlayerAnimationComponent())
+                .collidable()
                 .buildAndAttach();
     }
 
@@ -58,6 +60,16 @@ public class BombermanApp extends GameApplication {
         FXGL.onKey(KeyCode.A, () -> player.getComponent(PlayerAnimationComponent.class).moveLeft());
         FXGL.onKey(KeyCode.S, () -> player.getComponent(PlayerAnimationComponent.class).moveDown());
         FXGL.onKey(KeyCode.D, () -> player.getComponent(PlayerAnimationComponent.class).moveRight());
+    }
+
+    @Override
+    protected void initPhysics() {
+        FXGL.onCollision(
+                BombermanType.PLAYER,
+                BombermanType.WALL,
+                (player, wall) -> {
+
+                });
     }
 
     /**
