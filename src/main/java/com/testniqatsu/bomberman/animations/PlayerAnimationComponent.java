@@ -80,8 +80,10 @@ public class PlayerAnimationComponent extends Component {
      */
     @Override
     public void onUpdate(double tpf) {
+        // move character
         entity.translate(speedX * tpf, speedY * tpf);
 
+        // set animation for character
         if (speedX != 0 || speedY != 0) {
 
             if (speedX > 0) {
