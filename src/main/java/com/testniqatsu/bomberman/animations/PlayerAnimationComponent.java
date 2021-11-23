@@ -3,6 +3,7 @@ package com.testniqatsu.bomberman.animations;
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
+import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.geometry.Point2D;
@@ -19,7 +20,6 @@ public class PlayerAnimationComponent extends Component {
     final int spriteWidth = spriteSheetWidth / numberOfColumn;
     final int spriteHeight = spriteSheetHeight / numberOfRow;
 
-
     final Image spriteSheetImage = FXGL.image(spriteSheetName, spriteSheetWidth, spriteSheetHeight);
 
     final AnimationChannel idleDown = loadAnimation(1, 1);
@@ -34,17 +34,17 @@ public class PlayerAnimationComponent extends Component {
 
     final AnimatedTexture texture = new AnimatedTexture(idleDown);
 
-    final int maxSpeed = 250;
-    final int acceleration = (int) (250 * 0.4f); // acceleration is 40%
+    final int maxSpeed = 2000;
 
     int speedX;
     int speedY;
 
-    // 0: down
-    // 1: right
-    // 2: up
-    // 3: left
     int direction;
+
+    final int down = 0;
+    final int right = 1;
+    final int up = 2;
+    final int left = 3;
 
     AnimationChannel loadAnimation(int start, int end) {
         return new AnimationChannel(
@@ -80,69 +80,49 @@ public class PlayerAnimationComponent extends Component {
      */
     @Override
     public void onUpdate(double tpf) {
-        // move character
-        entity.translate(speedX * tpf, speedY * tpf);
-
-        // set animation for character
         if (speedX != 0 || speedY != 0) {
+            speedX = (int) (speedX * 0.9f);
+            speedY = (int) (speedY * 0.9f);
 
-            if (speedX > 0) {
-                direction = 1;
-            } else if (speedX < 0) {
-                direction = 3;
-            } else if (speedY > 0) {
-                direction = 0;
-            } else {
-                direction = 2;
-            }
-
-            switch (direction) {
-                case 0 -> texture.loopNoOverride(walkDown);
-                case 1 -> texture.loopNoOverride(walkRight);
-                case 2 -> texture.loopNoOverride(walkUp);
-                case 3 -> texture.loopNoOverride(walkLeft);
-            }
-
-            speedX = (int) (speedX * 0.1f);
-            speedY = (int) (speedY * 0.1f);
-
-            if (FXGLMath.abs(speedX) < 0 && FXGLMath.abs(speedY) < 0) {
+            if (FXGLMath.abs(speedX) < 1 && FXGLMath.abs(speedY) < 1) {
                 speedX = 0;
                 speedY = 0;
             }
 
         } else {
             switch (direction) {
-                case 0 -> texture.loopNoOverride(idleDown);
-                case 1 -> texture.loopNoOverride(idleRight);
-                case 2 -> texture.loopNoOverride(idleUp);
-                case 3 -> texture.loopNoOverride(idleLeft);
+                case down -> texture.loopNoOverride(idleDown);
+                case right -> texture.loopNoOverride(idleRight);
+                case up -> texture.loopNoOverride(idleUp);
+                case left -> texture.loopNoOverride(idleLeft);
             }
         }
+
+        entity.getComponent(PhysicsComponent.class).setLinearVelocity(speedX * tpf, speedY * tpf);
     }
 
     public void moveDown() {
-        if (speedY < maxSpeed) {
-            speedY += acceleration;
-        }
+        speedY = maxSpeed;
+        direction = down;
+        texture.loopNoOverride(walkDown);
     }
 
     public void moveRight() {
-        if (speedX < maxSpeed) {
-            speedX += acceleration;
-        }
+        speedX = maxSpeed;
+        direction = right;
+        texture.loopNoOverride(walkRight);
     }
 
     public void moveUp() {
-        if (speedY > -maxSpeed) {
-            speedY -= acceleration;
-        }
+        speedY = -maxSpeed;
+        direction = up;
+        texture.loopNoOverride(walkUp);
     }
 
     public void moveLeft() {
-        if (speedX > -maxSpeed) {
-            speedX -= acceleration;
-        }
+        speedX = -maxSpeed;
+        direction = left;
+        texture.loopNoOverride(walkLeft);
     }
 
 }
