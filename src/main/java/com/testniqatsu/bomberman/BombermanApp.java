@@ -61,10 +61,10 @@ public class BombermanApp extends GameApplication {
      */
     @Override
     protected void initInput() {
+        FXGL.onKey(KeyCode.D, () -> player.getComponent(PlayerAnimationComponent.class).moveRight());
         FXGL.onKey(KeyCode.W, () -> player.getComponent(PlayerAnimationComponent.class).moveUp());
         FXGL.onKey(KeyCode.A, () -> player.getComponent(PlayerAnimationComponent.class).moveLeft());
         FXGL.onKey(KeyCode.S, () -> player.getComponent(PlayerAnimationComponent.class).moveDown());
-        FXGL.onKey(KeyCode.D, () -> player.getComponent(PlayerAnimationComponent.class).moveRight());
     }
 
     @Override
