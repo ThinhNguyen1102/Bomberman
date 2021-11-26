@@ -125,4 +125,6 @@ public class PlayerAnimationComponent extends Component {
         texture.loopNoOverride(walkLeft);
     }
 
+    public void setScaleOrigin() {}
+
 }

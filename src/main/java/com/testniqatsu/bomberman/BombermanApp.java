@@ -10,6 +10,7 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.testniqatsu.bomberman.animations.PlayerAnimationComponent;
+import com.testniqatsu.bomberman.components.PlayerComponents;
 import javafx.scene.input.KeyCode;
 
 public class BombermanApp extends GameApplication {
@@ -56,11 +57,12 @@ public class BombermanApp extends GameApplication {
         physicsComponent.setFixtureDef(fixture);
         physicsComponent.setBodyDef(body);
 
+        var animationComponent = new PlayerAnimationComponent();
+
         player = new EntityBuilder()
                 .type(BombermanType.PLAYER)
                 .at(16, 16) // position (1, 1)
-                .with(physicsComponent)
-                .with(new PlayerAnimationComponent())
+                .with(new PlayerComponents(animationComponent, physicsComponent))
                 .buildAndAttach();
     }
 
@@ -72,10 +74,10 @@ public class BombermanApp extends GameApplication {
      */
     @Override
     protected void initInput() {
-        FXGL.onKey(KeyCode.D, () -> player.getComponent(PlayerAnimationComponent.class).moveRight());
-        FXGL.onKey(KeyCode.W, () -> player.getComponent(PlayerAnimationComponent.class).moveUp());
-        FXGL.onKey(KeyCode.A, () -> player.getComponent(PlayerAnimationComponent.class).moveLeft());
-        FXGL.onKey(KeyCode.S, () -> player.getComponent(PlayerAnimationComponent.class).moveDown());
+        FXGL.onKey(KeyCode.D, () -> player.getComponent(PlayerComponents.class).moveRight());
+        FXGL.onKey(KeyCode.W, () -> player.getComponent(PlayerComponents.class).moveUp());
+        FXGL.onKey(KeyCode.A, () -> player.getComponent(PlayerComponents.class).moveLeft());
+        FXGL.onKey(KeyCode.S, () -> player.getComponent(PlayerComponents.class).moveDown());
     }
 
     @Override
