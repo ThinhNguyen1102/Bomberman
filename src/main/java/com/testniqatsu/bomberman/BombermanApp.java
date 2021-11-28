@@ -6,9 +6,7 @@ import com.almasb.fxgl.dsl.EntityBuilder;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.PhysicsComponent;
-import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
-import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.testniqatsu.bomberman.animations.PlayerAnimationComponent;
 import com.testniqatsu.bomberman.components.PlayerComponents;
 import javafx.scene.input.KeyCode;
@@ -43,19 +41,10 @@ public class BombermanApp extends GameApplication {
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new BombermanFactory());
-        // FXGL.setLevelFromMap("demomap02/map2.tmx")
-
-        var fixture = new FixtureDef();
-        fixture.setFriction(0);
-        fixture.setDensity(0.1f);
-
-        var body = new BodyDef();
-        body.setFixedRotation(true);
-        body.setType(BodyType.KINEMATIC);
+        // FXGL.setLevelFromMap("demomap02/map2.tmx");
 
         var physicsComponent = new PhysicsComponent();
-        physicsComponent.setFixtureDef(fixture);
-        physicsComponent.setBodyDef(body);
+        physicsComponent.setBodyType(BodyType.DYNAMIC);
 
         var animationComponent = new PlayerAnimationComponent();
 
