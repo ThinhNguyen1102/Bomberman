@@ -41,7 +41,6 @@ public class BombermanApp extends GameApplication {
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new BombermanFactory());
-        // FXGL.setLevelFromMap("demomap02/map2.tmx");
 
         var physicsComponent = new PhysicsComponent();
         physicsComponent.setBodyType(BodyType.DYNAMIC);
@@ -51,7 +50,9 @@ public class BombermanApp extends GameApplication {
         player = new EntityBuilder()
                 .type(BombermanType.PLAYER)
                 .at(16, 16) // position (1, 1)
-                .with(new PlayerComponents(animationComponent, physicsComponent))
+                .with(physicsComponent)
+                .with(new PlayerAnimationComponent())
+                .with(new PlayerComponents())
                 .buildAndAttach();
     }
 
@@ -72,7 +73,7 @@ public class BombermanApp extends GameApplication {
     @Override
     protected void initPhysics() {
         var physicsWorld = FXGL.getPhysicsWorld();
-        physicsWorld.setGravity(0, 0); // remove gravity
+        physicsWorld.setGravity(0, 0);
     }
 
     /**
