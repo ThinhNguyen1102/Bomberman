@@ -7,6 +7,8 @@ import com.testniqatsu.bomberman.animations.PlayerAnimationComponent;
 
 public class PlayerComponents extends Component {
     final int MAX_VELOCITY = 1000;
+    final double FRICTION = 0.2f;
+    final int ACCELERATION = (int) (MAX_VELOCITY * 0.2f);
 
     enum Direction {
         DOWN, LEFT, RIGHT, UP
@@ -15,7 +17,7 @@ public class PlayerComponents extends Component {
     int velocityX;
     int velocityY;
 
-    Direction direction;
+    Direction direction = Direction.DOWN;
 
     PlayerAnimationComponent animationComponent;
     PhysicsComponent physicsComponent;
@@ -29,19 +31,19 @@ public class PlayerComponents extends Component {
     @Override
     public void onUpdate(double tpf) {
         if (velocityX != 0 && velocityY != 0) {
-            velocityX = (int) (velocityX * 0.9f);
-            velocityY = (int) (velocityY * 0.9f);
+            velocityX = (int) (velocityX * FRICTION);
+            velocityY = (int) (velocityY * FRICTION);
 
             if (FXGLMath.abs(velocityX) < 1 && FXGLMath.abs(velocityY) < 1) {
                 velocityX = 0;
                 velocityY = 0;
-
-                switch (direction) {
-                    case DOWN -> animationComponent.playAnimation(PlayerAnimationComponent.State.IDLE_DOWN);
-                    case LEFT -> animationComponent.playAnimation(PlayerAnimationComponent.State.IDLE_LEFT);
-                    case RIGHT -> animationComponent.playAnimation(PlayerAnimationComponent.State.IDLE_RIGHT);
-                    case UP -> animationComponent.playAnimation(PlayerAnimationComponent.State.IDLE_UP);
-                }
+            }
+        } else {
+            switch (direction) {
+                case DOWN -> animationComponent.playAnimation(PlayerAnimationComponent.State.IDLE_DOWN);
+                case LEFT -> animationComponent.playAnimation(PlayerAnimationComponent.State.IDLE_LEFT);
+                case RIGHT -> animationComponent.playAnimation(PlayerAnimationComponent.State.IDLE_RIGHT);
+                case UP -> animationComponent.playAnimation(PlayerAnimationComponent.State.IDLE_UP);
             }
         }
 
@@ -49,25 +51,33 @@ public class PlayerComponents extends Component {
     }
 
     public void moveDown() {
-        velocityY = MAX_VELOCITY;
+        if (velocityY < MAX_VELOCITY) {
+            velocityY += ACCELERATION;
+        }
         direction = Direction.DOWN;
         animationComponent.playAnimation(PlayerAnimationComponent.State.WALK_DOWN);
     }
 
     public void moveUp() {
-        velocityY = -MAX_VELOCITY;
+        if (velocityY > -MAX_VELOCITY) {
+            velocityY -= ACCELERATION;
+        }
         direction = Direction.UP;
         animationComponent.playAnimation(PlayerAnimationComponent.State.WALK_UP);
     }
 
     public void moveRight() {
-        velocityX = MAX_VELOCITY;
+        if (velocityX < MAX_VELOCITY) {
+            velocityX += ACCELERATION;
+        }
         direction = Direction.RIGHT;
         animationComponent.playAnimation(PlayerAnimationComponent.State.WALK_RIGHT);
     }
 
     public void moveLeft() {
-        velocityX = MAX_VELOCITY;
+        if (velocityX > -MAX_VELOCITY) {
+            velocityX -= ACCELERATION;
+        }
         direction = Direction.LEFT;
         animationComponent.playAnimation(PlayerAnimationComponent.State.WALK_LEFT);
     }
