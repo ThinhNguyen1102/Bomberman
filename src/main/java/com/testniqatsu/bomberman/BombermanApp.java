@@ -42,6 +42,8 @@ public class BombermanApp extends GameApplication {
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new BombermanFactory());
 
+        FXGL.setLevelFromMap("demomap02/map2.tmx");
+
         var physicsComponent = new PhysicsComponent();
         physicsComponent.setBodyType(BodyType.KINEMATIC);
 
