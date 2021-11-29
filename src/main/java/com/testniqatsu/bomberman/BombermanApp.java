@@ -43,9 +43,7 @@ public class BombermanApp extends GameApplication {
         FXGL.getGameWorld().addEntityFactory(new BombermanFactory());
 
         var physicsComponent = new PhysicsComponent();
-        physicsComponent.setBodyType(BodyType.DYNAMIC);
-
-        var animationComponent = new PlayerAnimationComponent();
+        physicsComponent.setBodyType(BodyType.KINEMATIC);
 
         player = new EntityBuilder()
                 .type(BombermanType.PLAYER)
