@@ -6,6 +6,8 @@ import com.almasb.fxgl.dsl.EntityBuilder;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.components.CollidableComponent;
+import com.almasb.fxgl.physics.BoundingShape;
+import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.testniqatsu.bomberman.animations.PlayerAnimationComponent;
@@ -52,7 +54,7 @@ public class BombermanApp extends GameApplication {
         player = new EntityBuilder()
                 .type(BombermanType.PLAYER)
                 .at(16, 16) // position (1, 1)
-                .zIndex(0)
+                .bbox(new HitBox(BoundingShape.circle(8)))
                 .with(physicsComponent)
                 .with(new CollidableComponent(true))
                 .with(new PlayerAnimationComponent())
