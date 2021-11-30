@@ -5,11 +5,11 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.EntityBuilder;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
-import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
+import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.testniqatsu.bomberman.animations.PlayerAnimationComponent;
 import com.testniqatsu.bomberman.components.PlayerComponents;
 import javafx.scene.input.KeyCode;
@@ -51,12 +51,17 @@ public class BombermanApp extends GameApplication {
         var physicsComponent = new PhysicsComponent();
         physicsComponent.setBodyType(BodyType.KINEMATIC);
 
+        var fixtureDef = new FixtureDef();
+        fixtureDef.setFriction(0);
+        fixtureDef.setDensity(0.1f);
+
+        physicsComponent.setFixtureDef(fixtureDef);
+
         player = new EntityBuilder()
                 .type(BombermanType.PLAYER)
                 .at(16, 16) // position (1, 1)
                 .bbox(new HitBox(BoundingShape.circle(8)))
                 .with(physicsComponent)
-                .with(new CollidableComponent(true))
                 .with(new PlayerAnimationComponent())
                 .with(new PlayerComponents())
                 .buildAndAttach();
