@@ -5,6 +5,7 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.dsl.EntityBuilder;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.testniqatsu.bomberman.animations.PlayerAnimationComponent;
@@ -27,9 +28,10 @@ public class BombermanApp extends GameApplication {
         settings.setWidth(16 * 27); // width 27 tiles
         settings.setHeight(16 * 17); // height 17 tiles
         settings.setTitle("爆弾男");
-        settings.setVersion("0.9.2");
+        settings.setVersion("0.10.4");
         settings.setPreserveResizeRatio(true);
         settings.setManualResizeEnabled(true);
+        settings.setDeveloperMenuEnabled(true);
     }
 
     /**
@@ -50,7 +52,9 @@ public class BombermanApp extends GameApplication {
         player = new EntityBuilder()
                 .type(BombermanType.PLAYER)
                 .at(16, 16) // position (1, 1)
+                .zIndex(0)
                 .with(physicsComponent)
+                .with(new CollidableComponent(true))
                 .with(new PlayerAnimationComponent())
                 .with(new PlayerComponents())
                 .buildAndAttach();

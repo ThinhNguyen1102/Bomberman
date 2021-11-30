@@ -21,8 +21,8 @@ public class PlayerAnimationComponent extends Component {
     int rows = 4;
     int columns = 3;
 
-    int spriteWidth = spriteSheetWidth / columns;
-    int spriteHeight = spriteSheetHeight / rows;
+    public int spriteWidth = spriteSheetWidth / columns;
+    public int spriteHeight = spriteSheetHeight / rows;
 
     int framesPerRow = columns;
 
