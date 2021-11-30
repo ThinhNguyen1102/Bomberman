@@ -8,6 +8,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
+import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.testniqatsu.bomberman.animations.PlayerAnimationComponent;
@@ -45,7 +46,6 @@ public class BombermanApp extends GameApplication {
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new BombermanFactory());
-
         FXGL.setLevelFromMap("demomap02/map2.tmx");
 
         var physicsComponent = new PhysicsComponent();
@@ -57,10 +57,15 @@ public class BombermanApp extends GameApplication {
 
         physicsComponent.setFixtureDef(fixtureDef);
 
+        var bodyDef = new BodyDef();
+        bodyDef.setFixedRotation(true);
+
+        physicsComponent.setBodyDef(bodyDef);
+
         player = new EntityBuilder()
                 .type(BombermanType.PLAYER)
                 .at(16, 16) // position (1, 1)
-                .bbox(new HitBox(BoundingShape.circle(8)))
+                .bbox(new HitBox(BoundingShape.circle(7)))
                 .with(physicsComponent)
                 .with(new PlayerAnimationComponent())
                 .with(new PlayerComponents())

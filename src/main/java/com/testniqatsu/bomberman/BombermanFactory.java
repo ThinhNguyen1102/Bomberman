@@ -22,7 +22,8 @@ public class BombermanFactory implements EntityFactory {
 
         return FXGL.entityBuilder(data)
                 .type(BombermanType.WALL)
-                .bbox(new HitBox(BoundingShape.box(width, height)))
+                // all size is reduced by 1 pixels for moving character easier to move
+                .bbox(new HitBox(BoundingShape.box(width - 1, height - 1)))
                 .with(physicsComponent)
                 .build();
     }
@@ -37,7 +38,8 @@ public class BombermanFactory implements EntityFactory {
 
         return FXGL.entityBuilder(data)
                 .type(BombermanType.WALL)
-                .bbox(new HitBox(BoundingShape.box(width, height)))
+                // all size is reduced by 1 pixels for moving character easier to move
+                .bbox(new HitBox(BoundingShape.box(width - 1, height - 1)))
                 .with(physicsComponent)
                 .build();
     }
