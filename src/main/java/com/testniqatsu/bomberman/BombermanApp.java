@@ -73,13 +73,18 @@ public class BombermanApp extends GameApplication {
         FXGL.getGameWorld().addEntityFactory(new BombermanFactory());
         loadNextLevel();
         FXGL.spawn("background");
+        startCountDownTimer();
+        getWorldProperties().<Integer>addListener("time", this::killPlayerWhenTimeUp);
+    }
 
+    void startCountDownTimer() {
         run(() -> inc("time", -1), Duration.seconds(1));
-        getWorldProperties().<Integer>addListener("time", (old, now) -> {
-            if (now == 0) {
-                onPlayerKilled();
-            }
-        });
+    }
+
+    void killPlayerWhenTimeUp(int old, int now) {
+        if (now == 0) {
+            onPlayerKilled();;
+        }
     }
 
     @Override
