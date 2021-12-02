@@ -71,7 +71,7 @@ public class BombermanApp extends GameApplication {
     @Override
     protected void initGame() {
         FXGL.getGameWorld().addEntityFactory(new BombermanFactory());
-        nextLevel();
+        loadNextLevel();
         FXGL.spawn("background");
 
         run(() -> inc("time", -1), Duration.seconds(1));
@@ -224,7 +224,7 @@ public class BombermanApp extends GameApplication {
 
         onCollisionBegin(BombermanType.PLAYER
                 , BombermanType.PORTAL, (p, po) -> getGameTimer().runOnceAfter(()
-                                -> getGameScene().getViewport().fade(this::nextLevel)
+                                -> getGameScene().getViewport().fade(this::loadNextLevel)
                         , Duration.seconds(1)));
 
         onCollisionBegin(BombermanType.PLAYER, BombermanType.FIRE, (p, f) -> onPlayerKilled());
@@ -236,7 +236,7 @@ public class BombermanApp extends GameApplication {
         requestNewGame = true;
     }
 
-    private void nextLevel() {
+    private void loadNextLevel() {
         if (FXGL.geti("level") == MAX_LEVEL) {
             showMessage("You win !!!");
             return;
