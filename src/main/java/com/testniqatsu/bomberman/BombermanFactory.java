@@ -1,4 +1,4 @@
-package App;
+package com.testniqatsu.bomberman;
 
 import Components.*;
 import Constants.BombermanType;
