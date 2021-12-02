@@ -1,7 +1,6 @@
 package com.testniqatsu.bomberman;
 
 import com.testniqatsu.bomberman.components.*;
-import com.testniqatsu.bomberman.constants.BombermanType;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;

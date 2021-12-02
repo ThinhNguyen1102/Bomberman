@@ -1,9 +1,5 @@
 package com.testniqatsu.bomberman;
 
-import com.testniqatsu.bomberman.components.PlayerComponent;
-import com.testniqatsu.bomberman.menus.BombermanGameMenu;
-import com.testniqatsu.bomberman.menus.BombermanMenu;
-import com.testniqatsu.bomberman.constants.BombermanType;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
@@ -13,6 +9,9 @@ import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.PhysicsWorld;
+import com.testniqatsu.bomberman.components.PlayerComponent;
+import com.testniqatsu.bomberman.menus.BombermanGameMenu;
+import com.testniqatsu.bomberman.menus.BombermanMenu;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
@@ -29,6 +28,9 @@ import static com.almasb.fxgl.dsl.FXGLForKtKt.getPhysicsWorld;
 import static com.testniqatsu.bomberman.constants.GameConst.*;
 
 public class BombermanApp extends GameApplication {
+    private static final int VIEW_WIDTH = 720;
+    private static final int VIEW_HEIGHT = 720;
+
     public static boolean sound_enabled = true;
     private boolean requestNewGame = false;
 
