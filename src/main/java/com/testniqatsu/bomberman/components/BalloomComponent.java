@@ -1,4 +1,4 @@
-package Components;
+package com.testniqatsu.bomberman.components;
 
 import Constants.BombermanType;
 import com.almasb.fxgl.entity.component.Component;

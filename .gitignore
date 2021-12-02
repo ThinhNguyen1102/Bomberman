@@ -148,3 +148,13 @@ target/classes/com/testniqatsu/bomberman/BombermanApp$3.class
 target/classes/com/testniqatsu/bomberman/BombermanApp$4.class
 target/classes/com/testniqatsu/bomberman/BombermanApp$5.class
 target/classes/com/testniqatsu/bomberman/BombermanApp$6.class
+target/classes/com/testniqatsu/bomberman/components/BalloomComponent$1.class
+target/classes/com/testniqatsu/bomberman/components/BalloomComponent$MoveDirection.class
+target/classes/com/testniqatsu/bomberman/components/BalloomComponent$TurnDirection.class
+target/classes/com/testniqatsu/bomberman/components/BalloomComponent.class
+target/classes/com/testniqatsu/bomberman/components/BombComponent.class
+target/classes/com/testniqatsu/bomberman/components/FlameComponent.class
+target/classes/com/testniqatsu/bomberman/components/PlayerComponent$1.class
+target/classes/com/testniqatsu/bomberman/components/PlayerComponent$AnimationSkin.class
+target/classes/com/testniqatsu/bomberman/components/PlayerComponent$StatusDirection.class
+target/classes/com/testniqatsu/bomberman/components/PlayerComponent.class

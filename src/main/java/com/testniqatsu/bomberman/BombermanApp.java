@@ -1,6 +1,6 @@
 package com.testniqatsu.bomberman;
 
-import Components.PlayerComponent;
+import com.testniqatsu.bomberman.components.PlayerComponent;
 import Menu.BombermanGameMenu;
 import Menu.BombermanMenu;
 import Constants.BombermanType;

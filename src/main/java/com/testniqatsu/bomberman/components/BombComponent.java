@@ -1,4 +1,4 @@
-package Components;
+package com.testniqatsu.bomberman.components;
 
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
