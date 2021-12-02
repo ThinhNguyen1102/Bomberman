@@ -1,5 +1,6 @@
-package App;
+package com.testniqatsu.bomberman;
 
+import App.BombermanFactory;
 import Components.PlayerComponent;
 import Menu.BombermanGameMenu;
 import Menu.BombermanMenu;

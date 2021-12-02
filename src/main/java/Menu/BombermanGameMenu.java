@@ -1,6 +1,6 @@
 package Menu;
 
-import App.BombermanApp;
+import com.testniqatsu.bomberman.BombermanApp;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
 import javafx.geometry.Pos;
