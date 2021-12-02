@@ -1,4 +1,4 @@
-package Constants;
+package com.testniqatsu.bomberman.constants;
 
 public enum BombermanType {
     PLAYER, WALL, BRICK, BOMB, FIRE,

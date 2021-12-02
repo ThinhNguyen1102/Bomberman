@@ -1,7 +1,7 @@
 package com.testniqatsu.bomberman;
 
 import com.testniqatsu.bomberman.components.*;
-import Constants.BombermanType;
+import com.testniqatsu.bomberman.constants.BombermanType;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -23,7 +23,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
-import static Constants.GameConst.*;
+import static com.testniqatsu.bomberman.constants.GameConst.*;
 import static com.almasb.fxgl.dsl.FXGL.texture;
 
 public class BombermanFactory implements EntityFactory {

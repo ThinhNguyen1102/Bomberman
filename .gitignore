@@ -158,3 +158,8 @@ target/classes/com/testniqatsu/bomberman/components/PlayerComponent$1.class
 target/classes/com/testniqatsu/bomberman/components/PlayerComponent$AnimationSkin.class
 target/classes/com/testniqatsu/bomberman/components/PlayerComponent$StatusDirection.class
 target/classes/com/testniqatsu/bomberman/components/PlayerComponent.class
+target/classes/com/testniqatsu/bomberman/constants/BombermanType.class
+target/classes/com/testniqatsu/bomberman/constants/GameConst.class
+target/classes/com/testniqatsu/bomberman/menus/BombermanGameMenu.class
+target/classes/com/testniqatsu/bomberman/menus/BombermanMenu.class
+target/classes/com/testniqatsu/bomberman/menus/MenuButton.class

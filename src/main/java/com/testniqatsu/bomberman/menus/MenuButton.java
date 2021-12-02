@@ -1,4 +1,4 @@
-package Menu;
+package com.testniqatsu.bomberman.menus;
 
 import com.almasb.fxgl.dsl.FXGL;
 import javafx.beans.binding.Bindings;

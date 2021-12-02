@@ -1,6 +1,6 @@
 package com.testniqatsu.bomberman.components;
 
-import Constants.BombermanType;
+import com.testniqatsu.bomberman.constants.BombermanType;
 import com.almasb.fxgl.core.math.FXGLMath;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
@@ -13,7 +13,7 @@ import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import static Constants.GameConst.*;
+import static com.testniqatsu.bomberman.constants.GameConst.*;
 
 public class PlayerComponent extends Component {
     private static final double ANIM_TIME_PLAYER = 0.5;

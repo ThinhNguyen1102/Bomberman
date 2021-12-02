@@ -1,9 +1,9 @@
 package com.testniqatsu.bomberman;
 
 import com.testniqatsu.bomberman.components.PlayerComponent;
-import Menu.BombermanGameMenu;
-import Menu.BombermanMenu;
-import Constants.BombermanType;
+import com.testniqatsu.bomberman.menus.BombermanGameMenu;
+import com.testniqatsu.bomberman.menus.BombermanMenu;
+import com.testniqatsu.bomberman.constants.BombermanType;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.FXGLMenu;
@@ -26,7 +26,7 @@ import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.getPhysicsWorld;
-import static Constants.GameConst.*;
+import static com.testniqatsu.bomberman.constants.GameConst.*;
 
 public class BombermanApp extends GameApplication {
     public static boolean sound_enabled = true;

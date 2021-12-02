@@ -1,4 +1,4 @@
-package Menu;
+package com.testniqatsu.bomberman.menus;
 
 import com.testniqatsu.bomberman.BombermanApp;
 import com.almasb.fxgl.app.scene.FXGLMenu;

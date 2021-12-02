@@ -1,12 +1,12 @@
 package com.testniqatsu.bomberman.components;
 
-import Constants.BombermanType;
+import com.testniqatsu.bomberman.constants.BombermanType;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.util.Duration;
 
-import static Constants.GameConst.*;
+import static com.testniqatsu.bomberman.constants.GameConst.*;
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 

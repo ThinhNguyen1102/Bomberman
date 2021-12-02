@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 import static com.almasb.fxgl.dsl.FXGL.spawn;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.image;
-import static Constants.GameConst.*;
+import static com.testniqatsu.bomberman.constants.GameConst.*;
 
 public class BombComponent extends Component {
     private ArrayList<Entity> listFire = new ArrayList<>();

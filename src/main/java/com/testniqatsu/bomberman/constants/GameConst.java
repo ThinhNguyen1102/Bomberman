@@ -1,4 +1,4 @@
-package Constants;
+package com.testniqatsu.bomberman.constants;
 
 public class GameConst {
     public static final int VIEW_WIDTH = 720;
