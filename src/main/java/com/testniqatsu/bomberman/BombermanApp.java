@@ -31,22 +31,25 @@ public class BombermanApp extends GameApplication {
     private static final int VIEW_WIDTH = 720;
     private static final int VIEW_HEIGHT = 720;
 
+    public static final String TITLE = "BOMBERMAN";
+    public static final String VERSION = "1.0";
+
     public static boolean sound_enabled = true;
     private boolean requestNewGame = false;
 
     @Override
-    protected void initSettings(GameSettings gameSettings) {
-        gameSettings.setHeight(VIEW_HEIGHT);
-        gameSettings.setWidth(VIEW_WIDTH);
-        gameSettings.setTitle(GAME_TITLE);
-        gameSettings.setVersion(GAME_VERSION);
-        gameSettings.setIntroEnabled(false);
-        gameSettings.setMainMenuEnabled(true);
-        gameSettings.setGameMenuEnabled(true);
-        gameSettings.setPreserveResizeRatio(true);
-        gameSettings.setManualResizeEnabled(true);
-        gameSettings.setFontUI("Quinquefive-Ea6d4.ttf");
-        gameSettings.setSceneFactory(new SceneFactory() {
+    protected void initSettings(GameSettings settings) {
+        settings.setHeight(VIEW_HEIGHT);
+        settings.setWidth(VIEW_WIDTH);
+        settings.setTitle(TITLE);
+        settings.setVersion(VERSION);
+        settings.setIntroEnabled(false);
+        settings.setMainMenuEnabled(true);
+        settings.setGameMenuEnabled(true);
+        settings.setPreserveResizeRatio(true);
+        settings.setManualResizeEnabled(true);
+        settings.setFontUI("Quinquefive-Ea6d4.ttf");
+        settings.setSceneFactory(new SceneFactory() {
             @Override
             public FXGLMenu newMainMenu() {
                 return new BombermanMenu();
