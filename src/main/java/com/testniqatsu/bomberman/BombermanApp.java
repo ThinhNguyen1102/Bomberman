@@ -21,7 +21,6 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -102,12 +101,10 @@ public class BombermanApp extends GameApplication {
 
     @Override
     protected void onPreInit() {
-        getSettings().setGlobalSoundVolume(sound_enabled ? 0.1 : 0.0);
         getSettings().setGlobalMusicVolume(sound_enabled ? 0.1 : 0.0);
+        getSettings().setGlobalSoundVolume(sound_enabled ? 0.1 : 0.0);
         loopBGM("title_screen.mp3");
     }
-
-    private double timeChangeWallE = 0;
 
     @Override
     protected void onUpdate(double tpf) {
@@ -125,17 +122,6 @@ public class BombermanApp extends GameApplication {
                 setLevel();
             }), Duration.seconds(0.5));
         }
-
-        timeChangeWallE = timeChangeWallE + tpf;
-        if (timeChangeWallE > 10) {
-            setWallE();
-            timeChangeWallE = 0.0;
-        }
-    }
-
-    private void setWallE() {
-        List<Entity> listWall = getGameWorld().getEntitiesByType(BombermanType.WALL_E);
-        listWall.forEach(w -> w.translateY(SIZE_BLOCK));
     }
 
     @Override
