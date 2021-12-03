@@ -1,16 +1,17 @@
 package com.testniqatsu.bomberman.components;
 
-import com.testniqatsu.bomberman.BombermanType;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsWorld;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
+import com.testniqatsu.bomberman.BombermanType;
 import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import static com.testniqatsu.bomberman.constants.GameConst.*;
+import static com.testniqatsu.bomberman.constants.GameConst.SCORE_BRICK;
+import static com.testniqatsu.bomberman.constants.GameConst.SIZE_BLOCK;
 
 public class FlameComponent extends Component {
     private AnimatedTexture texture;

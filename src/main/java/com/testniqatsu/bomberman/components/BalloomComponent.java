@@ -1,13 +1,14 @@
 package com.testniqatsu.bomberman.components;
 
-import com.testniqatsu.bomberman.BombermanType;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
+import com.testniqatsu.bomberman.BombermanType;
 import javafx.util.Duration;
 
-import static com.testniqatsu.bomberman.constants.GameConst.*;
-import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGL.image;
+import static com.almasb.fxgl.dsl.FXGL.onCollisionBegin;
+import static com.testniqatsu.bomberman.constants.GameConst.BALLOOM_SPEED;
 
 
 public class BalloomComponent extends Component {

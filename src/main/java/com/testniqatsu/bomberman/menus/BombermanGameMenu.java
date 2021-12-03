@@ -1,8 +1,8 @@
 package com.testniqatsu.bomberman.menus;
 
-import com.testniqatsu.bomberman.BombermanApp;
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
+import com.testniqatsu.bomberman.BombermanApp;
 import javafx.geometry.Pos;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.DropShadow;
@@ -15,7 +15,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import static com.almasb.fxgl.dsl.FXGL.centerTextBind;
 
 public class BombermanGameMenu extends FXGLMenu {
     public BombermanGameMenu() {
