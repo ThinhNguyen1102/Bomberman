@@ -1,6 +1,5 @@
 package com.testniqatsu.bomberman;
 
-import com.testniqatsu.bomberman.components.*;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -15,6 +14,10 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.texture.AnimatedTexture;
+import com.testniqatsu.bomberman.components.BalloomComponent;
+import com.testniqatsu.bomberman.components.BombComponent;
+import com.testniqatsu.bomberman.components.FlameComponent;
+import com.testniqatsu.bomberman.components.PlayerComponent;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -22,8 +25,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
-import static com.testniqatsu.bomberman.constants.GameConst.*;
 import static com.almasb.fxgl.dsl.FXGL.texture;
+import static com.testniqatsu.bomberman.constants.GameConst.*;
 
 public class BombermanFactory implements EntityFactory {
     @Spawns("background")

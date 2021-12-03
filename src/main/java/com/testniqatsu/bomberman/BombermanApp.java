@@ -37,6 +37,9 @@ public class BombermanApp extends GameApplication {
 
     private static final String FONT = "Quinquefive-Ea6d4.ttf";
 
+    private static final int TIME_PER_LEVEL = 100;
+    private static final int START_LEVEL = 0;
+
     public static boolean sound_enabled = true;
     private boolean requestNewGame = false;
 
@@ -83,7 +86,7 @@ public class BombermanApp extends GameApplication {
 
     void killPlayerWhenTimeUp(int old, int now) {
         if (now == 0) {
-            onPlayerKilled();;
+            onPlayerKilled();
         }
     }
 
