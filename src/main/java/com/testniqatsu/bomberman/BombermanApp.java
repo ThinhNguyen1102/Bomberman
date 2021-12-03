@@ -79,11 +79,11 @@ public class BombermanApp extends GameApplication {
         getWorldProperties().<Integer>addListener("time", this::killPlayerWhenTimeUp);
     }
 
-    void startCountDownTimer() {
+    private void startCountDownTimer() {
         run(() -> inc("time", -1), Duration.seconds(1));
     }
 
-    void killPlayerWhenTimeUp(int old, int now) {
+    private void killPlayerWhenTimeUp(int old, int now) {
         if (now == 0) {
             onPlayerKilled();
         }
@@ -216,14 +216,20 @@ public class BombermanApp extends GameApplication {
         PhysicsWorld physics = getPhysicsWorld();
         physics.setGravity(0, 0);
 
-        onCollisionBegin(BombermanType.PLAYER
-                , BombermanType.PORTAL, (p, po) -> getGameTimer().runOnceAfter(()
-                                -> getGameScene().getViewport().fade(this::loadNextLevel)
-                        , Duration.seconds(1)));
-
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.PORTAL, this::endLevel);
         onCollisionBegin(BombermanType.PLAYER, BombermanType.FIRE, (p, f) -> onPlayerKilled());
-
         onCollisionBegin(BombermanType.PLAYER, BombermanType.BALLOOM_E, (p, b) -> onPlayerKilled());
+    }
+
+    private void endLevel(Entity player, Entity portal) {
+        var timer = FXGL.getGameTimer();
+        timer.runOnceAfter(this::fadeToNextLevel, Duration.seconds(1));
+    }
+
+    private void fadeToNextLevel() {
+        var gameScene = FXGL.getGameScene();
+        var viewPort = gameScene.getViewport();
+        viewPort.fade(this::loadNextLevel);
     }
 
     private void onPlayerKilled() {
