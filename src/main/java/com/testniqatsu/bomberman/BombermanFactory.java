@@ -20,7 +20,6 @@ import com.testniqatsu.bomberman.components.FlameComponent;
 import com.testniqatsu.bomberman.components.PlayerComponent;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -97,10 +96,12 @@ public class BombermanFactory implements EntityFactory {
 
     @Spawns("wall")
     public Entity newWall(SpawnData data) {
+        var width = (int) data.get("width");
+        var height = (int) data.get("height");
+
         return FXGL.entityBuilder(data)
                 .type(BombermanType.WALL)
-                .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"),
-                        data.<Integer>get("height"))))
+                .bbox(new HitBox(BoundingShape.box(width, height)))
                 .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
                 .build();
@@ -108,10 +109,12 @@ public class BombermanFactory implements EntityFactory {
 
     @Spawns("brick")
     public Entity newBrick(SpawnData data) {
+        var width = (int) data.get("width");
+        var height = (int) data.get("height");
+
         return FXGL.entityBuilder(data)
                 .type(BombermanType.BRICK)
-                .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"),
-                        data.<Integer>get("height"))))
+                .bbox(new HitBox(BoundingShape.box(width, height)))
                 .view("brick.png")
                 .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
