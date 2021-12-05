@@ -48,10 +48,10 @@ public class BombermanGameMenu extends FXGLMenu {
         // UI Button
         var menuBox = new VBox(
                 2,
-                new MenuButton("Resume", () -> fireResume()),
-                new MenuButton("Menu", () -> fireExitToMainMenu()),
-                new MenuButton("Sounds", () -> setSoundEnabled()),
-                new MenuButton("Exit", () -> fireExit())
+                new MenuButton("Resume", this::fireResume),
+                new MenuButton("Menu", this::fireExitToMainMenu),
+                new MenuButton("Sounds", this::setSoundEnabled),
+                new MenuButton("Exit", this::fireExit)
         );
 
         // set pos menu button
@@ -63,10 +63,10 @@ public class BombermanGameMenu extends FXGLMenu {
     }
 
     private void setSoundEnabled() {
-        BombermanApp.sound_enabled = !BombermanApp.sound_enabled;
-        getSettings().setGlobalMusicVolume(BombermanApp.sound_enabled ? 0.1 : 0.0);
-        getSettings().setGlobalSoundVolume(BombermanApp.sound_enabled ? 0.1 : 0.0);
-        if (BombermanApp.sound_enabled) {
+        BombermanApp.isSoundEnabled = !BombermanApp.isSoundEnabled;
+        getSettings().setGlobalMusicVolume(BombermanApp.isSoundEnabled ? 0.1 : 0.0);
+        getSettings().setGlobalSoundVolume(BombermanApp.isSoundEnabled ? 0.1 : 0.0);
+        if (BombermanApp.isSoundEnabled) {
             showMessage("Sound enabled!");
         } else {
             showMessage("Sound disabled!");

@@ -39,7 +39,7 @@ public class BombermanApp extends GameApplication {
     private static final int TIME_PER_LEVEL = 100;
     private static final int START_LEVEL = 0;
 
-    public static boolean sound_enabled = true;
+    public static boolean isSoundEnabled = true;
     private boolean requestNewGame = false;
 
     @Override
@@ -101,8 +101,8 @@ public class BombermanApp extends GameApplication {
 
     @Override
     protected void onPreInit() {
-        getSettings().setGlobalMusicVolume(sound_enabled ? 0.1 : 0.0);
-        getSettings().setGlobalSoundVolume(sound_enabled ? 0.1 : 0.0);
+        getSettings().setGlobalMusicVolume(isSoundEnabled ? 0.1 : 0.0);
+        getSettings().setGlobalSoundVolume(isSoundEnabled ? 0.1 : 0.0);
         loopBGM("title_screen.mp3");
     }
 
@@ -250,8 +250,10 @@ public class BombermanApp extends GameApplication {
         FXGL.setLevelFromMap("bbm_level" + FXGL.geti("level") + ".tmx");
         Viewport viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, GAME_WORLD_WIDTH, GAME_WORLD_HEIGHT);
-        viewport.bindToEntity(getPlayer(), (double) getAppWidth() / 2
-                ,  (double) getAppHeight() / 2);
+        viewport.bindToEntity(
+                getPlayer(),
+                FXGL.getAppWidth() / 2.0f,
+                FXGL.getAppHeight() / 2.0f);
         viewport.setLazy(true);
         set("time", TIME_PER_LEVEL);
     }
