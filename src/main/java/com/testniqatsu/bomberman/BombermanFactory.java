@@ -40,16 +40,21 @@ public class BombermanFactory implements EntityFactory {
 
     @Spawns("player")
     public Entity newPlayer(SpawnData data) {
-        PhysicsComponent physics = new PhysicsComponent();
-        physics.setFixtureDef(new FixtureDef().friction(0).density(0.1f));
-        BodyDef bd = new BodyDef();
-        bd.setFixedRotation(true);
-        bd.setType(BodyType.DYNAMIC);
-        physics.setBodyDef(bd);
+        var physics = new PhysicsComponent();
+
+        var fixtureDef = new FixtureDef();
+        fixtureDef.setFriction(0);
+        fixtureDef.setDensity(0.1f);
+        physics.setFixtureDef(fixtureDef);
+
+        var bodyDef = new BodyDef();
+        bodyDef.setFixedRotation(true);
+        bodyDef.setType(BodyType.DYNAMIC);
+        physics.setBodyDef(bodyDef);
 
         return FXGL.entityBuilder(data)
                 .type(BombermanType.PLAYER)
-                .viewWithBBox(new Circle(24, 24, 22, Color.TRANSPARENT))
+                .bbox(new HitBox(BoundingShape.circle(22)))
                 .with(physics)
                 .with(new PlayerComponent())
                 .with(new CollidableComponent(true))
