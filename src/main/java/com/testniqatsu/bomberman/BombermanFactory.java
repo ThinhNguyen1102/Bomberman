@@ -123,10 +123,12 @@ public class BombermanFactory implements EntityFactory {
 
     @Spawns("grass")
     public Entity newGrass(SpawnData data) {
+        var width = (int) data.get("width");
+        var height = (int) data.get("height");
+
         return FXGL.entityBuilder(data)
                 .type(BombermanType.GRASS)
-                .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"),
-                        data.<Integer>get("height"))))
+                .bbox(new HitBox(BoundingShape.box(width, height)))
                 .view("grass.png")
                 .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
@@ -135,10 +137,18 @@ public class BombermanFactory implements EntityFactory {
 
     @Spawns("grass_break")
     public Entity newGrassBreak(SpawnData data) {
-        AnimatedTexture view = texture("grass_break_2.png").toAnimatedTexture(3, Duration.seconds(1));
+        var texture = texture("grass_break_2.png");
+        var view = texture.toAnimatedTexture(3, Duration.seconds(1));
+
+        var boundingShape = BoundingShape.box(
+                SIZE_BLOCK / 2.0f - 3,
+                SIZE_BLOCK / 2.0f - 3);
+
+        var hitBox = new HitBox(boundingShape);
+
         return FXGL.entityBuilder(data)
                 .type(BombermanType.GRASS_BREAK)
-                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2 - 3, SIZE_BLOCK / 2 - 3, Color.TRANSPARENT))
+                .bbox(hitBox)
                 .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
                 .view(view.loop())
                 .zIndex(1)

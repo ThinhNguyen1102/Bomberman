@@ -53,6 +53,7 @@ public class BombermanApp extends GameApplication {
         settings.setGameMenuEnabled(true);
         settings.setPreserveResizeRatio(true);
         settings.setManualResizeEnabled(true);
+        settings.setDeveloperMenuEnabled(true);
         settings.setFontUI(FONT);
         settings.setSceneFactory(new SceneFactory() {
             @NotNull
