@@ -225,9 +225,15 @@ public class BombermanFactory implements EntityFactory {
 
     @Spawns("portal")
     public Entity newPortal(SpawnData data) {
+        var width = (int) data.get("width");
+        var height = (int) data.get("height");
+
+        var boundingShape = BoundingShape.box(width, height);
+        var hitBox = new HitBox(boundingShape);
+
         return FXGL.entityBuilder(data)
                 .type(BombermanType.PORTAL)
-                .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
+                .bbox(hitBox)
                 .view("portal.png")
                 .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
