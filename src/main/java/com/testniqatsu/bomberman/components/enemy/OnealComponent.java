@@ -17,6 +17,9 @@ import static com.almasb.fxgl.dsl.FXGL.onCollisionBegin;
 @Required(AStarMoveComponent.class)
 public class OnealComponent extends NormalEnemy {
     private boolean die = false;
+    private double oldX = 0;
+    private double oldY = 0;
+
     protected AStarMoveComponent astar;
     protected boolean moveWithAi = true;
     protected int rangeDetectPlayer = 60;
@@ -45,6 +48,15 @@ public class OnealComponent extends NormalEnemy {
         if (!die) {
             if (!moveWithAi) {
                 astar.pause();
+                // fix bug move
+                double x = entity.getX() - oldX;
+                double y = entity.getY() - oldY;
+
+                oldX = entity.getX();
+                oldY = entity.getY();
+
+                if (x == 0 && y == 0) turn();
+                //
                 entity.setScaleUniform(0.9);
                 entity.translateX(dx * tpf);
                 entity.translateY(dy * tpf);
