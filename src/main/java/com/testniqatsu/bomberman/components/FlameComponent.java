@@ -74,6 +74,7 @@ public class FlameComponent extends Component {
         });
     }
 
+
     @Override
     public void onAdded() {
         entity.getViewComponent().addChild(texture);
