@@ -8,6 +8,8 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.pathfinding.CellState;
+import com.almasb.fxgl.pathfinding.astar.AStarGrid;
 import com.almasb.fxgl.physics.PhysicsWorld;
 import com.testniqatsu.bomberman.components.PlayerComponent;
 import com.testniqatsu.bomberman.menus.BombermanGameMenu;
@@ -41,6 +43,8 @@ public class BombermanApp extends GameApplication {
 
     public static boolean isSoundEnabled = true;
     private boolean requestNewGame = false;
+
+    private AStarGrid grid;
 
     @Override
     protected void initSettings(GameSettings settings) {
@@ -219,7 +223,7 @@ public class BombermanApp extends GameApplication {
 
         onCollisionBegin(BombermanType.PLAYER, BombermanType.PORTAL, this::endLevel);
         onCollisionBegin(BombermanType.PLAYER, BombermanType.FIRE, (p, f) -> onPlayerKilled());
-        onCollisionBegin(BombermanType.PLAYER, BombermanType.BALLOOM_E, (p, b) -> onPlayerKilled());
+//        onCollisionBegin(BombermanType.PLAYER, BombermanType.BALLOOM_E, (p, b) -> onPlayerKilled());
     }
 
     private void endLevel(Entity player, Entity portal) {
@@ -257,6 +261,20 @@ public class BombermanApp extends GameApplication {
                 FXGL.getAppHeight() / 2.0f);
         viewport.setLazy(true);
         set("time", TIME_PER_LEVEL);
+
+        grid = AStarGrid.fromWorld(getGameWorld(), 31, 15,
+                SIZE_BLOCK, SIZE_BLOCK, (type) -> {
+                    if (type == BombermanType.BRICK
+                            || type == BombermanType.WALL
+                            || type == BombermanType.GRASS
+                            || type == BombermanType.CORAL) {
+                        return CellState.NOT_WALKABLE;
+                    } else {
+                        return CellState.WALKABLE;
+                    }
+                });
+
+        set("grid", grid);
     }
 
     public static void main(String[] args) {

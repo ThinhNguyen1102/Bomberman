@@ -1,5 +1,6 @@
 package com.testniqatsu.bomberman;
 
+import com.almasb.fxgl.core.util.LazyValue;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
@@ -7,6 +8,8 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.entity.components.IrremovableComponent;
+import com.almasb.fxgl.pathfinding.CellMoveComponent;
+import com.almasb.fxgl.pathfinding.astar.AStarMoveComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
@@ -14,17 +17,18 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.texture.AnimatedTexture;
-import com.testniqatsu.bomberman.components.BalloomComponent;
 import com.testniqatsu.bomberman.components.BombComponent;
 import com.testniqatsu.bomberman.components.FlameComponent;
 import com.testniqatsu.bomberman.components.PlayerComponent;
+import com.testniqatsu.bomberman.components.enemy.BalloomComponent;
+import com.testniqatsu.bomberman.components.enemy.DoriaComponent;
+import com.testniqatsu.bomberman.components.enemy.OnealComponent;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
-import static com.almasb.fxgl.dsl.FXGL.texture;
+import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.testniqatsu.bomberman.constants.GameConst.*;
 
 public class BombermanFactory implements EntityFactory {
@@ -53,43 +57,53 @@ public class BombermanFactory implements EntityFactory {
 
         return FXGL.entityBuilder(data)
                 .type(BombermanType.PLAYER)
-                .bbox(new HitBox(BoundingShape.circle(22)))
+                .bbox(new HitBox(BoundingShape.circle(24)))
+                .atAnchored(new Point2D(24, 24), new Point2D(24, 24))
                 .with(physics)
                 .with(new PlayerComponent())
                 .with(new CollidableComponent(true))
+                .with(new CellMoveComponent(SIZE_BLOCK, SIZE_BLOCK, 100))
+                .with(new AStarMoveComponent(new LazyValue<>(() -> geto("grid"))))
                 .zIndex(5)
                 .build();
     }
 
-    @Spawns("bomb")
-    public Entity newBomb(SpawnData data) {
-        return FXGL.entityBuilder(data)
-                .type(BombermanType.BOMB)
-                .with(new BombComponent())
-                .build();
-    }
-
-    @Spawns("fire")
-    public Entity newFire(SpawnData data) {
-        return FXGL.entityBuilder(data)
-                .type(BombermanType.FIRE)
-                .with(new FlameComponent())
-                // cần đổi
-                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2 - 3, SIZE_BLOCK / 2 - 3, Color.TRANSPARENT))
-                .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
-                .with(new CollidableComponent(true))
-                .zIndex(1)
-                .build();
-    }
-
     @Spawns("balloom_e")
-    public Entity newBalloon(SpawnData data) {
+    public Entity newBalloom(SpawnData data) {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.BALLOOM_E)
-                .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"),
-                        data.<Integer>get("height"))))
+                .bbox(new HitBox(BoundingShape.circle(22)))
+                .atAnchored(new Point2D(24, 24), new Point2D(24, 24))
                 .with(new BalloomComponent())
                 .with(new CollidableComponent(true))
+                .zIndex(2)
+                .build();
+    }
+
+    @Spawns("oneal_e")
+    public Entity newOneal(SpawnData data) {
+        return FXGL.entityBuilder(data)
+                .type(BombermanType.ONEAL_E)
+                .bbox(new HitBox(BoundingShape.circle(22)))
+                .with(new CollidableComponent(true))
+                .atAnchored(new Point2D(24, 24), new Point2D(24, 24))
+                .with(new CellMoveComponent(48, 48, 100))
+                .with(new AStarMoveComponent(new LazyValue<>(() -> geto("grid"))))
+                .with(new OnealComponent())
+                .zIndex(2)
+                .build();
+    }
+
+    @Spawns("doria_e")
+    public Entity newDoria(SpawnData data) {
+        return FXGL.entityBuilder(data)
+                .type(BombermanType.DORIA_E)
+                .bbox(new HitBox(BoundingShape.circle(22)))
+                .with(new CollidableComponent(true))
+                .atAnchored(new Point2D(24, 24), new Point2D(24, 24))
+                .with(new CellMoveComponent(48, 48, 100))
+                .with(new AStarMoveComponent(new LazyValue<>(() -> geto("grid"))))
+                .with(new DoriaComponent())
                 .zIndex(2)
                 .build();
     }
@@ -107,6 +121,41 @@ public class BombermanFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("wall_bomb")
+    public Entity newWallBomb(SpawnData data) {
+        return FXGL.entityBuilder(data)
+                .type(BombermanType.WALL_BOMB)
+                .bbox(new HitBox(new Point2D(0, 0), BoundingShape.box(SIZE_BLOCK, SIZE_BLOCK)))
+                .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
+                .with(new PhysicsComponent())
+                .with(new CollidableComponent(true))
+                .build();
+    }
+
+    @Spawns("bomb")
+    public Entity newBomb(SpawnData data) {
+        return FXGL.entityBuilder(data)
+                .type(BombermanType.BOMB)
+                .with(new BombComponent())
+                .bbox(new HitBox(new Point2D(2, 2), BoundingShape.circle(22)))
+                .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
+                .with(new CollidableComponent(true))
+                .build();
+    }
+
+    @Spawns("fire")
+    public Entity newFire(SpawnData data) {
+        return FXGL.entityBuilder(data)
+                .type(BombermanType.FIRE)
+                .with(new FlameComponent())
+                // cần đổi
+                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2 - 3, SIZE_BLOCK / 2 - 3, Color.TRANSPARENT))
+                .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
+                .with(new CollidableComponent(true))
+                .zIndex(1)
+                .build();
+    }
+
     @Spawns("brick")
     public Entity newBrick(SpawnData data) {
         var width = (int) data.get("width");
@@ -118,6 +167,18 @@ public class BombermanFactory implements EntityFactory {
                 .view("brick.png")
                 .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
+                .build();
+    }
+
+    @Spawns("brick_break")
+    public Entity newBrickBreak(SpawnData data) {
+        AnimatedTexture view = texture("brick_break.png").toAnimatedTexture(3, Duration.seconds(1));
+        return FXGL.entityBuilder(data)
+                .type(BombermanType.BRICK_BREAK)
+                .view(view.loop())
+                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2 - 3, SIZE_BLOCK / 2 - 3, Color.TRANSPARENT))
+                .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
+                .zIndex(1)
                 .build();
     }
 
@@ -167,17 +228,7 @@ public class BombermanFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns("brick_break")
-    public Entity newBrickBreak(SpawnData data) {
-        AnimatedTexture view = texture("brick_break.png").toAnimatedTexture(3, Duration.seconds(1));
-        return FXGL.entityBuilder(data)
-                .type(BombermanType.BRICK_BREAK)
-                .view(view.loop())
-                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2 - 3, SIZE_BLOCK / 2 - 3, Color.TRANSPARENT))
-                .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
-                .zIndex(1)
-                .build();
-    }
+
 
     @Spawns("speedItem")
     public Entity newItem3(SpawnData data) {
