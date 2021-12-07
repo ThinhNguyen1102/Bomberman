@@ -127,15 +127,18 @@ public class BombermanApp extends GameApplication {
 
     @Override
     protected void initUI() {
-        FXGL.addUINode(setTextUI("score", "📰: %d"), 20, 30);
+        var margin = 20;
+        var labelWidth = (VIEW_WIDTH - 2 * margin) / 5;
 
-        FXGL.addUINode(setTextUI("speed", "👟: %d"), 140, 30);
+        FXGL.addUINode(setTextUI("score", "📰: %d"),  margin, 30);
 
-        FXGL.addUINode(setTextUI("flame", "🔥: %d"), 280, 30);
+        FXGL.addUINode(setTextUI("speed", "👟: %d"), margin + labelWidth, 30);
 
-        FXGL.addUINode(setTextUI("bomb", "💣: %d"), 390, 30);
+        FXGL.addUINode(setTextUI("flame", "🔥: %d"), margin + 2 * labelWidth, 30);
 
-        FXGL.addUINode(setTextUI("time", "⏰: %d"), 500, 30);
+        FXGL.addUINode(setTextUI("bomb", "💣: %d"), margin + 3 * labelWidth, 30);
+
+        FXGL.addUINode(setTextUI("time", "⏰: %d"), margin + 4 * labelWidth, 30);
     }
 
     private Label setTextUI(String valGame, String content) {
