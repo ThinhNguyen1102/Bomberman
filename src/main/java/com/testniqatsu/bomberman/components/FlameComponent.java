@@ -15,7 +15,6 @@ import com.testniqatsu.bomberman.components.enemy.OnealComponent;
 import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import static com.testniqatsu.bomberman.constants.GameConst.SCORE_BRICK;
 import static com.testniqatsu.bomberman.constants.GameConst.SIZE_BLOCK;
 
 public class FlameComponent extends Component {
@@ -27,6 +26,10 @@ public class FlameComponent extends Component {
         PhysicsWorld physics = getPhysicsWorld();
 
         onCollisionBegin(BombermanType.FIRE, BombermanType.WALL, (f, w) -> {
+            f.removeFromWorld();
+        });
+
+        onCollisionBegin(BombermanType.FIRE, BombermanType.AROUND_WALL, (f, w) -> {
             f.removeFromWorld();
         });
 
@@ -70,7 +73,6 @@ public class FlameComponent extends Component {
             Entity bBreak = spawn(nameTypeBreakAnim, new SpawnData(t.getX(), t.getY()));
             t.removeFromWorld();
             getGameTimer().runOnceAfter(bBreak::removeFromWorld, Duration.seconds(1));
-            inc("score", SCORE_BRICK);
         });
     }
 

@@ -16,7 +16,6 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyDef;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
-import com.almasb.fxgl.texture.AnimatedTexture;
 import com.testniqatsu.bomberman.components.BombComponent;
 import com.testniqatsu.bomberman.components.FlameComponent;
 import com.testniqatsu.bomberman.components.PlayerComponent;
@@ -25,6 +24,7 @@ import com.testniqatsu.bomberman.components.enemy.DoriaComponent;
 import com.testniqatsu.bomberman.components.enemy.OnealComponent;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -32,6 +32,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.testniqatsu.bomberman.constants.GameConst.*;
 
 public class BombermanFactory implements EntityFactory {
+    private final int radius = SIZE_BLOCK / 2;
     @Spawns("background")
     public Entity newBackground(SpawnData data) {
         return FXGL.entityBuilder(data)
@@ -57,12 +58,12 @@ public class BombermanFactory implements EntityFactory {
 
         return FXGL.entityBuilder(data)
                 .type(BombermanType.PLAYER)
-                .bbox(new HitBox(BoundingShape.circle(24)))
-                .atAnchored(new Point2D(24, 24), new Point2D(24, 24))
+                .bbox(new HitBox(BoundingShape.circle(radius)))
+                .atAnchored(new Point2D(radius, radius), new Point2D(radius, radius))
                 .with(physics)
                 .with(new PlayerComponent())
                 .with(new CollidableComponent(true))
-                .with(new CellMoveComponent(SIZE_BLOCK, SIZE_BLOCK, 100))
+                .with(new CellMoveComponent(SIZE_BLOCK, SIZE_BLOCK, ENEMY_SPEED_BASE))
                 .with(new AStarMoveComponent(new LazyValue<>(() -> geto("grid"))))
                 .zIndex(5)
                 .build();
@@ -72,8 +73,8 @@ public class BombermanFactory implements EntityFactory {
     public Entity newBalloom(SpawnData data) {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.BALLOOM_E)
-                .bbox(new HitBox(BoundingShape.circle(22)))
-                .atAnchored(new Point2D(24, 24), new Point2D(24, 24))
+                .bbox(new HitBox(BoundingShape.circle(radius - 2)))
+                .atAnchored(new Point2D(radius, radius), new Point2D(radius, radius))
                 .with(new BalloomComponent())
                 .with(new CollidableComponent(true))
                 .zIndex(2)
@@ -84,10 +85,10 @@ public class BombermanFactory implements EntityFactory {
     public Entity newOneal(SpawnData data) {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.ONEAL_E)
-                .bbox(new HitBox(BoundingShape.circle(22)))
+                .bbox(new HitBox(BoundingShape.circle(radius - 2)))
                 .with(new CollidableComponent(true))
-                .atAnchored(new Point2D(24, 24), new Point2D(24, 24))
-                .with(new CellMoveComponent(48, 48, 100))
+                .atAnchored(new Point2D(radius, radius), new Point2D(radius, radius))
+                .with(new CellMoveComponent(SIZE_BLOCK, SIZE_BLOCK, ENEMY_SPEED_BASE))
                 .with(new AStarMoveComponent(new LazyValue<>(() -> geto("grid"))))
                 .with(new OnealComponent())
                 .zIndex(2)
@@ -98,10 +99,10 @@ public class BombermanFactory implements EntityFactory {
     public Entity newDoria(SpawnData data) {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.DORIA_E)
-                .bbox(new HitBox(BoundingShape.circle(22)))
+                .bbox(new HitBox(BoundingShape.circle(radius - 2)))
                 .with(new CollidableComponent(true))
-                .atAnchored(new Point2D(24, 24), new Point2D(24, 24))
-                .with(new CellMoveComponent(48, 48, 100))
+                .atAnchored(new Point2D(radius, radius), new Point2D(radius, radius))
+                .with(new CellMoveComponent(SIZE_BLOCK, SIZE_BLOCK, ENEMY_SPEED_BASE + 20))
                 .with(new AStarMoveComponent(new LazyValue<>(() -> geto("grid"))))
                 .with(new DoriaComponent())
                 .zIndex(2)
@@ -115,6 +116,19 @@ public class BombermanFactory implements EntityFactory {
 
         return FXGL.entityBuilder(data)
                 .type(BombermanType.WALL)
+                .bbox(new HitBox(BoundingShape.box(width, height)))
+                .with(new PhysicsComponent())
+                .with(new CollidableComponent(true))
+                .build();
+    }
+
+    @Spawns("around_wall")
+    public Entity newArWall(SpawnData data) {
+        var width = (int) data.get("width");
+        var height = (int) data.get("height");
+
+        return FXGL.entityBuilder(data)
+                .type(BombermanType.AROUND_WALL)
                 .bbox(new HitBox(BoundingShape.box(width, height)))
                 .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
@@ -137,7 +151,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.BOMB)
                 .with(new BombComponent())
-                .bbox(new HitBox(new Point2D(2, 2), BoundingShape.circle(22)))
+                .bbox(new HitBox(new Point2D(2, 2), BoundingShape.circle(radius - 2)))
                 .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
                 .with(new CollidableComponent(true))
                 .build();
@@ -172,11 +186,19 @@ public class BombermanFactory implements EntityFactory {
 
     @Spawns("brick_break")
     public Entity newBrickBreak(SpawnData data) {
-        AnimatedTexture view = texture("brick_break.png").toAnimatedTexture(3, Duration.seconds(1));
+        var texture = texture("brick_break.png");
+        var view = texture.toAnimatedTexture(3, Duration.seconds(1));
+
+        var boundingShape = BoundingShape.box(
+                SIZE_BLOCK / 2.0f - 3,
+                SIZE_BLOCK / 2.0f - 3);
+
+        var hitBox = new HitBox(boundingShape);
+
         return FXGL.entityBuilder(data)
                 .type(BombermanType.BRICK_BREAK)
                 .view(view.loop())
-                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2 - 3, SIZE_BLOCK / 2 - 3, Color.TRANSPARENT))
+                .bbox(hitBox)
                 .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
                 .zIndex(1)
                 .build();
@@ -286,7 +308,6 @@ public class BombermanFactory implements EntityFactory {
                 .type(BombermanType.PORTAL)
                 .bbox(hitBox)
                 .view("portal.png")
-                .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
                 .build();
     }

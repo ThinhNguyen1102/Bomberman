@@ -38,7 +38,7 @@ public class BombermanApp extends GameApplication {
 
     private static final String FONT = "Quinquefive-Ea6d4.ttf";
 
-    private static final int TIME_PER_LEVEL = 100;
+    private static final int TIME_PER_LEVEL = 300;
     private static final int START_LEVEL = 0;
 
     public static boolean isSoundEnabled = true;
@@ -102,12 +102,14 @@ public class BombermanApp extends GameApplication {
         vars.put("speed", SPEED);
         vars.put("time", TIME_PER_LEVEL);
         vars.put("level", START_LEVEL);
+        vars.put("immortality", false);
+        vars.put("numOfEnemy", 10);
     }
 
     @Override
     protected void onPreInit() {
-        getSettings().setGlobalMusicVolume(isSoundEnabled ? 0.1 : 0.0);
-        getSettings().setGlobalSoundVolume(isSoundEnabled ? 0.1 : 0.0);
+        getSettings().setGlobalMusicVolume(isSoundEnabled ? 0.05 : 0.0);
+        getSettings().setGlobalSoundVolume(isSoundEnabled ? 0.4 : 0.0);
         loopBGM("title_screen.mp3");
     }
 
@@ -121,9 +123,7 @@ public class BombermanApp extends GameApplication {
         if (requestNewGame) {
             requestNewGame = false;
             getPlayer().getComponent(PlayerComponent.class).die();
-            getPlayer().getComponent(PlayerComponent.class).setExploreCancel(true);
             getGameTimer().runOnceAfter(() -> getGameScene().getViewport().fade(() -> {
-                set("bomb", 1);
                 setLevel();
             }), Duration.seconds(0.5));
         }
@@ -223,10 +223,15 @@ public class BombermanApp extends GameApplication {
 
         onCollisionBegin(BombermanType.PLAYER, BombermanType.PORTAL, this::endLevel);
         onCollisionBegin(BombermanType.PLAYER, BombermanType.FIRE, (p, f) -> onPlayerKilled());
-//        onCollisionBegin(BombermanType.PLAYER, BombermanType.BALLOOM_E, (p, b) -> onPlayerKilled());
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.BALLOOM_E, (p, b) -> onPlayerKilled());
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.ONEAL_E, (p, o) -> onPlayerKilled());
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.DORIA_E, (p, d) -> onPlayerKilled());
     }
 
     private void endLevel(Entity player, Entity portal) {
+        if (geti("numOfEnemy") > 0) return;
+        play("next_level.wav");
+        getPlayer().getComponent(PlayerComponent.class).setExploreCancel(true);
         var timer = FXGL.getGameTimer();
         timer.runOnceAfter(this::fadeToNextLevel, Duration.seconds(1));
     }
@@ -238,7 +243,11 @@ public class BombermanApp extends GameApplication {
     }
 
     private void onPlayerKilled() {
-        requestNewGame = true;
+        if (!getb("immortality")) {
+            set("score", 0);
+            getPlayer().getComponent(PlayerComponent.class).setExploreCancel(true);
+            requestNewGame = true;
+        }
     }
 
     private void loadNextLevel() {
@@ -261,13 +270,16 @@ public class BombermanApp extends GameApplication {
                 FXGL.getAppHeight() / 2.0f);
         viewport.setLazy(true);
         set("time", TIME_PER_LEVEL);
+        set("bomb", 1);
+        set("flame", 1);
 
         grid = AStarGrid.fromWorld(getGameWorld(), 31, 15,
                 SIZE_BLOCK, SIZE_BLOCK, (type) -> {
                     if (type == BombermanType.BRICK
                             || type == BombermanType.WALL
                             || type == BombermanType.GRASS
-                            || type == BombermanType.CORAL) {
+                            || type == BombermanType.CORAL
+                            || type == BombermanType.AROUND_WALL) {
                         return CellState.NOT_WALKABLE;
                     } else {
                         return CellState.WALKABLE;

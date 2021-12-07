@@ -1,9 +1,17 @@
 package com.testniqatsu.bomberman.components.enemy;
 
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.util.Duration;
 
+import static com.almasb.fxgl.dsl.FXGL.inc;
 import static com.testniqatsu.bomberman.constants.GameConst.*;
 
 public abstract class NormalEnemy extends Component {
@@ -117,15 +125,24 @@ public abstract class NormalEnemy extends Component {
     }
 
     public void enemyDie() {
+        FXGL.inc("numOfEnemy", -1);
+        int NORMAL_SCORE_E = 100;
+        showScore(NORMAL_SCORE_E);
+        inc("score", NORMAL_SCORE_E);
         dx = 0;
         dy = 0;
         texture.loopNoOverride(animDie);
     }
 
-    public void enemyStop() {
-        dx = 0;
-        dy = 0;
-        texture.loopNoOverride(animStop);
+    protected void showScore(int score) {
+        Label labelScore = new Label();
+        labelScore.setText(score + "!");
+        labelScore.setFont(Font.font("Comic Sans MS", FontWeight.EXTRA_BOLD, 15));
+        labelScore.setTextFill(Color.WHITE);
+        FXGL.addUINode(labelScore, entity.getX() + 24, entity.getY() + 24);
+        FXGL.getGameTimer().runOnceAfter(() -> {
+            FXGL.removeUINode(labelScore);
+        }, Duration.seconds(2));
     }
 }
 

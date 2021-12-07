@@ -20,6 +20,9 @@ public class PlayerComponent extends Component {
     private static final int SIZE_FRAMES = 45;
     private int bombsPlaced = 0;
     private boolean exploreCancel = false;
+    private double lastX = 0;
+    private double lastY = 0;
+    private double timeWalk = 1;
 
     public enum StatusDirection {
         UP, RIGHT, DOWN, LEFT, STOP,DIE
@@ -43,35 +46,42 @@ public class PlayerComponent extends Component {
         physics.setGravity(0, 0);
 
         onCollisionBegin(BombermanType.PLAYER, BombermanType.SPEED_ITEM, (p, speed_i) -> {
+            play("power_up.wav");
             speed_i.removeFromWorld();
             inc("score", SCORE_ITEM);
             inc("speed", SPEED / 3);
             speed = geti("speed");
-
+            setAnimation(AnimationSkin.FLAME_PASS);
             getGameTimer().runOnceAfter(() -> {
                 inc("speed", -SPEED / 3);
                 speed = geti("speed");
+                setAnimation(AnimationSkin.NORMAL);
             }, Duration.seconds(8));
         });
 
         onCollisionBegin(BombermanType.PLAYER, BombermanType.BOMB_ITEM, (p, bombs_t) -> {
+            play("power_up.wav");
             bombs_t.removeFromWorld();
             inc("score", SCORE_ITEM);
             inc("bomb", 1);
         });
 
         onCollisionBegin(BombermanType.PLAYER, BombermanType.FLAME_ITEM, (p, flame_i) -> {
+            play("power_up.wav");
             flame_i.removeFromWorld();
             inc("score", SCORE_ITEM);
             inc("flame", 1);
         });
 
         onCollisionBegin(BombermanType.PLAYER, BombermanType.FLAME_PASS_ITEM, (p, flame_pass_i) -> {
+            play("power_up.wav");
+            set("immortality", true);
             flame_pass_i.removeFromWorld();
             inc("score", SCORE_ITEM);
             setAnimation(AnimationSkin.FLAME_PASS);
             getGameTimer().runOnceAfter(() -> {
                 setAnimation(AnimationSkin.NORMAL);
+                set("immortality", false);
             }, Duration.seconds(8));
         });
 
@@ -133,7 +143,7 @@ public class PlayerComponent extends Component {
 
     @Override
     public void onUpdate(double tpf) {
-        getEntity().setScaleUniform(0.9);
+        getEntity().setScaleUniform(0.95);
         if (physics.getVelocityX() != 0) {
             physics.setVelocityX((int) physics.getVelocityX() * 0.9);
             if (FXGLMath.abs(physics.getVelocityX()) < 1) {
@@ -176,6 +186,22 @@ public class PlayerComponent extends Component {
                 texture.loopNoOverride(animDie);
                 break;
         }
+        timeWalk += tpf;
+        double dx = entity.getX() - lastX;
+        double dy = entity.getY() - lastY;
+        lastX = entity.getX();
+        lastY = entity.getY();
+        if (timeWalk > 0.6) {
+            timeWalk = 0;
+            if (!(dx == 0 && dy == 0)) {
+                if (currMove == StatusDirection.DOWN
+                        || currMove == StatusDirection.UP) {
+                    play("walk_2.wav");
+                } else {
+                    play("walk_1.wav");
+                }
+            }
+        }
     }
 
     public void up() {
@@ -217,6 +243,7 @@ public class PlayerComponent extends Component {
     }
 
     public void placeBomb() {
+        play("placed_bomb.wav");
         if (bombsPlaced == geti("bomb")) {
             return;
         }
@@ -234,6 +261,7 @@ public class PlayerComponent extends Component {
         if (currMove != StatusDirection.DIE) {
             getGameTimer().runOnceAfter(() -> {
                 if (!exploreCancel) {
+                    play("bomb_explored.wav");
                     bomb.getComponent(BombComponent.class).explode();
                 } else {
                     bomb.removeFromWorld();

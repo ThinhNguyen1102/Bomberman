@@ -12,14 +12,15 @@ import javafx.util.Duration;
 
 import java.util.List;
 
+import static com.almasb.fxgl.dsl.FXGL.inc;
 import static com.almasb.fxgl.dsl.FXGL.onCollisionBegin;
 
 @Required(AStarMoveComponent.class)
 public class OnealComponent extends NormalEnemy {
-    private boolean die = false;
     private double oldX = 0;
     private double oldY = 0;
 
+    protected boolean die = false;
     protected AStarMoveComponent astar;
     protected boolean moveWithAi = true;
     protected int rangeDetectPlayer = 60;
@@ -30,7 +31,15 @@ public class OnealComponent extends NormalEnemy {
 
     public OnealComponent() {
         super();
+        onCollisionBegin(BombermanType.ONEAL_E, BombermanType.BOMB, (o, w) -> {
+            o.getComponent(OnealComponent.class).turn();
+        });
+
         onCollisionBegin(BombermanType.ONEAL_E, BombermanType.WALL, (o, w) -> {
+            o.getComponent(OnealComponent.class).turn();
+        });
+
+        onCollisionBegin(BombermanType.ONEAL_E, BombermanType.AROUND_WALL, (o, w) -> {
             o.getComponent(OnealComponent.class).turn();
         });
 
@@ -39,6 +48,10 @@ public class OnealComponent extends NormalEnemy {
         });
 
         onCollisionBegin(BombermanType.ONEAL_E, BombermanType.GRASS, (o, gr) -> {
+            o.getComponent(OnealComponent.class).turn();
+        });
+
+        onCollisionBegin(BombermanType.ONEAL_E, BombermanType.CORAL, (o, gr) -> {
             o.getComponent(OnealComponent.class).turn();
         });
     }
@@ -81,8 +94,15 @@ public class OnealComponent extends NormalEnemy {
     protected void detectPlayer() {
         BoundingBoxComponent bbox = entity.getBoundingBoxComponent();
         List<Entity> list = FXGL.getGameWorld().getEntitiesInRange(bbox.range(rangeDetectPlayer, rangeDetectPlayer));
+        for (Entity entity : list) {
+            if (entity.isType(BombermanType.BOMB)) {
+                moveWithAi = false;
+                return;
+            }
+        }
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).isType(BombermanType.PLAYER)) {
+            Entity entity = list.get(i);
+            if (entity.isType(BombermanType.PLAYER)) {
                 moveWithAi = true;
                 break;
             }
@@ -107,6 +127,10 @@ public class OnealComponent extends NormalEnemy {
 
     @Override
     public void enemyDie() {
+        FXGL.inc("numOfEnemy", -1);
+        int ONEAL_SCORE = 200;
+        showScore(ONEAL_SCORE);
+        inc("score", ONEAL_SCORE);
         die = true;
         dx = 0;
         dy = 0;
