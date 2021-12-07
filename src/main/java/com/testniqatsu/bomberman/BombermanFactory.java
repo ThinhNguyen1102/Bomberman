@@ -250,6 +250,25 @@ public class BombermanFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("coral_break")
+    public Entity newCoralBreak(SpawnData data) {
+        var texture = texture("coral_break_2.png");
+        var view = texture.toAnimatedTexture(3, Duration.seconds(1));
+
+        var boundingShape = BoundingShape.box(
+                SIZE_BLOCK / 2.0f - 3,
+                SIZE_BLOCK / 2.0f - 3);
+
+        var hitBox = new HitBox(boundingShape);
+
+        return FXGL.entityBuilder(data)
+                .type(BombermanType.CORAL_BREAK)
+                .bbox(hitBox)
+                .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
+                .view(view.loop())
+                .zIndex(1)
+                .build();
+    }
 
 
     @Spawns("speedItem")

@@ -104,6 +104,7 @@ public class BombermanApp extends GameApplication {
         vars.put("level", START_LEVEL);
         vars.put("immortality", false);
         vars.put("numOfEnemy", 10);
+        vars.put("life", 3);
     }
 
     @Override
@@ -117,13 +118,20 @@ public class BombermanApp extends GameApplication {
     protected void onUpdate(double tpf) {
 
         if (geti("time") == 0) {
-            getDialogService().showMessageBox("Game Over!!!", getGameController()::startNewGame);
+            showMessage("Game Over leu leu!!!", () -> {
+                getGameController().gotoMainMenu();
+            });
         }
 
         if (requestNewGame) {
             requestNewGame = false;
             getPlayer().getComponent(PlayerComponent.class).die();
             getGameTimer().runOnceAfter(() -> getGameScene().getViewport().fade(() -> {
+                if (geti("life") <= 0) {
+                    showMessage("Game Over leu leu!!!", () -> {
+                        getGameController().gotoMainMenu();
+                    });
+                }
                 setLevel();
             }), Duration.seconds(0.5));
         }
@@ -140,6 +148,10 @@ public class BombermanApp extends GameApplication {
         FXGL.addUINode(setTextUI("bomb", "Bombs: %d"), 390, 30);
 
         FXGL.addUINode(setTextUI("time", "Time: %d"), 500, 30);
+
+        FXGL.addUINode(setTextUI("life", "life: %d"), 620, 30);
+
+        FXGL.addUINode(setTextUI("level", "Lv:%d"), 20, 5);
     }
 
     private Label setTextUI(String valGame, String content) {
@@ -244,6 +256,7 @@ public class BombermanApp extends GameApplication {
 
     private void onPlayerKilled() {
         if (!getb("immortality")) {
+            inc("life", -1);
             set("score", 0);
             getPlayer().getComponent(PlayerComponent.class).setExploreCancel(true);
             requestNewGame = true;
@@ -251,13 +264,14 @@ public class BombermanApp extends GameApplication {
     }
 
     private void loadNextLevel() {
-        if (FXGL.geti("level") == MAX_LEVEL) {
-            showMessage("You win !!!");
-            return;
+        if (FXGL.geti("level") >= MAX_LEVEL) {
+            showMessage("You Win! bum bum bum!!!", () -> {
+                getGameController().gotoMainMenu();
+            });
+        } else {
+            inc("level", +1);
+            setLevel();
         }
-
-        inc("level", +1);
-        setLevel();
     }
 
     private void setLevel() {
