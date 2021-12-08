@@ -2,15 +2,15 @@ package com.testniqatsu.bomberman.menus;
 
 import com.almasb.fxgl.app.scene.FXGLMenu;
 import com.almasb.fxgl.app.scene.MenuType;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.input.view.KeyView;
 import javafx.geometry.Pos;
 import javafx.scene.effect.Bloom;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static javafx.scene.input.KeyCode.*;
@@ -19,10 +19,8 @@ public class BombermanMenu extends FXGLMenu {
     public BombermanMenu() {
         super(MenuType.MAIN_MENU);
 
-        // UI background
-        ImageView iv1 = new ImageView();
-        iv1.setImage(new Image("assets/textures/background_demo.png"));
-        getContentRoot().getChildren().add(iv1);
+        var background = new Rectangle(FXGL.getAppWidth(), getAppHeight(), Color.BLACK);
+        getContentRoot().getChildren().add(background);
 
         // UI game title
         var title = getUIFactoryService().newText(getSettings().getTitle(), Color.WHITE, 50);
