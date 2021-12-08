@@ -5,6 +5,7 @@ import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.input.view.KeyView;
 import javafx.geometry.Pos;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,10 +24,16 @@ public class BombermanMenu extends FXGLMenu {
 
         // UI game title
         var title = getUIFactoryService().newText(getSettings().getTitle(), Color.WHITE, 80);
+        var dropShadow = new DropShadow();
+        dropShadow.setColor(Color.DARKBLUE);
+        dropShadow.setOffsetY(10);
+        dropShadow.setOffsetX(10);
+        title.setEffect(dropShadow);
         centerTextBind(title, getAppWidth() / 2.0, 250);
 
         // UI game version
         var version = getUIFactoryService().newText(getSettings().getVersion(), Color.WHITE, 40);
+        version.setEffect(dropShadow);
         centerTextBind(version, getAppWidth() / 2.0, 280);
         getContentRoot().getChildren().addAll(title, version);
 
