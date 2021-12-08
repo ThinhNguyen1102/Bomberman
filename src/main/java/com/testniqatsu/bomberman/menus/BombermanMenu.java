@@ -24,17 +24,19 @@ public class BombermanMenu extends FXGLMenu {
 
         // UI game title
         var title = getUIFactoryService().newText(getSettings().getTitle(), Color.WHITE, 80);
-        var dropShadow = new DropShadow();
-        dropShadow.setColor(Color.DARKBLUE);
-        dropShadow.setOffsetY(10);
-        dropShadow.setOffsetX(10);
-        title.setEffect(dropShadow);
         centerTextBind(title, getAppWidth() / 2.0, 250);
 
         // UI game version
         var version = getUIFactoryService().newText(getSettings().getVersion(), Color.WHITE, 40);
-        version.setEffect(dropShadow);
         centerTextBind(version, getAppWidth() / 2.0, 280);
+
+        var dropShadow = new DropShadow();
+        dropShadow.setColor(Color.DARKBLUE);
+        dropShadow.setOffsetY(10);
+        dropShadow.setOffsetX(10);
+
+        title.setEffect(dropShadow);
+        version.setEffect(dropShadow);
         getContentRoot().getChildren().addAll(title, version);
 
         // UI Button
