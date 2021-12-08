@@ -12,8 +12,8 @@ import javafx.util.Duration;
 
 import java.util.List;
 
-import static com.almasb.fxgl.dsl.FXGL.inc;
-import static com.almasb.fxgl.dsl.FXGL.onCollisionBegin;
+import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGL.image;
 
 @Required(AStarMoveComponent.class)
 public class OnealComponent extends NormalEnemy {
@@ -115,14 +115,14 @@ public class OnealComponent extends NormalEnemy {
 
     @Override
     protected void setAnimationMove() {
-        animDie = new AnimationChannel(FXGL.image("oneal.png"), 7, SIZE_FLAME, SIZE_FLAME,
-                Duration.seconds(1), 6, 6);
-        animWalkRight = new AnimationChannel(FXGL.image("oneal.png"), 7, SIZE_FLAME, SIZE_FLAME,
-                Duration.seconds(ANIM_TIME), 3, 5);
-        animWalkLeft = new AnimationChannel(FXGL.image("oneal.png"), 7, SIZE_FLAME, SIZE_FLAME,
-                Duration.seconds(ANIM_TIME), 0, 2);
-        animStop = new AnimationChannel(FXGL.image("oneal.png"), 7, SIZE_FLAME, SIZE_FLAME,
-                Duration.seconds(1), 1, 6);
+        animDie = new AnimationChannel(image("sprites.png"), 16, SIZE_FLAME, SIZE_FLAME,
+                Duration.seconds(ANIM_TIME), 38, 38);
+        animWalkRight = new AnimationChannel(image("sprites.png"), 16, SIZE_FLAME, SIZE_FLAME,
+                Duration.seconds(ANIM_TIME), 35, 37);
+        animWalkLeft = new AnimationChannel(image("sprites.png"), 16, SIZE_FLAME, SIZE_FLAME,
+                Duration.seconds(ANIM_TIME), 32, 34);
+        animStop = new AnimationChannel(image("sprites.png"), 16, SIZE_FLAME, SIZE_FLAME,
+                Duration.seconds(1), 32, 36);
     }
 
     @Override

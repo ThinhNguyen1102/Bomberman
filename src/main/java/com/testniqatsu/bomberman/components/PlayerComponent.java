@@ -17,7 +17,7 @@ import static com.testniqatsu.bomberman.constants.GameConst.*;
 
 public class PlayerComponent extends Component {
     private static final double ANIM_TIME_PLAYER = 0.5;
-    private static final int SIZE_FRAMES = 45;
+    private static final int SIZE_FRAMES = 48;
     private int bombsPlaced = 0;
     private boolean exploreCancel = false;
     private double lastX = 0;
@@ -51,7 +51,6 @@ public class PlayerComponent extends Component {
             inc("score", SCORE_ITEM);
             inc("speed", SPEED / 3);
             speed = geti("speed");
-            setAnimation(AnimationSkin.FLAME_PASS);
             getGameTimer().runOnceAfter(() -> {
                 inc("speed", -SPEED / 3);
                 speed = geti("speed");
@@ -91,48 +90,45 @@ public class PlayerComponent extends Component {
     }
 
     public void setAnimation(AnimationSkin animation) {
+        animDie = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                Duration.seconds(1.5), 12, 14);
+
         if (animation == AnimationSkin.NORMAL) {
-            animDie = new AnimationChannel(image("player_die.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(1.5), 0, 2);
+            animIdleDown = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 3, 3);
+            animIdleRight = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 6, 6);
+            animIdleUp = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 0, 0);
+            animIdleLeft = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 9, 9);
 
-            animIdleDown = new AnimationChannel(image("player_down.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 0);
-            animIdleRight = new AnimationChannel(image("player_right.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 0);
-            animIdleUp = new AnimationChannel(image("player_up.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 0);
-            animIdleLeft = new AnimationChannel(image("player_left.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 0);
-
-            animWalkDown = new AnimationChannel(image("player_down.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
+            animWalkDown = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 3, 5);
+            animWalkRight = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 6, 8);
+            animWalkUp = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
                     Duration.seconds(ANIM_TIME_PLAYER), 0, 2);
-            animWalkRight = new AnimationChannel(image("player_right.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 2);
-            animWalkUp = new AnimationChannel(image("player_up.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 2);
-            animWalkLeft = new AnimationChannel(image("player_left.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 2);
+            animWalkLeft = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 9, 11);
         } else {
-            animDie = new AnimationChannel(image("player_die.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(1.5), 0, 2);
+            animIdleDown = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 115, 115);
+            animIdleRight = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 118, 118);
+            animIdleUp = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 112, 112);
+            animIdleLeft = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 121, 121);
 
-            animIdleDown = new AnimationChannel(image("player_down_1.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 0);
-            animIdleRight = new AnimationChannel(image("player_right_1.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 0);
-            animIdleUp = new AnimationChannel(image("player_up_1.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 0);
-            animIdleLeft = new AnimationChannel(image("player_left_1.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 0);
-
-            animWalkDown = new AnimationChannel(image("player_down_1.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 2);
-            animWalkRight = new AnimationChannel(image("player_right_1.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 2);
-            animWalkUp = new AnimationChannel(image("player_up_1.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 2);
-            animWalkLeft = new AnimationChannel(image("player_left_1.png"), 3, SIZE_FRAMES, SIZE_FRAMES,
-                    Duration.seconds(ANIM_TIME_PLAYER), 0, 2);
+            animWalkDown = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 115, 117);
+            animWalkRight = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 118, 120);
+            animWalkUp = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 112, 114);
+            animWalkLeft = new AnimationChannel(image("sprites.png"), 16, SIZE_FRAMES, SIZE_FRAMES,
+                    Duration.seconds(ANIM_TIME_PLAYER), 121, 123);
         }
     }
 

@@ -234,7 +234,7 @@ public class BombermanApp extends GameApplication {
         physics.setGravity(0, 0);
 
         onCollisionBegin(BombermanType.PLAYER, BombermanType.PORTAL, this::endLevel);
-        onCollisionBegin(BombermanType.PLAYER, BombermanType.FIRE, (p, f) -> onPlayerKilled());
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.FLAME, (p, f) -> onPlayerKilled());
         onCollisionBegin(BombermanType.PLAYER, BombermanType.BALLOOM_E, (p, b) -> onPlayerKilled());
         onCollisionBegin(BombermanType.PLAYER, BombermanType.ONEAL_E, (p, o) -> onPlayerKilled());
         onCollisionBegin(BombermanType.PLAYER, BombermanType.DORIA_E, (p, d) -> onPlayerKilled());
@@ -275,7 +275,8 @@ public class BombermanApp extends GameApplication {
     }
 
     private void setLevel() {
-        FXGL.setLevelFromMap("bbm_level" + FXGL.geti("level") + ".tmx");
+        //FXGL.setLevelFromMap("bbm_level" + FXGL.geti("level") + ".tmx");
+        FXGL.setLevelFromMap("bbm_level2.tmx");
         Viewport viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, GAME_WORLD_WIDTH, GAME_WORLD_HEIGHT);
         viewport.bindToEntity(

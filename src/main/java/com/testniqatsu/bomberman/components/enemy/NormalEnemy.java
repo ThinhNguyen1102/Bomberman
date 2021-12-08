@@ -27,7 +27,7 @@ public abstract class NormalEnemy extends Component {
 
     protected final AnimatedTexture texture;
     protected static final double ANIM_TIME = 0.5;
-    protected static final int SIZE_FLAME = 45;
+    protected static final int SIZE_FLAME = 48;
 
     protected AnimationChannel animWalkRight;
     protected AnimationChannel animWalkLeft;

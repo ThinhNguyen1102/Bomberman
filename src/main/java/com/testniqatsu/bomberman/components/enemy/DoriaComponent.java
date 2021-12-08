@@ -10,8 +10,8 @@ import javafx.util.Duration;
 
 import java.util.List;
 
-import static com.almasb.fxgl.dsl.FXGL.inc;
-import static com.almasb.fxgl.dsl.FXGL.onCollisionBegin;
+import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGL.image;
 
 public class DoriaComponent extends OnealComponent {
     private double timeChangeMove = 0.0;
@@ -42,14 +42,14 @@ public class DoriaComponent extends OnealComponent {
 
     @Override
     protected void setAnimationMove() {
-        animDie = new AnimationChannel(FXGL.image("doria.png"), 7, SIZE_FLAME, SIZE_FLAME,
-                Duration.seconds(1), 6, 6);
-        animWalkRight = new AnimationChannel(FXGL.image("doria.png"), 7, SIZE_FLAME, SIZE_FLAME,
-                Duration.seconds(ANIM_TIME), 3, 5);
-        animWalkLeft = new AnimationChannel(FXGL.image("doria.png"), 7, SIZE_FLAME, SIZE_FLAME,
-                Duration.seconds(ANIM_TIME), 0, 2);
-        animStop = new AnimationChannel(FXGL.image("doria.png"), 7, SIZE_FLAME, SIZE_FLAME,
-                Duration.seconds(1), 1, 6);
+        animDie = new AnimationChannel(image("sprites.png"), 16, SIZE_FLAME, SIZE_FLAME,
+                Duration.seconds(ANIM_TIME), 30, 30);
+        animWalkRight = new AnimationChannel(image("sprites.png"), 16, SIZE_FLAME, SIZE_FLAME,
+                Duration.seconds(ANIM_TIME), 27, 29);
+        animWalkLeft = new AnimationChannel(image("sprites.png"), 16, SIZE_FLAME, SIZE_FLAME,
+                Duration.seconds(ANIM_TIME), 24, 26);
+        animStop = new AnimationChannel(image("sprites.png"), 16, SIZE_FLAME, SIZE_FLAME,
+                Duration.seconds(1), 24, 30);
     }
 
     @Override

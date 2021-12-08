@@ -22,14 +22,14 @@ public class FlameComponent extends Component {
     private AnimationChannel animationFlame;
 
 
-    public FlameComponent() {
+    public FlameComponent(int startF, int endF) {
         PhysicsWorld physics = getPhysicsWorld();
 
-        onCollisionBegin(BombermanType.FIRE, BombermanType.WALL, (f, w) -> {
+        onCollisionBegin(BombermanType.FLAME, BombermanType.WALL, (f, w) -> {
             f.removeFromWorld();
         });
 
-        onCollisionBegin(BombermanType.FIRE, BombermanType.AROUND_WALL, (f, w) -> {
+        onCollisionBegin(BombermanType.FLAME, BombermanType.AROUND_WALL, (f, w) -> {
             f.removeFromWorld();
         });
 
@@ -39,30 +39,31 @@ public class FlameComponent extends Component {
 
         setCollisionBreak(BombermanType.CORAL, "coral_break");
 
-        onCollisionBegin(BombermanType.FIRE, BombermanType.BALLOOM_E, (f, b) -> {
+        onCollisionBegin(BombermanType.FLAME, BombermanType.BALLOOM_E, (f, b) -> {
             b.getComponent(BalloomComponent.class).enemyDie();
             getGameTimer().runOnceAfter(b::removeFromWorld, Duration.seconds(1));
         });
 
-        onCollisionBegin(BombermanType.FIRE, BombermanType.ONEAL_E, (f, o) -> {
+        onCollisionBegin(BombermanType.FLAME, BombermanType.ONEAL_E, (f, o) -> {
             o.getComponent(OnealComponent.class).enemyDie();
             getGameTimer().runOnceAfter(o::removeFromWorld, Duration.seconds(1));
         });
 
-        onCollisionBegin(BombermanType.FIRE, BombermanType.DORIA_E, (f, d) -> {
+        onCollisionBegin(BombermanType.FLAME, BombermanType.DORIA_E, (f, d) -> {
             d.getComponent(DoriaComponent.class).enemyDie();
             getGameTimer().runOnceAfter(d::removeFromWorld, Duration.seconds(1));
         });
 
-        animationFlame = new AnimationChannel(image("bomb_exploded_1.png"), 3, SIZE_BLOCK, SIZE_BLOCK,
-                Duration.seconds(0.4), 0, 2);
+        animationFlame = new AnimationChannel(image("sprites.png"), 16, SIZE_BLOCK, SIZE_BLOCK,
+                Duration.seconds(0.4), startF, endF);
+
 
         texture = new AnimatedTexture(animationFlame);
         texture.loop();
     }
 
     private void setCollisionBreak(BombermanType type, String nameTypeBreakAnim) {
-        onCollisionBegin(BombermanType.FIRE, type, (f, t) -> {
+        onCollisionBegin(BombermanType.FLAME, type, (f, t) -> {
             int cellX = (int)((t.getX() + 24) / SIZE_BLOCK);
             int cellY = (int)((t.getY() + 24) / SIZE_BLOCK);
 

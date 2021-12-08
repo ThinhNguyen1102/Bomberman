@@ -37,14 +37,13 @@ public class BalloomComponent extends NormalEnemy {
 
     @Override
     protected void setAnimationMove() {
-        animDie = new AnimationChannel(image("balloom.png"), 7, SIZE_FLAME, SIZE_FLAME,
-                Duration.seconds(1), 0, 0);
-        animWalkRight = new AnimationChannel(image("balloom.png"), 7, SIZE_FLAME, SIZE_FLAME,
-                Duration.seconds(ANIM_TIME), 4, 6);
-        animWalkLeft = new AnimationChannel(image("balloom.png"), 7, SIZE_FLAME, SIZE_FLAME,
-                Duration.seconds(ANIM_TIME), 1, 3);
-        animStop = new AnimationChannel(image("balloom.png"), 7, SIZE_FLAME, SIZE_FLAME,
-                Duration.seconds(1), 1, 6);
+        animDie = new AnimationChannel(image("sprites.png"), 16, SIZE_FLAME, SIZE_FLAME,
+                Duration.seconds(ANIM_TIME), 22, 22);
+        animWalkRight = new AnimationChannel(image("sprites.png"), 16, SIZE_FLAME, SIZE_FLAME,
+                Duration.seconds(ANIM_TIME), 19, 21);
+        animWalkLeft = new AnimationChannel(image("sprites.png"), 16, SIZE_FLAME, SIZE_FLAME,
+                Duration.seconds(ANIM_TIME), 16, 18);
+        animStop = new AnimationChannel(image("sprites.png"), 16, SIZE_FLAME, SIZE_FLAME,
+                Duration.seconds(1), 16, 22);
     }
-
 }
