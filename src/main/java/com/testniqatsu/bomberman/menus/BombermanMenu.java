@@ -39,9 +39,9 @@ public class BombermanMenu extends FXGLMenu {
         // UI Button
         var menuBox = new VBox(
                 2,
-                new MenuButton("New Game", () -> fireNewGame()),
-                new MenuButton("Control", () -> instructions()),
-                new MenuButton("Exit", () -> fireExit())
+                new MenuButton("New Game", this::fireNewGame),
+                new MenuButton("Control", this::instructions),
+                new MenuButton("Exit", this::fireExit)
         );
 
         // set pos menu button
@@ -58,7 +58,7 @@ public class BombermanMenu extends FXGLMenu {
         pane.setVgap(10);
         pane.addRow(0, getUIFactoryService().newText("Movement"),
                 new HBox(4, new KeyView(W), new KeyView(S), new KeyView(A), new KeyView(D)));
-        pane.addRow(1, getUIFactoryService().newText("Placed Bomb"),
+        pane.addRow(1, getUIFactoryService().newText("Place Bomb"),
                 new KeyView(SPACE));
 
         getDialogService().showBox("How to Play", pane, getUIFactoryService().newButton("OK"));
