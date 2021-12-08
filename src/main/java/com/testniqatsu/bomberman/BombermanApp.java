@@ -34,7 +34,7 @@ public class BombermanApp extends GameApplication {
     private static final String TITLE = "BOMBERMAN";
     private static final String VERSION = "1.0";
 
-    private static final String FONT = "Quinquefive-Ea6d4.ttf";
+    private static final String FONT = "Retro Gaming.ttf";
 
     private static final int TIME_PER_LEVEL = 100;
     private static final int START_LEVEL = 0;

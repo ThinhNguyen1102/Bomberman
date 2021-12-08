@@ -5,7 +5,6 @@ import com.almasb.fxgl.app.scene.MenuType;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.input.view.KeyView;
 import javafx.geometry.Pos;
-import javafx.scene.effect.Bloom;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,14 +22,11 @@ public class BombermanMenu extends FXGLMenu {
         getContentRoot().getChildren().add(background);
 
         // UI game title
-        var title = getUIFactoryService().newText(getSettings().getTitle(), Color.WHITE, 50);
-        title.setStroke(Color.WHITESMOKE);
-        title.setStrokeWidth(1.5);
-        title.setEffect(new Bloom(0.6));
+        var title = getUIFactoryService().newText(getSettings().getTitle(), Color.WHITE, 80);
         centerTextBind(title, getAppWidth() / 2.0, 250);
 
         // UI game version
-        var version = getUIFactoryService().newText(getSettings().getVersion(), Color.WHITE, 20);
+        var version = getUIFactoryService().newText(getSettings().getVersion(), Color.WHITE, 40);
         centerTextBind(version, getAppWidth() / 2.0, 280);
         getContentRoot().getChildren().addAll(title, version);
 
