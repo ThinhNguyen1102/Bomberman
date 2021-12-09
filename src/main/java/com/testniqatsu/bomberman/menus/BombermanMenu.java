@@ -18,10 +18,17 @@ import static javafx.scene.input.KeyCode.*;
 public class BombermanMenu extends FXGLMenu {
     public BombermanMenu() {
         super(MenuType.MAIN_MENU);
+        displayBackground();
+        displayTitle();
+        displayOptionsBox();
+    }
 
+    private void displayBackground() {
         var background = new Rectangle(FXGL.getAppWidth(), getAppHeight(), Color.BLACK);
         getContentRoot().getChildren().add(background);
+    }
 
+    private void displayTitle() {
         // UI game title
         var title = getUIFactoryService().newText(getSettings().getTitle(), Color.WHITE, 80);
         centerTextBind(title, getAppWidth() / 2.0, 250);
@@ -37,8 +44,11 @@ public class BombermanMenu extends FXGLMenu {
 
         title.setEffect(dropShadow);
         version.setEffect(dropShadow);
-        getContentRoot().getChildren().addAll(title, version);
 
+        getContentRoot().getChildren().addAll(title, version);
+    }
+
+    private void displayOptionsBox() {
         var buttonTextSize = 40;
 
         // UI Button
@@ -48,7 +58,7 @@ public class BombermanMenu extends FXGLMenu {
                 new MenuButton("Exit", buttonTextSize, this::fireExit)
         );
 
-        var offsetCenterX = menuBox.getWidth() / 2.0;
+        var offsetCenterX = buttonTextSize * 2.5;
         var offsetCenterY = buttonTextSize * 2;
 
         // set pos menu button
@@ -63,7 +73,7 @@ public class BombermanMenu extends FXGLMenu {
         GridPane pane = new GridPane();
         pane.setHgap(25);
         pane.setVgap(10);
-        pane.addRow(0, getUIFactoryService().newText("Movement"),
+        pane.addRow(0, getUIFactoryService().newText("Control"),
                 new HBox(4, new KeyView(W), new KeyView(S), new KeyView(A), new KeyView(D)));
         pane.addRow(1, getUIFactoryService().newText("Place Bomb"),
                 new KeyView(SPACE));
