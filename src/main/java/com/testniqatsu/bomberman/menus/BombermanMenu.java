@@ -39,18 +39,22 @@ public class BombermanMenu extends FXGLMenu {
         version.setEffect(dropShadow);
         getContentRoot().getChildren().addAll(title, version);
 
+        var buttonTextSize = 40;
+
         // UI Button
         var menuBox = new VBox(
-                2,
-                new MenuButton("New Game", this::fireNewGame),
-                new MenuButton("Control", this::instructions),
-                new MenuButton("Exit", this::fireExit)
+                new MenuButton("New Game", buttonTextSize, this::fireNewGame),
+                new MenuButton("Control", buttonTextSize, this::instructions),
+                new MenuButton("Exit", buttonTextSize, this::fireExit)
         );
+
+        var offsetCenterX = menuBox.getWidth() / 2.0;
+        var offsetCenterY = buttonTextSize * 2;
 
         // set pos menu button
         menuBox.setAlignment(Pos.CENTER_LEFT);
-        menuBox.setTranslateX(getAppWidth() / 2.0 - 80);
-        menuBox.setTranslateY(getAppHeight() / 2.0 + 80);
+        menuBox.setTranslateX(getAppWidth() / 2.0 - offsetCenterX);
+        menuBox.setTranslateY(getAppHeight() / 2.0 + offsetCenterY);
         menuBox.setSpacing(20);
         getContentRoot().getChildren().addAll(menuBox);
     }

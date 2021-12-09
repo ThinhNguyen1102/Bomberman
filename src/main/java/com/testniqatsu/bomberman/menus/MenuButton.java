@@ -4,10 +4,17 @@ import com.almasb.fxgl.dsl.FXGL;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Parent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 public class MenuButton extends Parent {
+    Text text;
+
     MenuButton(String name, Runnable action) {
-        var text = FXGL.getUIFactoryService().newText(name, Color.WHITE, 20);
+        this(name, 20, action);
+    }
+
+    MenuButton(String name, int size, Runnable action) {
+        text = FXGL.getUIFactoryService().newText(name, Color.WHITE, size);
         text.setStrokeWidth(1.5);
         text.strokeProperty().bind(text.fillProperty());
 

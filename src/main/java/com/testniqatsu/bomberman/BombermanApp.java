@@ -28,7 +28,7 @@ import static com.almasb.fxgl.dsl.FXGLForKtKt.getPhysicsWorld;
 import static com.testniqatsu.bomberman.constants.GameConst.*;
 
 public class BombermanApp extends GameApplication {
-    private static final int VIEW_WIDTH = 720;
+    private static final int VIEW_WIDTH = 1080;
     private static final int VIEW_HEIGHT = 720;
 
     private static final String TITLE = "BOMBERMAN";
