@@ -12,9 +12,12 @@ import com.almasb.fxgl.physics.PhysicsWorld;
 import com.testniqatsu.bomberman.components.PlayerComponent;
 import com.testniqatsu.bomberman.menus.BombermanGameMenu;
 import com.testniqatsu.bomberman.menus.BombermanMenu;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -127,24 +130,32 @@ public class BombermanApp extends GameApplication {
 
     @Override
     protected void initUI() {
-        var margin = 20;
-        var labelWidth = (VIEW_WIDTH - 2 * margin) / 5;
+        var HUDRow0 = new HBox(setTextUI("level", "LEVEL %d"));
+        HUDRow0.setAlignment(Pos.CENTER_LEFT);
 
-        FXGL.addUINode(setTextUI("score", "📰: %d"),  margin, 30);
+        var HUDRow1 = new HBox(
+                setTextUI("score", "SCORE: %d"),
+                setTextUI("speed", "SPEED: %d"),
+                setTextUI("flame", "FLAME: %d"),
+                setTextUI("bomb", "BOMB: %d"),
+                setTextUI("time", "TIME: %d")
+        );
+        HUDRow1.setAlignment(Pos.CENTER);
+        HUDRow1.setSpacing(20);
 
-        FXGL.addUINode(setTextUI("speed", "👟: %d"), margin + labelWidth, 30);
+        var HUD = new VBox(
+                HUDRow0,
+                HUDRow1
+        );
+        HUD.setSpacing(10);
 
-        FXGL.addUINode(setTextUI("flame", "🔥: %d"), margin + 2 * labelWidth, 30);
-
-        FXGL.addUINode(setTextUI("bomb", "💣: %d"), margin + 3 * labelWidth, 30);
-
-        FXGL.addUINode(setTextUI("time", "⏰: %d"), margin + 4 * labelWidth, 30);
+        FXGL.addUINode(HUD);
     }
 
     private Label setTextUI(String valGame, String content) {
         Label label = new Label();
         label.setTextFill(Color.BLACK);
-        label.setFont(Font.font(FONT, FontWeight.EXTRA_BOLD, 20));
+        label.setFont(Font.font(FONT, FontWeight.EXTRA_BOLD, 30));
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.LIGHTGREEN);
         label.setEffect(shadow);
@@ -221,7 +232,7 @@ public class BombermanApp extends GameApplication {
         physics.setGravity(0, 0);
 
         onCollisionBegin(BombermanType.PLAYER, BombermanType.PORTAL, this::endLevel);
-        onCollisionBegin(BombermanType.PLAYER, BombermanType.FIRE, (p, f) -> onPlayerKilled());
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.FLAME, (p, f) -> onPlayerKilled());
         onCollisionBegin(BombermanType.PLAYER, BombermanType.BALLOOM_E, (p, b) -> onPlayerKilled());
     }
 
