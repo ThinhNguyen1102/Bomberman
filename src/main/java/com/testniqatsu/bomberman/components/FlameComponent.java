@@ -16,8 +16,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.testniqatsu.bomberman.constants.GameConst.SIZE_BLOCK;
 
 public class FlameComponent extends Component {
-    private AnimatedTexture texture;
-    private AnimationChannel animationFlame;
+    private final AnimatedTexture texture;
 
 
     public FlameComponent(int startF, int endF) {
@@ -64,11 +63,19 @@ public class FlameComponent extends Component {
 
         onCollisionBegin(BombermanType.FLAME, BombermanType.PASS_E, (f, pa) -> {
             pa.getComponent(PassComponent.class).enemyDie();
-            getGameTimer().runOnceAfter(pa::removeFromWorld, Duration.seconds(1));
+            getGameTimer().runOnceAfter(() -> {
+                switch (randomInt()) {
+                    case 1, 3 -> spawn("balloom_e", new SpawnData(pa.getX(), pa.getY()));
+                    case 2 -> spawn("dahl_e", new SpawnData(pa.getX(), pa.getY()));
+                    case 4, 5 -> spawn("ovape_e", new SpawnData(pa.getX(), pa.getY()));
+                    default -> {}
+                }
+                inc("numOfEnemy", 1);
+                pa.removeFromWorld();
+            }, Duration.seconds(1));
         });
 
-
-        animationFlame = new AnimationChannel(image("sprites.png"), 16, SIZE_BLOCK, SIZE_BLOCK,
+        AnimationChannel animationFlame = new AnimationChannel(image("sprites.png"), 16, SIZE_BLOCK, SIZE_BLOCK,
                 Duration.seconds(0.4), startF, endF);
 
 
@@ -89,6 +96,11 @@ public class FlameComponent extends Component {
             t.removeFromWorld();
             getGameTimer().runOnceAfter(bBreak::removeFromWorld, Duration.seconds(1));
         });
+    }
+
+    // random 1 - 5
+    private int randomInt() {
+        return (int) ((Math.random()) * 5 + 1);
     }
 
 

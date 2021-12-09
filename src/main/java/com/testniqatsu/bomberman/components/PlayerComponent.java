@@ -192,9 +192,9 @@ public class PlayerComponent extends Component {
             if (!(dx == 0 && dy == 0)) {
                 if (currMove == StatusDirection.DOWN
                         || currMove == StatusDirection.UP) {
-                    play("walk_2.wav");
-                } else {
                     play("walk_1.wav");
+                } else {
+                    play("walk_2.wav");
                 }
             }
         }

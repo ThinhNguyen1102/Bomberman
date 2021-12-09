@@ -8,6 +8,8 @@ import com.almasb.fxgl.app.scene.Viewport;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.pathfinding.CellState;
+import com.almasb.fxgl.pathfinding.astar.AStarGrid;
 import com.almasb.fxgl.physics.PhysicsWorld;
 import com.testniqatsu.bomberman.components.PlayerComponent;
 import com.testniqatsu.bomberman.menus.BombermanGameMenu;
@@ -16,9 +18,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
@@ -39,7 +44,7 @@ public class BombermanApp extends GameApplication {
 
     private static final String FONT = "Retro Gaming.ttf";
 
-    private static final int TIME_PER_LEVEL = 100;
+    private static final int TIME_PER_LEVEL = 300;
     private static final int START_LEVEL = 0;
 
     public static boolean isSoundEnabled = true;
@@ -101,12 +106,15 @@ public class BombermanApp extends GameApplication {
         vars.put("speed", SPEED);
         vars.put("time", TIME_PER_LEVEL);
         vars.put("level", START_LEVEL);
+        vars.put("immortality", false);
+        vars.put("numOfEnemy", 10);
+        vars.put("life", 3);
     }
 
     @Override
     protected void onPreInit() {
-        getSettings().setGlobalMusicVolume(isSoundEnabled ? 0.1 : 0.0);
-        getSettings().setGlobalSoundVolume(isSoundEnabled ? 0.1 : 0.0);
+        getSettings().setGlobalMusicVolume(isSoundEnabled ? 0.05 : 0.0);
+        getSettings().setGlobalSoundVolume(isSoundEnabled ? 0.4 : 0.0);
         loopBGM("title_screen.mp3");
     }
 
@@ -114,16 +122,21 @@ public class BombermanApp extends GameApplication {
     protected void onUpdate(double tpf) {
 
         if (geti("time") == 0) {
-            getDialogService().showMessageBox("Game Over!!!", getGameController()::startNewGame);
+            showMessage("Game Over leu leu!!!", () -> {
+                getGameController().gotoMainMenu();
+            });
         }
 
         if (requestNewGame) {
             requestNewGame = false;
             getPlayer().getComponent(PlayerComponent.class).die();
-            getPlayer().getComponent(PlayerComponent.class).setExploreCancel(true);
             getGameTimer().runOnceAfter(() -> getGameScene().getViewport().fade(() -> {
-                set("bomb", 1);
+                if (geti("life") <= 0) {
+                    showMessage("Game Over leu leu!!!",
+                            () -> getGameController().gotoMainMenu());
+                }
                 setLevel();
+                set("immortality", false);
             }), Duration.seconds(0.5));
         }
     }
@@ -138,10 +151,12 @@ public class BombermanApp extends GameApplication {
                 setTextUI("speed", "SPEED: %d"),
                 setTextUI("flame", "FLAME: %d"),
                 setTextUI("bomb", "BOMB: %d"),
-                setTextUI("time", "TIME: %d")
+                setTextUI("time", "TIME: %d"),
+                setTextUI("life", "Life: %d"),
+                setTextUI("numOfEnemy", "E: %d")
         );
         HUDRow1.setAlignment(Pos.CENTER);
-        HUDRow1.setSpacing(20);
+        HUDRow1.setSpacing(40);
 
         var HUD = new VBox(
                 HUDRow0,
@@ -152,13 +167,14 @@ public class BombermanApp extends GameApplication {
         var leftMargin = 48;
         var topMargin = 0;
 
-        FXGL.addUINode(HUD, leftMargin, topMargin);
+        getGameTimer().runOnceAfter(() -> FXGL.addUINode(HUD, leftMargin, topMargin), Duration.seconds(3));
+
     }
 
     private Label setTextUI(String valGame, String content) {
         Label label = new Label();
         label.setTextFill(Color.BLACK);
-        label.setFont(Font.font(FONT, FontWeight.EXTRA_BOLD, 30));
+        label.setFont(Font.font("Comic Sans MS", FontWeight.EXTRA_BOLD, 20));
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.LIGHTGREEN);
         label.setEffect(shadow);
@@ -237,9 +253,17 @@ public class BombermanApp extends GameApplication {
         onCollisionBegin(BombermanType.PLAYER, BombermanType.PORTAL, this::endLevel);
         onCollisionBegin(BombermanType.PLAYER, BombermanType.FLAME, (p, f) -> onPlayerKilled());
         onCollisionBegin(BombermanType.PLAYER, BombermanType.BALLOOM_E, (p, b) -> onPlayerKilled());
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.DAHL_E, (p, dh) -> onPlayerKilled());
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.ONEAL_E, (p, o) -> onPlayerKilled());
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.DORIA_E, (p, d) -> onPlayerKilled());
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.OVAPE_E, (p, o) -> onPlayerKilled());
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.PASS_E, (p, pa) -> onPlayerKilled());
     }
 
     private void endLevel(Entity player, Entity portal) {
+        if (geti("numOfEnemy") > 0) return;
+        play("next_level.wav");
+        getPlayer().getComponent(PlayerComponent.class).setExploreCancel(true);
         var timer = FXGL.getGameTimer();
         timer.runOnceAfter(this::fadeToNextLevel, Duration.seconds(1));
     }
@@ -251,21 +275,53 @@ public class BombermanApp extends GameApplication {
     }
 
     private void onPlayerKilled() {
-        requestNewGame = true;
+        if (!getb("immortality")) {
+            set("immortality", true);
+            if (geti("life") > 0) inc("life", -1);
+            set("score", 0);
+            getPlayer().getComponent(PlayerComponent.class).setExploreCancel(true);
+            requestNewGame = true;
+        }
     }
 
     private void loadNextLevel() {
-        if (FXGL.geti("level") == MAX_LEVEL) {
-            showMessage("You win !!!");
-            return;
+        if (FXGL.geti("level") >= MAX_LEVEL) {
+            showMessage("You Win! bum bum bum!!!", () -> {
+                getGameController().gotoMainMenu();
+            });
+        } else {
+            getSettings().setGlobalMusicVolume(0);
+            play("stage_start.wav");
+            inc("level", +1);
+            AnchorPane pane = creStartStage();
+            FXGL.addUINode(pane);
+            getGameTimer().runOnceAfter(() -> {
+                FXGL.removeUINode(pane);
+                getSettings().setGlobalMusicVolume(0.05);
+                setLevel();
+            }, Duration.seconds(3));
         }
+    }
 
-        inc("level", +1);
-        setLevel();
+    private AnchorPane creStartStage() {
+        AnchorPane pane = new AnchorPane();
+        Shape shape = new Rectangle(1080, 720, Color.BLACK);
+
+        Label label = new Label();
+        label.setText("STAGE " + geti("level"));
+        label.setTranslateX((SCREEN_WIDTH >> 1) - 80);
+        label.setTranslateY((SCREEN_HEIGHT >> 1) - 20);
+        label.setTextFill(Color.WHITE);
+        label.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 40));
+
+        pane.getChildren().addAll(shape, label);
+        return pane;
     }
 
     private void setLevel() {
         FXGL.setLevelFromMap("bbm_level" + FXGL.geti("level") + ".tmx");
+//        FXGL.setLevelFromMap("bbm_level2.tmx");
+
         Viewport viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, GAME_WORLD_WIDTH, GAME_WORLD_HEIGHT);
         viewport.bindToEntity(
@@ -274,6 +330,36 @@ public class BombermanApp extends GameApplication {
                 FXGL.getAppHeight() / 2.0f);
         viewport.setLazy(true);
         set("time", TIME_PER_LEVEL);
+        set("bomb", 1);
+        set("flame", 1);
+        setGridForAi();
+    }
+
+    private void setGridForAi() {
+        AStarGrid grid = AStarGrid.fromWorld(getGameWorld(), 31, 15,
+                SIZE_BLOCK, SIZE_BLOCK, (type) -> {
+                    if (type == BombermanType.BRICK
+                            || type == BombermanType.WALL
+                            || type == BombermanType.GRASS
+                            || type == BombermanType.CORAL
+                            || type == BombermanType.AROUND_WALL) {
+                        return CellState.NOT_WALKABLE;
+                    } else {
+                        return CellState.WALKABLE;
+                    }
+                });
+
+        AStarGrid _grid = AStarGrid.fromWorld(getGameWorld(), 31, 15,
+                SIZE_BLOCK, SIZE_BLOCK, (type) -> {
+                    if (type == BombermanType.AROUND_WALL || type == BombermanType.WALL) {
+                        return CellState.NOT_WALKABLE;
+                    } else {
+                        return CellState.WALKABLE;
+                    }
+                });
+
+        set("grid", grid);
+        set("_grid", _grid);
     }
 
     public static void main(String[] args) {

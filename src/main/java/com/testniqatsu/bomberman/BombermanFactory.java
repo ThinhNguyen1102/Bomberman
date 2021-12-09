@@ -187,7 +187,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.BALLOOM_E)
                 .bbox(new HitBox(BoundingShape.circle(radius - 2)))
-                .atAnchored(new Point2D(radius, radius), new Point2D(radius, radius))
+                .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
                 .with(new BalloomComponent())
                 .with(new CollidableComponent(true))
                 .zIndex(2)
@@ -199,7 +199,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.DAHL_E)
                 .bbox(new HitBox(BoundingShape.circle(radius - 2)))
-                .atAnchored(new Point2D(radius, radius), new Point2D(radius, radius))
+                .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
                 .with(new DahlComponent())
                 .with(new CollidableComponent(true))
                 .zIndex(2)
@@ -211,7 +211,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.OVAPE_E)
                 .bbox(new HitBox(BoundingShape.circle(radius - 2)))
-                .atAnchored(new Point2D(radius, radius), new Point2D(radius, radius))
+                .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
                 .with(new OvapeComponent())
                 .with(new CollidableComponent(true))
                 .zIndex(2)
@@ -297,7 +297,7 @@ public class BombermanFactory implements EntityFactory {
                 .type(BombermanType.BRICK)
                 .bbox(new HitBox(BoundingShape.box(width, height)))
                 .with(new BlockComponent(104, 104, TIME_PER_LEVEL))
-//                .with(new PhysicsComponent())
+                .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
                 .build();
     }
@@ -328,7 +328,7 @@ public class BombermanFactory implements EntityFactory {
                 .type(BombermanType.GRASS)
                 .bbox(new HitBox(BoundingShape.box(width, height)))
                 .with(new BlockComponent(88, 88, TIME_PER_LEVEL))
-//                .with(new PhysicsComponent())
+                .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
                 .build();
     }
@@ -385,7 +385,7 @@ public class BombermanFactory implements EntityFactory {
     public Entity newItem3(SpawnData data) {
         return entityBuilder(data)
                 .type(BombermanType.SPEED_ITEM)
-                .with(new BlockComponent(138,138, TIME_PER_LEVEL))
+                .view("photo/powerup_speed.png")
                 .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
                 .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
@@ -397,7 +397,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.BOMB_ITEM)
                 .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
-                .with(new BlockComponent(136,136, TIME_PER_LEVEL))
+                .view("photo/powerup_bombs.png")
                 .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
                 .build();
@@ -408,7 +408,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.FLAME_ITEM)
                 .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
-                .with(new BlockComponent(137, 137, TIME_PER_LEVEL))
+                .view("photo/powerup_flames.png")
                 .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
                 .build();
@@ -419,7 +419,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.FLAME_PASS_ITEM)
                 .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
-                .with(new BlockComponent(142, 142, TIME_PER_LEVEL))
+                .view("photo/powerup_flamepass.png")
                 .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
                 .build();

@@ -22,7 +22,7 @@
 6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6
 </data>
  </layer>
- <objectgroup id="6" name="Bricks" visible="0">
+ <objectgroup id="6" name="Bricks">
   <object id="528" name="brick" type="brick" x="48" y="624" width="48" height="48">
    <ellipse/>
   </object>
@@ -450,7 +450,7 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup id="7" name="Enemies" visible="0" locked="1">
+ <objectgroup id="7" name="Enemies" locked="1">
   <object id="592" name="Enemy" type="balloom_e" x="48" y="336" width="48" height="48"/>
   <object id="593" name="Enemy" type="oneal_e" x="624" y="624" width="48" height="48"/>
   <object id="601" name="Enemy" type="oneal_e" x="1056" y="144" width="48" height="48"/>
@@ -462,23 +462,23 @@
   <object id="527" name="Enemy" type="balloom_e" x="1296" y="528" width="48" height="48"/>
   <object id="600" name="Enemy" type="dahl_e" x="432" y="144" width="48" height="48"/>
  </objectgroup>
- <objectgroup id="4" name="Around Walls" visible="0" locked="1">
+ <objectgroup id="4" name="Around Walls" locked="1">
   <object id="414" type="around_wall" x="0" y="96" width="48" height="624"/>
   <object id="415" type="around_wall" x="48" y="96" width="1392" height="48"/>
   <object id="416" type="around_wall" x="1440" y="96" width="48" height="624"/>
   <object id="417" type="around_wall" x="48" y="672" width="1392" height="48"/>
  </objectgroup>
- <objectgroup id="3" name="Items" visible="0">
-  <object id="154" name="Item" type="speedItem" x="244" y="148" width="40" height="40"/>
-  <object id="156" name="Item" type="speedItem" x="484" y="532" width="40" height="40"/>
-  <object id="157" name="Item" type="speedItem" x="916" y="436" width="40" height="40"/>
-  <object id="158" name="Item" type="flameItem" x="1252" y="244" width="40" height="40"/>
-  <object id="160" name="Item" type="bombsItem" x="724" y="148" width="40" height="40"/>
-  <object id="161" name="Item" type="bombsItem" x="244" y="484" width="40" height="40"/>
-  <object id="162" name="Item" type="flamePassItem" x="52" y="628" width="40" height="40"/>
-  <object id="163" name="Item" type="flamePassItem" x="532" y="340" width="40" height="40"/>
-  <object id="164" name="Item" type="flamePassItem" x="724" y="580" width="40" height="40"/>
-  <object id="159" name="Item" type="flameItem" x="1060" y="628" width="40" height="40"/>
-  <object id="599" name="Item" type="portal" x="244" y="340" width="40" height="40"/>
+ <objectgroup id="3" name="Items">
+  <object id="154" name="Item" type="speedItem" x="246" y="150" width="36" height="36"/>
+  <object id="156" name="Item" type="speedItem" x="486" y="534" width="36" height="36"/>
+  <object id="157" name="Item" type="speedItem" x="918" y="438" width="36" height="36"/>
+  <object id="158" name="Item" type="flameItem" x="1254" y="246" width="36" height="36"/>
+  <object id="160" name="Item" type="bombsItem" x="726" y="150" width="36" height="36"/>
+  <object id="161" name="Item" type="bombsItem" x="246" y="486" width="36" height="36"/>
+  <object id="162" name="Item" type="flamePassItem" x="54" y="630" width="36" height="36"/>
+  <object id="163" name="Item" type="flamePassItem" x="534" y="342" width="36" height="36"/>
+  <object id="164" name="Item" type="flamePassItem" x="726" y="582" width="36" height="36"/>
+  <object id="159" name="Item" type="flameItem" x="1062" y="630" width="36" height="36"/>
+  <object id="599" name="Item" type="portal" x="246" y="342" width="36" height="36"/>
  </objectgroup>
 </map>

@@ -10,7 +10,7 @@ public class MenuButton extends Parent {
     Text text;
 
     MenuButton(String name, Runnable action) {
-        this(name, 20, action);
+        this(name, 30, action);
     }
 
     MenuButton(String name, int size, Runnable action) {
