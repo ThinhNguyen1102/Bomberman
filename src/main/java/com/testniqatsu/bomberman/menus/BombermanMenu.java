@@ -30,7 +30,7 @@ public class BombermanMenu extends FXGLMenu {
 
     private void displayTitle() {
         // UI game title
-        var title = getUIFactoryService().newText(getSettings().getTitle(), Color.WHITE, 80);
+        var title = getUIFactoryService().newText(getSettings().getTitle(), Color.WHITE, 100);
         centerTextBind(title, getAppWidth() / 2.0, 250);
 
         // UI game version
@@ -53,9 +53,9 @@ public class BombermanMenu extends FXGLMenu {
 
         // UI Button
         var menuBox = new VBox(
-                new MenuButton("New Game", buttonTextSize, this::fireNewGame),
-                new MenuButton("Control", buttonTextSize, this::instructions),
-                new MenuButton("Exit", buttonTextSize, this::fireExit)
+                new MenuButton("NEW GAME", buttonTextSize, this::fireNewGame),
+                new MenuButton("CONTROL", buttonTextSize, this::instructions),
+                new MenuButton("EXIT", buttonTextSize, this::fireExit)
         );
 
         var offsetCenterX = buttonTextSize * 2.5;
@@ -70,15 +70,15 @@ public class BombermanMenu extends FXGLMenu {
     }
 
     private void instructions() {
-        GridPane pane = new GridPane();
+        var pane = new GridPane();
         pane.setHgap(25);
         pane.setVgap(10);
-        pane.addRow(0, getUIFactoryService().newText("Control"),
+        pane.addRow(0, getUIFactoryService().newText("CONTROL"),
                 new HBox(4, new KeyView(W), new KeyView(S), new KeyView(A), new KeyView(D)));
-        pane.addRow(1, getUIFactoryService().newText("Place Bomb"),
+        pane.addRow(1, getUIFactoryService().newText("PLACE BOMB"),
                 new KeyView(SPACE));
 
-        getDialogService().showBox("How to Play", pane, getUIFactoryService().newButton("OK"));
+        FXGL.getDialogService().showBox("HOW TO PLAY", pane, getUIFactoryService().newButton("OK"));
     }
 
 }

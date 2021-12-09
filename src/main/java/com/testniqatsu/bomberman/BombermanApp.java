@@ -144,7 +144,7 @@ public class BombermanApp extends GameApplication {
     private Label setTextUI(String valGame, String content) {
         Label label = new Label();
         label.setTextFill(Color.BLACK);
-        label.setFont(Font.font("Comic Sans MS", FontWeight.EXTRA_BOLD, 20));
+        label.setFont(Font.font(FONT, FontWeight.EXTRA_BOLD, 20));
         DropShadow shadow = new DropShadow();
         shadow.setColor(Color.LIGHTGREEN);
         label.setEffect(shadow);
