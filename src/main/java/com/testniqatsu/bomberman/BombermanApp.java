@@ -149,7 +149,10 @@ public class BombermanApp extends GameApplication {
         );
         HUD.setSpacing(10);
 
-        FXGL.addUINode(HUD);
+        var leftMargin = 48;
+        var topMargin = 0;
+
+        FXGL.addUINode(HUD, leftMargin, topMargin);
     }
 
     private Label setTextUI(String valGame, String content) {
