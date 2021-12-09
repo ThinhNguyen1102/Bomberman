@@ -9,9 +9,7 @@ import com.almasb.fxgl.physics.PhysicsWorld;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.testniqatsu.bomberman.BombermanType;
-import com.testniqatsu.bomberman.components.enemy.BalloomComponent;
-import com.testniqatsu.bomberman.components.enemy.DoriaComponent;
-import com.testniqatsu.bomberman.components.enemy.OnealComponent;
+import com.testniqatsu.bomberman.components.enemy.*;
 import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -53,6 +51,22 @@ public class FlameComponent extends Component {
             d.getComponent(DoriaComponent.class).enemyDie();
             getGameTimer().runOnceAfter(d::removeFromWorld, Duration.seconds(1));
         });
+
+        onCollisionBegin(BombermanType.FLAME, BombermanType.DAHL_E, (f, d) -> {
+            d.getComponent(DahlComponent.class).enemyDie();
+            getGameTimer().runOnceAfter(d::removeFromWorld, Duration.seconds(1));
+        });
+
+        onCollisionBegin(BombermanType.FLAME, BombermanType.OVAPE_E, (f, o) -> {
+            o.getComponent(OvapeComponent.class).enemyDie();
+            getGameTimer().runOnceAfter(o::removeFromWorld, Duration.seconds(1));
+        });
+
+        onCollisionBegin(BombermanType.FLAME, BombermanType.PASS_E, (f, pa) -> {
+            pa.getComponent(PassComponent.class).enemyDie();
+            getGameTimer().runOnceAfter(pa::removeFromWorld, Duration.seconds(1));
+        });
+
 
         animationFlame = new AnimationChannel(image("sprites.png"), 16, SIZE_BLOCK, SIZE_BLOCK,
                 Duration.seconds(0.4), startF, endF);

@@ -1,28 +1,34 @@
 package com.testniqatsu.bomberman.components.enemy;
 
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
+import com.almasb.fxgl.entity.components.BoundingBoxComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
-import javafx.scene.Node;
+import com.testniqatsu.bomberman.BombermanType;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
+import java.util.List;
+
 import static com.almasb.fxgl.dsl.FXGL.inc;
 import static com.testniqatsu.bomberman.constants.GameConst.*;
 
 public abstract class NormalEnemy extends Component {
-    protected double dx = ENEMY_SPEED_BASE;
-    protected double dy = 0;
     private double lastX = 0;
     private double lastY = 0;
 
-    protected enum TurnDirection {
+
+    private enum TurnDirection {
         BLOCK_LEFT, BLOCK_RIGHT, BLOCK_UP, BLOCK_DOWN
     }
+
+    protected double dx = ENEMY_SPEED_BASE;
+    protected double dy = 0;
 
 
     protected final AnimatedTexture texture;
@@ -33,6 +39,8 @@ public abstract class NormalEnemy extends Component {
     protected AnimationChannel animWalkLeft;
     protected AnimationChannel animDie;
     protected AnimationChannel animStop;
+    protected int rangeDetectPlayer = 60;
+
 
     public NormalEnemy() {
         setAnimationMove();
@@ -83,28 +91,28 @@ public abstract class NormalEnemy extends Component {
         }
     }
 
-    protected void setTurnEnemy(TurnDirection direct) {
+    private void setTurnEnemy(TurnDirection direct) {
         switch (direct) {
-            case BLOCK_LEFT:
+            case BLOCK_LEFT -> {
                 entity.translateX(3);
                 dx = 0.0;
                 dy = getRandom();
-                break;
-            case BLOCK_RIGHT:
+            }
+            case BLOCK_RIGHT -> {
                 entity.translateX(-3);
                 dx = 0.0;
                 dy = getRandom();
-                break;
-            case BLOCK_UP:
+            }
+            case BLOCK_UP -> {
                 entity.translateY(3);
                 dy = 0.0;
                 dx = getRandom();
-                break;
-            case BLOCK_DOWN:
+            }
+            case BLOCK_DOWN -> {
                 entity.translateY(-3);
                 dy = 0.0;
                 dx = getRandom();
-                break;
+            }
         }
     }
 
@@ -124,14 +132,20 @@ public abstract class NormalEnemy extends Component {
         }
     }
 
-    public void enemyDie() {
-        FXGL.inc("numOfEnemy", -1);
-        int NORMAL_SCORE_E = 100;
-        showScore(NORMAL_SCORE_E);
-        inc("score", NORMAL_SCORE_E);
-        dx = 0;
-        dy = 0;
-        texture.loopNoOverride(animDie);
+    protected boolean isDetectPlayer() {
+        BoundingBoxComponent bbox = entity.getBoundingBoxComponent();
+        List<Entity> list = FXGL.getGameWorld().getEntitiesInRange(bbox.range(rangeDetectPlayer, rangeDetectPlayer));
+        for (Entity entity : list) {
+            if (entity.isType(BombermanType.BOMB)) {
+                return false;
+            }
+        }
+        for (Entity entity : list) {
+            if (entity.isType(BombermanType.PLAYER)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     protected void showScore(int score) {
@@ -140,9 +154,24 @@ public abstract class NormalEnemy extends Component {
         labelScore.setFont(Font.font("Comic Sans MS", FontWeight.EXTRA_BOLD, 15));
         labelScore.setTextFill(Color.WHITE);
         FXGL.addUINode(labelScore, entity.getX() + 24, entity.getY() + 24);
-        FXGL.getGameTimer().runOnceAfter(() -> {
-            FXGL.removeUINode(labelScore);
-        }, Duration.seconds(2));
+        FXGL.getGameTimer().runOnceAfter(() -> FXGL.removeUINode(labelScore), Duration.seconds(2));
+    }
+
+    public void enemyDie() {
+        FXGL.inc("numOfEnemy", -1);
+        dx = 0;
+        dy = 0;
+        texture.loopNoOverride(animDie);
+    }
+
+    public void enemyStop() {
+        dx = 0;
+        dy = 0;
+        texture.loopNoOverride(animStop);
+    }
+
+    public void setRangeDetectPlayer(int rangeDetectPlayer) {
+        this.rangeDetectPlayer = rangeDetectPlayer;
     }
 }
 

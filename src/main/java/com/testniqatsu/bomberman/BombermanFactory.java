@@ -20,9 +20,7 @@ import com.testniqatsu.bomberman.components.BlockComponent;
 import com.testniqatsu.bomberman.components.BombComponent;
 import com.testniqatsu.bomberman.components.FlameComponent;
 import com.testniqatsu.bomberman.components.PlayerComponent;
-import com.testniqatsu.bomberman.components.enemy.BalloomComponent;
-import com.testniqatsu.bomberman.components.enemy.DoriaComponent;
-import com.testniqatsu.bomberman.components.enemy.OnealComponent;
+import com.testniqatsu.bomberman.components.enemy.*;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -196,6 +194,30 @@ public class BombermanFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("dahl_e")
+    public Entity newDahl(SpawnData data) {
+        return FXGL.entityBuilder(data)
+                .type(BombermanType.DAHL_E)
+                .bbox(new HitBox(BoundingShape.circle(radius - 2)))
+                .atAnchored(new Point2D(radius, radius), new Point2D(radius, radius))
+                .with(new DahlComponent())
+                .with(new CollidableComponent(true))
+                .zIndex(2)
+                .build();
+    }
+
+    @Spawns("ovape_e")
+    public Entity newOvape(SpawnData data) {
+        return FXGL.entityBuilder(data)
+                .type(BombermanType.OVAPE_E)
+                .bbox(new HitBox(BoundingShape.circle(radius - 2)))
+                .atAnchored(new Point2D(radius, radius), new Point2D(radius, radius))
+                .with(new OvapeComponent())
+                .with(new CollidableComponent(true))
+                .zIndex(2)
+                .build();
+    }
+
     @Spawns("oneal_e")
     public Entity newOneal(SpawnData data) {
         return FXGL.entityBuilder(data)
@@ -210,6 +232,20 @@ public class BombermanFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("pass_e")
+    public Entity newPass(SpawnData data) {
+        return FXGL.entityBuilder(data)
+                .type(BombermanType.PASS_E)
+                .bbox(new HitBox(BoundingShape.circle(radius - 2)))
+                .with(new CollidableComponent(true))
+                .atAnchored(new Point2D(radius, radius), new Point2D(radius, radius))
+                .with(new CellMoveComponent(SIZE_BLOCK, SIZE_BLOCK, ENEMY_SPEED_BASE))
+                .with(new AStarMoveComponent(new LazyValue<>(() -> geto("grid"))))
+                .with(new PassComponent())
+                .zIndex(2)
+                .build();
+    }
+
     @Spawns("doria_e")
     public Entity newDoria(SpawnData data) {
         return FXGL.entityBuilder(data)
@@ -218,7 +254,7 @@ public class BombermanFactory implements EntityFactory {
                 .with(new CollidableComponent(true))
                 .atAnchored(new Point2D(radius, radius), new Point2D(radius, radius))
                 .with(new CellMoveComponent(SIZE_BLOCK, SIZE_BLOCK, ENEMY_SPEED_BASE + 20))
-                .with(new AStarMoveComponent(new LazyValue<>(() -> geto("grid"))))
+                .with(new AStarMoveComponent(new LazyValue<>(() -> geto("_grid"))))
                 .with(new DoriaComponent())
                 .zIndex(2)
                 .build();
@@ -261,7 +297,7 @@ public class BombermanFactory implements EntityFactory {
                 .type(BombermanType.BRICK)
                 .bbox(new HitBox(BoundingShape.box(width, height)))
                 .with(new BlockComponent(104, 104, TIME_PER_LEVEL))
-                .with(new PhysicsComponent())
+//                .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
                 .build();
     }
@@ -292,7 +328,7 @@ public class BombermanFactory implements EntityFactory {
                 .type(BombermanType.GRASS)
                 .bbox(new HitBox(BoundingShape.box(width, height)))
                 .with(new BlockComponent(88, 88, TIME_PER_LEVEL))
-                .with(new PhysicsComponent())
+//                .with(new PhysicsComponent())
                 .with(new CollidableComponent(true))
                 .build();
     }

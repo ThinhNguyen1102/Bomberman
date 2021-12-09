@@ -14,6 +14,7 @@ import com.almasb.fxgl.physics.PhysicsWorld;
 import com.testniqatsu.bomberman.components.PlayerComponent;
 import com.testniqatsu.bomberman.menus.BombermanGameMenu;
 import com.testniqatsu.bomberman.menus.BombermanMenu;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
@@ -23,6 +24,7 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Map;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
@@ -44,7 +46,7 @@ public class BombermanApp extends GameApplication {
     public static boolean isSoundEnabled = true;
     private boolean requestNewGame = false;
 
-    private AStarGrid grid;
+    private AStarGrid grid, _grid;
 
     @Override
     protected void initSettings(GameSettings settings) {
@@ -236,8 +238,11 @@ public class BombermanApp extends GameApplication {
         onCollisionBegin(BombermanType.PLAYER, BombermanType.PORTAL, this::endLevel);
         onCollisionBegin(BombermanType.PLAYER, BombermanType.FLAME, (p, f) -> onPlayerKilled());
         onCollisionBegin(BombermanType.PLAYER, BombermanType.BALLOOM_E, (p, b) -> onPlayerKilled());
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.DAHL_E, (p, dh) -> onPlayerKilled());
         onCollisionBegin(BombermanType.PLAYER, BombermanType.ONEAL_E, (p, o) -> onPlayerKilled());
         onCollisionBegin(BombermanType.PLAYER, BombermanType.DORIA_E, (p, d) -> onPlayerKilled());
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.OVAPE_E, (p, o) -> onPlayerKilled());
+        onCollisionBegin(BombermanType.PLAYER, BombermanType.PASS_E, (p, pa) -> onPlayerKilled());
     }
 
     private void endLevel(Entity player, Entity portal) {
@@ -275,7 +280,7 @@ public class BombermanApp extends GameApplication {
     }
 
     private void setLevel() {
-        //FXGL.setLevelFromMap("bbm_level" + FXGL.geti("level") + ".tmx");
+//        FXGL.setLevelFromMap("bbm_level" + FXGL.geti("level") + ".tmx");
         FXGL.setLevelFromMap("bbm_level2.tmx");
         Viewport viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, GAME_WORLD_WIDTH, GAME_WORLD_HEIGHT);
@@ -301,7 +306,17 @@ public class BombermanApp extends GameApplication {
                     }
                 });
 
+        _grid = AStarGrid.fromWorld(getGameWorld(), 31, 15,
+                SIZE_BLOCK, SIZE_BLOCK, (type) -> {
+                    if (type == BombermanType.AROUND_WALL || type == BombermanType.WALL) {
+                        return CellState.NOT_WALKABLE;
+                    } else {
+                        return CellState.WALKABLE;
+                    }
+                });
+
         set("grid", grid);
+        set("_grid", _grid);
     }
 
     public static void main(String[] args) {
