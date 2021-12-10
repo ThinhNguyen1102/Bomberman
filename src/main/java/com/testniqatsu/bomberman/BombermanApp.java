@@ -16,7 +16,6 @@ import com.testniqatsu.bomberman.menus.BombermanGameMenu;
 import com.testniqatsu.bomberman.menus.BombermanMenu;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -26,6 +25,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
@@ -176,16 +176,11 @@ public class BombermanApp extends GameApplication {
 
     }
 
-    private Label setTextUI(String valGame, String content) {
-        Label label = new Label();
-        label.setTextFill(Color.BLACK);
-        label.setFont(Font.font("Comic Sans MS", FontWeight.EXTRA_BOLD, 20));
-        DropShadow shadow = new DropShadow();
-        shadow.setColor(Color.LIGHTGREEN);
-        label.setEffect(shadow);
-        // valGame's datatype is int
-        label.textProperty().bind(FXGL.getip(valGame).asString(content));
-        return label;
+    private Text setTextUI(String valGame, String content) {
+        var text = FXGL.getUIFactoryService().newText("", 20);
+        text.setFill(Color.BLACK);
+        text.textProperty().bind(FXGL.getip(valGame).asString(content));
+        return text;
     }
 
     @Override
