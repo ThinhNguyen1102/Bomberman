@@ -1,19 +1,20 @@
-package com.testniqatsu.bomberman.components;
+package com.testniqatsu.bomberman.components.enemy;
 
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.util.Duration;
 
-import static com.testniqatsu.bomberman.constants.GameConst.SIZE_BLOCK;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.image;
+import static com.testniqatsu.bomberman.constants.GameConst.SIZE_BLOCK;
 
-public class BlockComponent extends Component {
+public class EnemyDieComponent extends Component {
+
     private final AnimatedTexture texture;
 
-    public BlockComponent(int startF, int endF, double duration) {
+    public EnemyDieComponent() {
         AnimationChannel animationChannel = new AnimationChannel(image("sprites.png"), 16, SIZE_BLOCK, SIZE_BLOCK,
-                Duration.seconds(duration), startF, endF);
+                Duration.seconds(1.5), 75, 77);
 
         texture = new AnimatedTexture(animationChannel);
         texture.loop();

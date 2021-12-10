@@ -13,6 +13,9 @@ public class DahlComponent extends NormalEnemy {
         onCollisionBegin(BombermanType.DAHL_E, BombermanType.WALL,
                 (d, w) -> d.getComponent(DahlComponent.class).turn());
 
+        onCollisionBegin(BombermanType.DAHL_E, BombermanType.BOMB,
+                (d, b) -> d.getComponent(DahlComponent.class).turn());
+
         onCollisionBegin(BombermanType.DAHL_E, BombermanType.AROUND_WALL,
                 (d, w) -> d.getComponent(DahlComponent.class).turn());
 

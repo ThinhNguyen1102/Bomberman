@@ -271,6 +271,16 @@ public class BombermanFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("enemyDie")
+    public Entity newEnemyDie(SpawnData data) {
+        return FXGL.entityBuilder(data)
+                .type(BombermanType.ENEMY_DIE)
+                .bbox(new HitBox(BoundingShape.circle(radius - 2)))
+                .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
+                .with(new EnemyDieComponent())
+                .build();
+    }
+
     //BLOCKS
 
     @Spawns("wall")

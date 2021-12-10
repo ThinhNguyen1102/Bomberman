@@ -38,47 +38,73 @@ public class FlameComponent extends Component {
         setCollisionBreak(BombermanType.CORAL, "coral_break");
 
         onCollisionBegin(BombermanType.FLAME, BombermanType.BALLOOM_E, (f, b) -> {
+            double x = b.getX();
+            double y = b.getY();
             b.getComponent(BalloomComponent.class).enemyDie();
             getGameTimer().runOnceAfter(() -> {
                 b.removeFromWorld();
                 set("numOfEnemy", getEnemies());
-            }, Duration.seconds(1));
+            }, Duration.seconds(0.3));
+            Entity entity = spawn("enemyDie", new SpawnData(x, y));
+            getGameTimer().runOnceAfter(entity::removeFromWorld, Duration.seconds(1.5));
         });
 
         onCollisionBegin(BombermanType.FLAME, BombermanType.ONEAL_E, (f, o) -> {
+            double x = o.getX();
+            double y = o.getY();
             o.getComponent(OnealComponent.class).enemyDie();
             getGameTimer().runOnceAfter(() -> {
                 o.removeFromWorld();
                 set("numOfEnemy", getEnemies());
-            }, Duration.seconds(1));
+            }, Duration.seconds(0.3));
+            Entity entity = spawn("enemyDie", new SpawnData(x, y));
+            getGameTimer().runOnceAfter(entity::removeFromWorld, Duration.seconds(1.5));
         });
 
         onCollisionBegin(BombermanType.FLAME, BombermanType.DORIA_E, (f, d) -> {
+            double x = d.getX();
+            double y = d.getY();
             d.getComponent(DoriaComponent.class).enemyDie();
             getGameTimer().runOnceAfter(() -> {
                 d.removeFromWorld();
                 set("numOfEnemy", getEnemies());
-            }, Duration.seconds(1));
+            }, Duration.seconds(0.3));
+            Entity entity = spawn("enemyDie", new SpawnData(x, y));
+            getGameTimer().runOnceAfter(entity::removeFromWorld, Duration.seconds(1.5));
         });
 
         onCollisionBegin(BombermanType.FLAME, BombermanType.DAHL_E, (f, d) -> {
+            double x = d.getX();
+            double y = d.getY();
             d.getComponent(DahlComponent.class).enemyDie();
             getGameTimer().runOnceAfter(() -> {
                 d.removeFromWorld();
                 set("numOfEnemy", getEnemies());
-            }, Duration.seconds(1));
+            }, Duration.seconds(0.3));
+            Entity entity = spawn("enemyDie", new SpawnData(x, y));
+            getGameTimer().runOnceAfter(entity::removeFromWorld, Duration.seconds(1.5));
         });
 
         onCollisionBegin(BombermanType.FLAME, BombermanType.OVAPE_E, (f, o) -> {
+            double x = o.getX();
+            double y = o.getY();
             o.getComponent(OvapeComponent.class).enemyDie();
             getGameTimer().runOnceAfter(() -> {
                 o.removeFromWorld();
                 set("numOfEnemy", getEnemies());
-            }, Duration.seconds(1));
+            }, Duration.seconds(0.3));
+
+            Entity entity = spawn("enemyDie", new SpawnData(x, y));
+            getGameTimer().runOnceAfter(entity::removeFromWorld, Duration.seconds(1.5));
         });
 
         onCollisionBegin(BombermanType.FLAME, BombermanType.PASS_E, (f, pa) -> {
+            double x = pa.getX();
+            double y = pa.getY();
             pa.getComponent(PassComponent.class).enemyDie();
+            getGameTimer().runOnceAfter(pa::removeFromWorld, Duration.seconds(0.3));
+
+            Entity entity = spawn("enemyDie", new SpawnData(x, y));
             getGameTimer().runOnceAfter(() -> {
                 switch (randomInt()) {
                     case 1, 3 -> spawn("balloom_e", new SpawnData(pa.getX(), pa.getY()));
@@ -86,9 +112,9 @@ public class FlameComponent extends Component {
                     case 4, 5 -> spawn("ovape_e", new SpawnData(pa.getX(), pa.getY()));
                     default -> {}
                 }
-                pa.removeFromWorld();
+                entity.removeFromWorld();
                 set("numOfEnemy", getEnemies());
-            }, Duration.seconds(1));
+            }, Duration.seconds(1.5));
         });
 
         AnimationChannel animationFlame = new AnimationChannel(image("sprites.png"), 16, SIZE_BLOCK, SIZE_BLOCK,

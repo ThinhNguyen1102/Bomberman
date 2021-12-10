@@ -15,6 +15,9 @@ public class BalloomComponent extends NormalEnemy {
         onCollisionBegin(BombermanType.BALLOOM_E, BombermanType.WALL,
                 (b, w) -> b.getComponent(BalloomComponent.class).turn());
 
+        onCollisionBegin(BombermanType.BALLOOM_E, BombermanType.BOMB,
+                (b, bo) -> b.getComponent(BalloomComponent.class).turn());
+
         onCollisionBegin(BombermanType.BALLOOM_E, BombermanType.AROUND_WALL,
                 (b, w) -> b.getComponent(BalloomComponent.class).turn());
 
