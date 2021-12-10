@@ -10,7 +10,6 @@ import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.testniqatsu.bomberman.BombermanType;
 import com.testniqatsu.bomberman.components.enemy.*;
-import javafx.css.converter.DurationConverter;
 import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.*;

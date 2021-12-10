@@ -29,6 +29,9 @@ import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
 import static com.almasb.fxgl.dsl.FXGL.geto;
 import static com.testniqatsu.bomberman.constants.GameConst.*;
 
+/**
+ * Entity factory. Used to create all entities in the game.
+ */
 public class BombermanFactory implements EntityFactory {
     private final int radius = SIZE_BLOCK / 2;
 

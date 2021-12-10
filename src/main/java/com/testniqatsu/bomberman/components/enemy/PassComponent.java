@@ -1,6 +1,5 @@
 package com.testniqatsu.bomberman.components.enemy;
 
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.texture.AnimationChannel;
 import com.testniqatsu.bomberman.BombermanType;
 import javafx.util.Duration;

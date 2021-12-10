@@ -16,6 +16,10 @@ import javafx.scene.shape.Shape;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
+/**
+ * In game menu.
+ * Press esc key to open this menu.
+ */
 public class BombermanGameMenu extends FXGLMenu {
     public BombermanGameMenu() {
         super(MenuType.GAME_MENU);

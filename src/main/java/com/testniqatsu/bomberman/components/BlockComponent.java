@@ -8,6 +8,9 @@ import javafx.util.Duration;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.image;
 import static com.testniqatsu.bomberman.constants.GameConst.SIZE_BLOCK;
 
+/**
+ * Sprite Sheet.
+ */
 public class BlockComponent extends Component {
     private final AnimatedTexture texture;
 

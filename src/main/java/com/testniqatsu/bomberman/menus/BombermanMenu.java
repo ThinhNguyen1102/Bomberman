@@ -15,6 +15,9 @@ import javafx.scene.shape.Rectangle;
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static javafx.scene.input.KeyCode.*;
 
+/**
+ * Main menu, displayed at the start of the game.
+ */
 public class BombermanMenu extends FXGLMenu {
     public BombermanMenu() {
         super(MenuType.MAIN_MENU);

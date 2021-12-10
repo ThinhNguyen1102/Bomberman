@@ -1,5 +1,8 @@
 package com.testniqatsu.bomberman.constants;
 
+/**
+ * Game configuration, this is not recommended. But there is no time for refactoring.
+ */
 public class GameConst {
     public static final int SIZE_BLOCK = 48;
     public static final int SCREEN_WIDTH = 1080;
