@@ -180,6 +180,17 @@ public class BombermanFactory implements EntityFactory {
                 .build();
     }
 
+    @Spawns("check_flame")
+    public Entity newCheckFlame(SpawnData data) {
+        return FXGL.entityBuilder(data)
+                .type(BombermanType.CHECK_FLAME)
+                .viewWithBBox(new Rectangle(SIZE_BLOCK, SIZE_BLOCK, Color.TRANSPARENT))
+                .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
+                .with(new CollidableComponent(true))
+                .zIndex(1)
+                .build();
+    }
+
     //ENEMY ENTITIES
 
     @Spawns("balloom_e")

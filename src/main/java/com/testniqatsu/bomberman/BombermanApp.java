@@ -333,7 +333,6 @@ public class BombermanApp extends GameApplication {
 
     private void setLevel() {
         FXGL.setLevelFromMap("bbm_level" + FXGL.geti("level") + ".tmx");
-//        FXGL.setLevelFromMap("bbm_level2.tmx");
 
         Viewport viewport = getGameScene().getViewport();
         viewport.setBounds(0, 0, GAME_WORLD_WIDTH, GAME_WORLD_HEIGHT);
