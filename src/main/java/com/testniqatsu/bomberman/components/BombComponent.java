@@ -48,7 +48,7 @@ public class BombComponent extends Component {
     }
 
     public void explode() {
-        int flameLength = geti("flame") + 1;
+        int flameLength = geti("flame");
 
         listFire.add(spawn("centerFlame", new SpawnData(entity.getX(), entity.getY())));
 
