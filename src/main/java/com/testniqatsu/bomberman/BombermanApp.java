@@ -15,9 +15,6 @@ import com.testniqatsu.bomberman.components.PlayerComponent;
 import com.testniqatsu.bomberman.menus.BombermanGameMenu;
 import com.testniqatsu.bomberman.menus.BombermanMenu;
 import com.testniqatsu.bomberman.ui.BombermanHUD;
-import com.testniqatsu.bomberman.ui.HUD;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
@@ -26,7 +23,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
@@ -149,7 +145,7 @@ public class BombermanApp extends GameApplication {
 
     @Override
     protected void initUI() {
-        var hud = new BombermanHUD(VIEW_WIDTH);
+        var hud = new BombermanHUD();
         var leftMargin = 0;
         var topMargin = 0;
         getGameTimer().runOnceAfter(() -> FXGL.addUINode(hud.getHUD(), leftMargin, topMargin), Duration.seconds(3));
