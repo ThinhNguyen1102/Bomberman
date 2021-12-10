@@ -27,8 +27,6 @@ public class BombermanHUD implements HUD {
         HUDRow0.setAlignment(Pos.CENTER_LEFT);
         HUDRow0.setPadding(new Insets(0, padding, 0, padding));
 
-        HBox.setHgrow(HUDRow0, Priority.ALWAYS);
-
         var HUDRow1 = new HBox(
                 setTextUI("score", "SCORE: %d"),
                 setTextUI("speed", "SPEED: %d"),
@@ -39,14 +37,7 @@ public class BombermanHUD implements HUD {
         );
         HUDRow1.setAlignment(Pos.CENTER_LEFT);
         HUDRow1.setPadding(new Insets(0, padding, 0, padding));
-
-        var spacing = width;
-        for (var child : HUDRow1.getChildren()) {
-            spacing -= child.getBoundsInParent().getWidth();
-        }
-        spacing = spacing - padding * 2;
-        spacing /= 5;
-        HUDRow1.setSpacing(spacing);
+        fillRow(width, HUDRow1);
 
         hud = new VBox(
                 HUDRow0,
@@ -63,6 +54,24 @@ public class BombermanHUD implements HUD {
         return text;
     }
 
+    private void fillRow(double width, HBox row) {
+        var spacing = width;
+
+        for (var child : row.getChildren()) {
+            spacing -= child.getBoundsInParent().getWidth();
+        }
+
+        var leftPadding = row.getPadding().getLeft();
+        var rightPadding = row.getPadding().getRight();
+        var numberOfChildren = row.getChildren().size();
+        var spaceNumber = numberOfChildren > 1 ? numberOfChildren - 1 : 1;
+
+        spacing = spacing - leftPadding - rightPadding;
+        spacing /= spaceNumber;
+        row.setSpacing(spacing);
+    }
+
+    @Override
     public Pane getHUD() {
         return hud;
     }
