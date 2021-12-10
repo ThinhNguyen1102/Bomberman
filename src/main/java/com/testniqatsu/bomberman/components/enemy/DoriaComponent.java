@@ -6,7 +6,6 @@ import com.testniqatsu.bomberman.BombermanType;
 import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import static com.almasb.fxgl.dsl.FXGL.image;
 
 public class DoriaComponent extends OnealComponent {
     private double timeChangeMove = 0.0;

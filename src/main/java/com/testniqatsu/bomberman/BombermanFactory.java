@@ -24,9 +24,9 @@ import com.testniqatsu.bomberman.components.enemy.*;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
-import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
+import static com.almasb.fxgl.dsl.FXGL.geto;
 import static com.testniqatsu.bomberman.constants.GameConst.*;
 
 public class BombermanFactory implements EntityFactory {
@@ -101,7 +101,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.FLAME)
                 .with(new FlameComponent(128, 130))
-                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2 - 3, SIZE_BLOCK / 2 - 3, Color.TRANSPARENT))
+                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2.0 - 3, SIZE_BLOCK / 2.0 - 3, Color.TRANSPARENT))
                 .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
                 .with(new CollidableComponent(true))
                 .zIndex(1)
@@ -113,7 +113,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.FLAME)
                 .with(new FlameComponent(147, 149))
-                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2 - 3, SIZE_BLOCK / 2 - 3, Color.TRANSPARENT))
+                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2.0 - 3, SIZE_BLOCK / 2.0 - 3, Color.TRANSPARENT))
                 .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
                 .with(new CollidableComponent(true))
                 .zIndex(1)
@@ -125,7 +125,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.FLAME)
                 .with(new FlameComponent(160, 162))
-                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2 - 3, SIZE_BLOCK / 2 - 3, Color.TRANSPARENT))
+                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2.0 - 3, SIZE_BLOCK / 2.0 - 3, Color.TRANSPARENT))
                 .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
                 .with(new CollidableComponent(true))
                 .zIndex(1)
@@ -137,7 +137,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.FLAME)
                 .with(new FlameComponent(144, 146))
-                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2 - 3, SIZE_BLOCK / 2 - 3, Color.TRANSPARENT))
+                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2.0 - 3, SIZE_BLOCK / 2.0 - 3, Color.TRANSPARENT))
                 .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
                 .with(new CollidableComponent(true))
                 .zIndex(1)
@@ -149,7 +149,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.FLAME)
                 .with(new FlameComponent(176, 178))
-                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2 - 3, SIZE_BLOCK / 2 - 3, Color.TRANSPARENT))
+                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2.0 - 3, SIZE_BLOCK / 2.0 - 3, Color.TRANSPARENT))
                 .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
                 .with(new CollidableComponent(true))
                 .zIndex(1)
@@ -161,7 +161,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.FLAME)
                 .with(new FlameComponent(131, 133))
-                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2 - 3, SIZE_BLOCK / 2 - 3, Color.TRANSPARENT))
+                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2.0 - 3, SIZE_BLOCK / 2.0 - 3, Color.TRANSPARENT))
                 .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
                 .with(new CollidableComponent(true))
                 .zIndex(1)
@@ -173,7 +173,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.FLAME)
                 .with(new FlameComponent(163, 165))
-                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2 - 3, SIZE_BLOCK / 2 - 3, Color.TRANSPARENT))
+                .viewWithBBox(new Rectangle(SIZE_BLOCK / 2.0 - 3, SIZE_BLOCK / 2.0 - 3, Color.TRANSPARENT))
                 .atAnchored(new Point2D(0, 0), new Point2D(data.getX(), data.getY()))
                 .with(new CollidableComponent(true))
                 .zIndex(1)

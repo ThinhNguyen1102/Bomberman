@@ -26,7 +26,7 @@ public class BombermanGameMenu extends FXGLMenu {
         // UI background
         ImageView iv1 = new ImageView();
         iv1.setImage(new Image("assets/textures/background_demo_1.png"));
-        iv1.setX(1080 / 2 - 520 / 2);
+        iv1.setX(1080 / 2.0 - 520 / 2.0);
         iv1.setY(100);
         iv1.setEffect(new DropShadow(5, 3.5, 3.5, Color.WHITE));
         iv1.setEffect(new Lighting());

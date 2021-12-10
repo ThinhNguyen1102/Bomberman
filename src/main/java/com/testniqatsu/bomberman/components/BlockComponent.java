@@ -5,8 +5,8 @@ import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.util.Duration;
 
-import static com.testniqatsu.bomberman.constants.GameConst.SIZE_BLOCK;
 import static com.almasb.fxgl.dsl.FXGLForKtKt.image;
+import static com.testniqatsu.bomberman.constants.GameConst.SIZE_BLOCK;
 
 public class BlockComponent extends Component {
     private final AnimatedTexture texture;

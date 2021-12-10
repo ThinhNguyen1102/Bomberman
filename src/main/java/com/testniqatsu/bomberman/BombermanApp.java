@@ -14,17 +14,15 @@ import com.almasb.fxgl.physics.PhysicsWorld;
 import com.testniqatsu.bomberman.components.PlayerComponent;
 import com.testniqatsu.bomberman.menus.BombermanGameMenu;
 import com.testniqatsu.bomberman.menus.BombermanMenu;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import com.testniqatsu.bomberman.ui.BombermanHUD;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.jetbrains.annotations.NotNull;
 
@@ -147,59 +145,11 @@ public class BombermanApp extends GameApplication {
 
     @Override
     protected void initUI() {
-        var spacer = new Pane();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        var padding = 20;
-
-        var HUDRow0 = new HBox(
-                setTextUI("level", "LEVEL %d"),
-                spacer,
-                setTextUI("time", "TIME: %d")
-        );
-        HUDRow0.setAlignment(Pos.CENTER_LEFT);
-        HUDRow0.setPadding(new Insets(0, padding, 0, padding));
-
-        HBox.setHgrow(HUDRow0, Priority.ALWAYS);
-
-        var HUDRow1 = new HBox(
-                setTextUI("score", "SCORE: %d"),
-                setTextUI("speed", "SPEED: %d"),
-                setTextUI("flame", "FLAME: %d"),
-                setTextUI("bomb", "BOMB: %d"),
-                setTextUI("life", "LIFE: %d"),
-                setTextUI("numOfEnemy", "E: %d")
-        );
-        HUDRow1.setAlignment(Pos.CENTER_LEFT);
-        HUDRow1.setPadding(new Insets(0, padding, 0, padding));
-
-        var spacing = VIEW_WIDTH;
-        for (var child : HUDRow1.getChildren()) {
-            spacing -= child.getBoundsInParent().getWidth();
-        }
-        spacing = spacing - padding * 2;
-        spacing /= 5;
-        HUDRow1.setSpacing(spacing);
-
-        var HUD = new VBox(
-                HUDRow0,
-                HUDRow1
-        );
-        HUD.setPadding(new Insets(padding, 0, padding, 0));
-        HUD.setSpacing(10);
-
+        var hud = new BombermanHUD();
         var leftMargin = 0;
         var topMargin = 0;
+        getGameTimer().runOnceAfter(() -> FXGL.addUINode(hud.getHUD(), leftMargin, topMargin), Duration.seconds(3));
 
-        getGameTimer().runOnceAfter(() -> FXGL.addUINode(HUD, leftMargin, topMargin), Duration.seconds(3));
-
-    }
-
-    private Text setTextUI(String valGame, String content) {
-        var text = FXGL.getUIFactoryService().newText("", 20);
-        text.setFill(Color.BLACK);
-        text.textProperty().bind(FXGL.getip(valGame).asString(content));
-        return text;
     }
 
     @Override

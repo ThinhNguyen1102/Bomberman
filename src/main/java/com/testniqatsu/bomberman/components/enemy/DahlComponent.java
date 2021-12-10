@@ -5,7 +5,7 @@ import com.testniqatsu.bomberman.BombermanType;
 import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
-import static com.testniqatsu.bomberman.constants.GameConst.*;
+import static com.testniqatsu.bomberman.constants.GameConst.ENEMY_SPEED_BASE;
 
 public class DahlComponent extends NormalEnemy {
     public DahlComponent() {

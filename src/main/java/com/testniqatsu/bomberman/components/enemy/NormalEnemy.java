@@ -15,8 +15,7 @@ import javafx.util.Duration;
 
 import java.util.List;
 
-import static com.almasb.fxgl.dsl.FXGL.inc;
-import static com.testniqatsu.bomberman.constants.GameConst.*;
+import static com.testniqatsu.bomberman.constants.GameConst.ENEMY_SPEED_BASE;
 
 public abstract class NormalEnemy extends Component {
     private double lastX = 0;
