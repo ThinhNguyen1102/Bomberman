@@ -4,6 +4,7 @@ import com.almasb.fxgl.dsl.FXGL;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -25,28 +26,22 @@ public class BombermanHUD implements HUD {
         HUDRow0.setAlignment(Pos.CENTER_LEFT);
         HUDRow0.setPadding(new Insets(0, padding, 0, padding));
 
-        var HUDRow1 = new GridPane();
-
-        HUDRow1.add(setTextUI("score", "SCORE: %d"), 0, 0);
-        HUDRow1.add(setTextUI("speed", "SPEED: %d"), 1, 0);
-        HUDRow1.add(setTextUI("flame", "FLAME: %d"), 2, 0);
-        HUDRow1.add(setTextUI("bomb", "BOMB: %d"), 3, 0);
-        HUDRow1.add(setTextUI("life", "LIFE: %d"), 4, 0);
-        HUDRow1.add(setTextUI("numOfEnemy", "E: %d"), 5, 0);
-
-        for (var i = 0; i < 6; ++i) {
-            var cc = new ColumnConstraints();
-            cc.setPercentWidth(100.0 / 6.0);
-            cc.setHgrow(Priority.ALWAYS);
-            HUDRow1.getColumnConstraints().add(cc);
-        }
-
-        HUDRow1.setPadding(new Insets(0, padding, 0, padding));
+        var HUDRow1 = new HBox(
+                setTextUI("score", "SCORE: %d"),
+                createSpacer(),
+                setTextUI("speed", "SPEED: %d"),
+                createSpacer(),
+                setTextUI("flame", "FLAME: %d"),
+                createSpacer(),
+                setTextUI("bomb", "BOMB: %d"),
+                createSpacer(),
+                setTextUI("life", "LIFE: %d"),
+                createSpacer(),
+                setTextUI("numOfEnemy", "E: %d")
+        );
+        HUDRow1.setAlignment(Pos.CENTER_LEFT);
         HUDRow1.prefWidthProperty().bind(FXGL.getSettings().actualWidthProperty());
-
-        for (var child : HUDRow1.getChildren()) {
-            GridPane.setHalignment(child, HPos.CENTER);
-        }
+        HUDRow1.setPadding(new Insets(0, padding, 0, padding));
 
         hud = new VBox(
                 HUDRow0,
@@ -54,6 +49,12 @@ public class BombermanHUD implements HUD {
         );
         hud.setPadding(new Insets(padding, 0, padding, 0));
         hud.setSpacing(10);
+    }
+
+    private Node createSpacer() {
+        var spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        return spacer;
     }
 
     private Text setTextUI(String valGame, String content) {
