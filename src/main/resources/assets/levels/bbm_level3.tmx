@@ -44,6 +44,20 @@
 410,411,411,411,411,411,411,411,989,989,989,989,989,989,989,989,989,989,989,989,989,989,989,989,989,989,989,989,989,989,990
 </data>
  </layer>
+ <objectgroup id="9" name="Items">
+  <object id="582" name="Item" type="speedItem" x="198" y="150" width="36" height="36"/>
+  <object id="583" name="Item" type="flamePassItem" x="246" y="438" width="36" height="36"/>
+  <object id="584" name="Item" type="flameItem" x="390" y="630" width="36" height="36"/>
+  <object id="585" name="Item" type="bombsItem" x="822" y="630" width="36" height="36"/>
+  <object id="586" name="Item" type="bombsItem" x="870" y="150" width="36" height="36"/>
+  <object id="587" name="Item" type="flamePassItem" x="726" y="246" width="36" height="36"/>
+  <object id="624" name="Item" type="flamePassItem" x="630" y="438" width="36" height="36"/>
+  <object id="625" name="Item" type="flamePassItem" x="822" y="486" width="36" height="36"/>
+  <object id="588" name="Item" type="portal" x="1110" y="534" width="36" height="36"/>
+  <object id="589" name="Item" type="speedItem" x="1398" y="630" width="36" height="36"/>
+  <object id="590" name="Item" type="speedItem" x="1014" y="342" width="36" height="36"/>
+  <object id="591" name="Item" type="flameItem" x="102" y="630" width="36" height="36"/>
+ </objectgroup>
  <objectgroup id="5" name="Corals">
   <object id="363" type="player" x="48" y="144" width="48" height="48"/>
   <object id="364" type="coral" x="48" y="624" width="48" height="48"/>
@@ -377,19 +391,5 @@
   <object id="579" type="around_wall" x="48" y="96" width="1440" height="48"/>
   <object id="580" type="around_wall" x="1440" y="144" width="48" height="576"/>
   <object id="581" type="around_wall" x="48" y="672" width="1392" height="48"/>
- </objectgroup>
- <objectgroup id="9" name="Items">
-  <object id="582" name="Item" type="speedItem" x="198" y="150" width="36" height="36"/>
-  <object id="583" name="Item" type="flamePassItem" x="246" y="438" width="36" height="36"/>
-  <object id="584" name="Item" type="flameItem" x="390" y="630" width="36" height="36"/>
-  <object id="585" name="Item" type="bombsItem" x="822" y="630" width="36" height="36"/>
-  <object id="586" name="Item" type="bombsItem" x="870" y="150" width="36" height="36"/>
-  <object id="587" name="Item" type="flamePassItem" x="726" y="246" width="36" height="36"/>
-  <object id="624" name="Item" type="flamePassItem" x="630" y="438" width="36" height="36"/>
-  <object id="625" name="Item" type="flamePassItem" x="822" y="486" width="36" height="36"/>
-  <object id="588" name="Item" type="portal" x="1110" y="534" width="36" height="36"/>
-  <object id="589" name="Item" type="speedItem" x="1398" y="630" width="36" height="36"/>
-  <object id="590" name="Item" type="speedItem" x="1014" y="342" width="36" height="36"/>
-  <object id="591" name="Item" type="flameItem" x="102" y="630" width="36" height="36"/>
  </objectgroup>
 </map>

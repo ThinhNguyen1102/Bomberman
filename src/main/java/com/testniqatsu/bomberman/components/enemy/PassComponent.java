@@ -55,7 +55,6 @@ public class PassComponent extends OnealComponent {
         showScore(PASS_SCORE);
         inc("score", PASS_SCORE);
 
-        FXGL.inc("numOfEnemy", -1);
         die = true;
         dx = 0;
         dy = 0;

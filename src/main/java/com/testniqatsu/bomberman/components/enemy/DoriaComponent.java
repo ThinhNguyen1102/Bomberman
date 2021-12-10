@@ -54,7 +54,6 @@ public class DoriaComponent extends OnealComponent {
         inc("score", DORIA_SCORE);
         showScore(DORIA_SCORE);
 
-        FXGL.inc("numOfEnemy", -1);
         die = true;
         dx = 0;
         dy = 0;

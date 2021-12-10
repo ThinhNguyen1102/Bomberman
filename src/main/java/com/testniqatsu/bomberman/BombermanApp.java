@@ -304,6 +304,8 @@ public class BombermanApp extends GameApplication {
             showMessage("You Win! bum bum bum!!!", () -> getGameController().gotoMainMenu());
         } else {
             getSettings().setGlobalMusicVolume(0);
+            getInput().setProcessInput(false);
+
             play("stage_start.wav");
             inc("level", +1);
             AnchorPane pane = creStartStage();
@@ -311,6 +313,7 @@ public class BombermanApp extends GameApplication {
             getGameTimer().runOnceAfter(() -> {
                 FXGL.removeUINode(pane);
                 getSettings().setGlobalMusicVolume(0.05);
+                getInput().setProcessInput(true);
                 setLevel();
             }, Duration.seconds(3));
         }
@@ -320,14 +323,11 @@ public class BombermanApp extends GameApplication {
         AnchorPane pane = new AnchorPane();
         Shape shape = new Rectangle(1080, 720, Color.BLACK);
 
-        Label label = new Label();
-        label.setText("STAGE " + geti("level"));
-        label.setTranslateX((SCREEN_WIDTH >> 1) - 80);
-        label.setTranslateY((SCREEN_HEIGHT >> 1) - 20);
-        label.setTextFill(Color.WHITE);
-        label.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 40));
+        var text = FXGL.getUIFactoryService().newText("STAGE " + geti("level"), Color.WHITE, 40);
+        text.setTranslateX((SCREEN_WIDTH >> 1) - 80);
+        text.setTranslateY((SCREEN_HEIGHT >> 1) - 20);
+        pane.getChildren().addAll(shape, text);
 
-        pane.getChildren().addAll(shape, label);
         return pane;
     }
 
@@ -345,6 +345,7 @@ public class BombermanApp extends GameApplication {
         set("time", TIME_PER_LEVEL);
         set("bomb", 1);
         set("flame", 1);
+        set("numOfEnemy", 10);
         setGridForAi();
     }
 

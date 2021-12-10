@@ -158,7 +158,6 @@ public abstract class NormalEnemy extends Component {
     }
 
     public void enemyDie() {
-        FXGL.inc("numOfEnemy", -1);
         dx = 0;
         dy = 0;
         texture.loopNoOverride(animDie);

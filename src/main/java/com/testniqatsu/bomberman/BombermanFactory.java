@@ -436,7 +436,7 @@ public class BombermanFactory implements EntityFactory {
         return FXGL.entityBuilder(data)
                 .type(BombermanType.PORTAL)
                 .bbox(hitBox)
-                .with(new BlockComponent(15,15,TIME_PER_LEVEL))
+                .view("photo/portal.png")
                 .with(new CollidableComponent(true))
                 .build();
     }
