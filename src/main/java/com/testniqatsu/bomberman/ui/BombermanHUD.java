@@ -22,7 +22,7 @@ public class BombermanHUD implements HUD {
         var HUDRow0 = new HBox(
                 setTextUI("level", "LEVEL %d"),
                 spacer,
-                setTextUI("time", "TIME: %d")
+                setTextUI("time", "⏰ %d")
         );
         HUDRow0.setAlignment(Pos.CENTER_LEFT);
         HUDRow0.setPadding(new Insets(0, padding, 0, padding));
