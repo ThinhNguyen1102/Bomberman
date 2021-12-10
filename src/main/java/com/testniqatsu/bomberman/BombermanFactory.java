@@ -24,9 +24,9 @@ import com.testniqatsu.bomberman.components.enemy.*;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
-import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
+import static com.almasb.fxgl.dsl.FXGL.geto;
 import static com.testniqatsu.bomberman.constants.GameConst.*;
 
 public class BombermanFactory implements EntityFactory {

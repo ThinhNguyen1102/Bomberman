@@ -8,9 +8,7 @@ import com.almasb.fxgl.texture.AnimationChannel;
 import com.testniqatsu.bomberman.BombermanType;
 import javafx.util.Duration;
 
-
 import static com.almasb.fxgl.dsl.FXGL.*;
-import static com.almasb.fxgl.dsl.FXGL.image;
 
 @Required(AStarMoveComponent.class)
 public class OnealComponent extends NormalEnemy {

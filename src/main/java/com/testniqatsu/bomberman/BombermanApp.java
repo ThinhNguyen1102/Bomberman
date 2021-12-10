@@ -17,7 +17,7 @@ import com.testniqatsu.bomberman.menus.BombermanMenu;
 import com.testniqatsu.bomberman.ui.BombermanHUD;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;

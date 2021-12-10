@@ -4,7 +4,6 @@ import com.almasb.fxgl.texture.AnimationChannel;
 import com.testniqatsu.bomberman.BombermanType;
 import javafx.util.Duration;
 
-
 import static com.almasb.fxgl.dsl.FXGL.*;
 import static com.testniqatsu.bomberman.constants.GameConst.ENEMY_SPEED_BASE;
 

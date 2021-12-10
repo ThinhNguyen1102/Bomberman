@@ -1,7 +1,6 @@
 package com.testniqatsu.bomberman.ui;
 
 import com.almasb.fxgl.dsl.FXGL;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -10,43 +9,56 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class BombermanHUD implements HUD {
+    final int padding = 20;
+
     VBox hud;
 
     public BombermanHUD() {
-        var spacer = new Pane();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
+        var HUDRow0 = createRow0();
+        var HUDRow1 = createRow1();
+        createHUD(HUDRow0, HUDRow1);
+    }
 
-        var padding = 20;
-
-        var HUDRow0 = new HBox(
+    private HBox createRow0() {
+        var row = new HBox(
                 setTextUI("level", "LEVEL %d"),
-                spacer,
+                createSpacer(),
                 setTextUI("time", "⏰ %d")
         );
-        HUDRow0.setAlignment(Pos.CENTER_LEFT);
-        HUDRow0.setPadding(new Insets(0, padding, 0, padding));
+        row.setAlignment(Pos.CENTER_LEFT);
+        row.setPadding(new Insets(0, padding, 0, padding));
 
-        var HUDRow1 = new HBox(
-                setTextUI("score", "SCORE: %d"),
-                createSpacer(),
-                setTextUI("speed", "SPEED: %d"),
-                createSpacer(),
-                setTextUI("flame", "FLAME: %d"),
-                createSpacer(),
-                setTextUI("bomb", "BOMB: %d"),
-                createSpacer(),
-                setTextUI("life", "LIFE: %d"),
-                createSpacer(),
-                setTextUI("numOfEnemy", "E: %d")
-        );
-        HUDRow1.setAlignment(Pos.CENTER_LEFT);
-        HUDRow1.prefWidthProperty().bind(FXGL.getSettings().actualWidthProperty());
-        HUDRow1.setPadding(new Insets(0, padding, 0, padding));
+        return row;
+    }
 
-        hud = new VBox(
-                HUDRow0,
-                HUDRow1
+    private HBox createRow1() {
+        var row = new HBox(
+                setTextUI("score", "SCORE %d"),
+                createSpacer(),
+                setTextUI("speed", "SPEED %d"),
+                createSpacer(),
+                setTextUI("flame", "FLAME %d"),
+                createSpacer(),
+                setTextUI("bomb", "BOMB %d"),
+                createSpacer(),
+                setTextUI("life", "LIFE %d"),
+                createSpacer(),
+                setTextUI("numOfEnemy", "E %d")
         );
+        row.setAlignment(Pos.CENTER_LEFT);
+        row.prefWidthProperty().bind(FXGL.getSettings().actualWidthProperty());
+        row.setPadding(new Insets(0, padding, 0, padding));
+
+        return row;
+    }
+
+    private void createHUD(HBox... rows) {
+        hud = new VBox();
+
+        for (var row : rows) {
+            hud.getChildren().add(row);
+        }
+
         hud.setPadding(new Insets(padding, 0, padding, 0));
         hud.setSpacing(10);
     }
