@@ -77,6 +77,8 @@ public class BombermanMenu extends FXGLMenu {
                 new HBox(4, new KeyView(W), new KeyView(S), new KeyView(A), new KeyView(D)));
         pane.addRow(1, getUIFactoryService().newText("PLACE BOMB"),
                 new KeyView(SPACE));
+        pane.addRow(2, getUIFactoryService().newText("OPEN MENU GAME"),
+                new KeyView(ESCAPE));
 
         FXGL.getDialogService().showBox("HOW TO PLAY", pane, getUIFactoryService().newButton("OK"));
     }
