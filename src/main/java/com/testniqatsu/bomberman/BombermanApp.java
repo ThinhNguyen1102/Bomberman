@@ -50,6 +50,14 @@ public class BombermanApp extends GameApplication {
     public static boolean isSoundEnabled = true;
     private boolean requestNewGame = false;
 
+    private static Entity getPlayer() {
+        return FXGL.getGameWorld().getSingleton(BombermanType.PLAYER);
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setHeight(VIEW_HEIGHT);
@@ -77,7 +85,6 @@ public class BombermanApp extends GameApplication {
             }
         });
     }
-
 
     @Override
     protected void initGame() {
@@ -122,9 +129,7 @@ public class BombermanApp extends GameApplication {
     protected void onUpdate(double tpf) {
 
         if (geti("time") == 0) {
-            showMessage("Game Over leu leu!!!", () -> {
-                getGameController().gotoMainMenu();
-            });
+            showMessage("Game Over leu leu!!!", () -> getGameController().gotoMainMenu());
         }
 
         if (requestNewGame) {
@@ -152,10 +157,10 @@ public class BombermanApp extends GameApplication {
                 setTextUI("flame", "FLAME: %d"),
                 setTextUI("bomb", "BOMB: %d"),
                 setTextUI("time", "TIME: %d"),
-                setTextUI("life", "Life: %d"),
+                setTextUI("life", "LIFE: %d"),
                 setTextUI("numOfEnemy", "E: %d")
         );
-        HUDRow1.setAlignment(Pos.CENTER);
+        HUDRow1.setAlignment(Pos.CENTER_LEFT);
         HUDRow1.setSpacing(40);
 
         var HUD = new VBox(
@@ -181,10 +186,6 @@ public class BombermanApp extends GameApplication {
         // valGame's datatype is int
         label.textProperty().bind(FXGL.getip(valGame).asString(content));
         return label;
-    }
-
-    private static Entity getPlayer() {
-        return FXGL.getGameWorld().getSingleton(BombermanType.PLAYER);
     }
 
     @Override
@@ -286,9 +287,7 @@ public class BombermanApp extends GameApplication {
 
     private void loadNextLevel() {
         if (FXGL.geti("level") >= MAX_LEVEL) {
-            showMessage("You Win! bum bum bum!!!", () -> {
-                getGameController().gotoMainMenu();
-            });
+            showMessage("You Win! bum bum bum!!!", () -> getGameController().gotoMainMenu());
         } else {
             getSettings().setGlobalMusicVolume(0);
             play("stage_start.wav");
@@ -360,10 +359,6 @@ public class BombermanApp extends GameApplication {
 
         set("grid", grid);
         set("_grid", _grid);
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
 
